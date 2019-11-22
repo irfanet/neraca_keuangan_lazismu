@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      <?= $this->lang->line('data_user'); ?>
+      Data User
     </h1>
   </section>
 
@@ -16,13 +16,13 @@
       <div class="col-xs-12 col-md-12 col-lg-2">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title"><?= $this->lang->line('tambah_user'); ?></h3>
+            <h3 class="box-title">Tambah User</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
             <center>
               <a class="btn btn-app btn-lg" data-toggle="modal" id="btn_add_modal" data-target="#modal_add">
-                <i class="fa fa-plus"></i> <?= $this->lang->line('tambah'); ?>
+                <i class="fa fa-plus"></i> Tambah
               </a>
             </center>
           </div>
@@ -33,21 +33,10 @@
       <div class="col-xs-12 col-md-12 col-lg-10">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title"><?= $this->lang->line('data_user'); ?></h3>
+            <h3 class="box-title">Data User</h3>
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
               </button>
-              <div class="btn-group">
-                <button type="button" class="btn btn-box-tool dropdown-toggle" data-toggle="dropdown">
-                  <i class="fa fa-cog"></i></button>
-                <ul class="dropdown-menu" role="menu">
-                  <li><a href="#" id="a_operator">Action</a></li>
-                  <li><a href="#">Another action</a></li>
-                  <li><a href="#">Something else here</a></li>
-                  <li class="divider"></li>
-                  <li><a href="#">Separated link</a></li>
-                </ul>
-              </div>
             </div>
           </div>
 
@@ -57,12 +46,12 @@
             <table id="example2" class="table table-bordered table-hover">
               <thead>
                 <tr>
-                  <th><?= $this->lang->line('no'); ?></th>
-                  <th><?= $this->lang->line('email'); ?></th>
-                  <th><?= $this->lang->line('username'); ?></th>
-                  <th><?= $this->lang->line('level'); ?></th>
-                  <th><?= $this->lang->line('status'); ?></th>
-                  <th width="15%"><?= $this->lang->line('aksi'); ?></th>
+                  <th>No</th>
+                  <th>Email</th>
+                  <th>Nama</th>
+                  <th>Level</th>
+                  <th>Status</th>
+                  <th width="15%">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">

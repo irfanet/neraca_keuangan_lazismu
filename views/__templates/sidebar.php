@@ -11,7 +11,7 @@
         </a>
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'jurnal' ? 'active': '' ?>">
-        <a href="#">
+        <a href="#" data-target="jurnal">
           <i class="fa fa-book"></i>
           <span>Jurnal</span>
         </a>

@@ -2,12 +2,12 @@
 
 (defined('BASEPATH')) or exit('No direct script access allowed');
 
-class Dashboard extends MY_Controller{
+class Jurnal extends MY_Controller{
 
     function __construct()
     {
         parent::__construct();
-		$this->load->model('dashboard_model');
+		$this->load->model('jurnal_model');
 		if($this->session->userdata('id_user') == TRUE){
             redirect('auth');
         }
@@ -15,22 +15,22 @@ class Dashboard extends MY_Controller{
 
     function index_awal()
     {
-        $this->load->template('dashboard');
+        $this->load->template('jurnal');
 	}
 
     function index()
     {
-        $this->load->view('dashboard');
+        $this->load->view('jurnal');
 	}
 
     function get_data(){
-		$data=$this->dashboard_model->data_list();
+		$data=$this->jurnal_model->data_list();
 		echo json_encode($data);
 	}
 
 	function get_kode(){
 		$kode=$this->input->get('id');
-		$data=$this->dashboard_model->get_data_by_kode($kode);
+		$data=$this->jurnal_model->get_data_by_kode($kode);
 		echo json_encode($data);
 	}
 
@@ -49,7 +49,7 @@ class Dashboard extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->dashboard_model->simpan_data();	
+			$this->jurnal_model->simpan_data();	
 		}
 		echo json_encode($data);
 	}
@@ -65,14 +65,14 @@ class Dashboard extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->dashboard_model->update_data();	
+			$this->jurnal_model->update_data();	
 		}
 		echo json_encode($data);
 	}
 
 	function hapus_data(){
 		$kode=$this->input->post('kode');
-		$data=$this->dashboard_model->hapus_data($kode);
+		$data=$this->jurnal_model->hapus_data($kode);
 		echo json_encode($data);
 	}
 
@@ -83,7 +83,7 @@ class Dashboard extends MY_Controller{
 	function import_excel(){
 		error_reporting(E_ALL ^ E_NOTICE);
         include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
-        $upload = $this->dashboard_model->upload_file($this->filename);
+        $upload = $this->jurnal_model->upload_file($this->filename);
         if ($upload['result'] == 'failed') {
           $data['upload_error'] = $upload['error'];
         }
@@ -112,7 +112,7 @@ class Dashboard extends MY_Controller{
           $numrow++; 
         // }
       
-        $this->dashboard_model->insert_multiple($data);
+        $this->jurnal_model->insert_multiple($data);
         $this->session->set_flashdata('flash','Pegawai Berhasil ditambahkan');
         redirect("bagian");
     }
