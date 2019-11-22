@@ -77,15 +77,15 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" name="show_in_add"><?= $this->lang->line('tambah_user'); ?></h4>
-        <h4 class="modal-title" name="show_in_edit"><?= $this->lang->line('edit_user'); ?></h4>
+        <h4 class="modal-title" name="show_in_add">Tambah User</h4>
+        <h4 class="modal-title" name="show_in_edit">Edit User</h4>
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
           <input type="hidden" id="id_user" name="id_user">
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email"><?= $this->lang->line('email'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email">Email <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="email" name="email" required class="form-control col-md-7 col-xs-12">
@@ -95,7 +95,7 @@
           <br>
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="username"><?= $this->lang->line('username'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="username">Username <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="username" name="username" required class="form-control col-md-7 col-xs-12">
@@ -105,7 +105,7 @@
           <br name="show_in_add">
           <div class="row" name="show_in_add">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password1" name="password1"><?= $this->lang->line('password'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password1" name="password1">Password <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="password" id="password1" name="password1" required class="form-control col-md-7 col-xs-12">
@@ -115,7 +115,7 @@
           <br name="show_in_add">
           <div class="row" name="show_in_add">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password2" name="password2"><?= $this->lang->line('konfirmasi_password'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password2" name="password2">Konfirmasi Password <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="password" id="password2" name="password2" required class="form-control col-md-7 col-xs-12">
@@ -125,7 +125,7 @@
           <br>
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="level"><?= $this->lang->line('level'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="level">Level <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select class="form-control" name="level" id="level">
@@ -145,7 +145,7 @@
           <br>
           <div class="row" name="show_in_edit">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="is_active"><?= $this->lang->line('status'); ?> <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="is_active">Status <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select class="form-control" name="is_active" id="is_active">
@@ -157,8 +157,8 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->lang->line('bt_batal'); ?></button>
-          <input type="submit" name="btn_simpan" id="btn_simpan" value="<?= $this->lang->line('bt_simpan'); ?>" class="btn btn-primary">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+          <input type="submit" name="btn_simpan" id="btn_simpan" value="Simpan" class="btn btn-primary">
         </div>
       </form>
     </div>
@@ -175,15 +175,15 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title"><?= $this->lang->line('hapus_data'); ?></h4>
+        <h4 class="modal-title">Hapus Data</h4>
       </div>
       <div class="modal-body">
         <input type="hidden" name="id_data" id="id_data">
-        <h5><?= $this->lang->line('yakin'); ?></h5>
+        <h5>Apakah Anda Yakin ?</h5>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal"><?= $this->lang->line('bt_tidak'); ?></button>
-        <button type="button" id="btn_hapus" class="btn btn-outline"><?= $this->lang->line('bt_ya'); ?></button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Tidak</button>
+        <button type="button" id="btn_hapus" class="btn btn-outline">Ya</button>
       </div>
     </div>
     <!-- /.modal-content -->
