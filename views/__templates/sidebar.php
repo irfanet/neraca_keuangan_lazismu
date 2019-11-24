@@ -29,10 +29,10 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#" data-target="honor_lembur"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
-          <li><a href="#" data-target="departemen"><i class="fa fa-circle-o"></i> Kode Segmen 2</a></li>
-          <li><a href="#" data-target="jabatan"><i class="fa fa-circle-o"></i> Kode Segmen 3</a></li>
-          <li><a href="#" data-target="line"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
+          <li><a href="#" data-target="setting"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
+          <li><a href="#" data-target="setting/viewSegmen2"><i class="fa fa-circle-o"></i> Kode Segmen 2</a></li>
+          <li><a href="#" data-target="setting/viewSegmen3"><i class="fa fa-circle-o"></i> Kode Segmen 3</a></li>
+          <li><a href="#" data-target="setting/viewSegmen4"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
         </ul>
       </li>
     </ul>

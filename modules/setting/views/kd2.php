@@ -3,7 +3,7 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Jurnal Keuangan
+      Kode Segmen 2
     </h1>
   </section>
 
@@ -16,7 +16,7 @@
       <div class="col-xs-12 col-md-12 col-lg-2">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title">Tambah Transaksi</h3>
+            <h3 class="box-title">Tambah Kode</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -33,7 +33,7 @@
       <div class="col-xs-12 col-md-12 col-lg-10">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title">Jurnal</h3>
+            <h3 class="box-title">Kode</h3>
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
               </button>
@@ -47,12 +47,10 @@
               <thead>
                 <tr>
                   <th width="10px">No</th>
-                  <th>Tgl</th>
-                  <th>Akun</th>
-                  <th>Keterangan</th>
-                  <th>Debit</th>
-                  <th>Kredit</th>
-                  <!-- <th width="15%">Aksi</th> -->
+                  <th>Kode 1</th>
+                  <th>Kode 2</th>
+                  <th>Nama</th>
+                  <th width="15%">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -78,81 +76,40 @@
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title" name="show_in_add">Tambah User</h4>
-        <h4 class="modal-title" name="show_in_edit">Edit User</h4>
+        <h4 class="modal-title" name="show_in_add">Tambah Kode</h4>
+        <h4 class="modal-title" name="show_in_edit">Edit Kode</h4>
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-          <input type="hidden" id="id_user" name="id_user">
+          <input type="hidden" id="id_2" name="id_2">
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email">Email <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kode">Kode Segmen 1 <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-6">
+                    <select type="text" class="form-control" id="id_1" name="id_1" required>
+                    <!-- //isian -->
+                    </select>
+                </div>
+            </div>
+          </div>
+          <br>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kode">Kode <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="email" name="email" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="kd_2" name="kd_2" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
           <br>
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="username">Username <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nama">Nama <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="username" name="username" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-          <br name="show_in_add">
-          <div class="row" name="show_in_add">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password1" name="password1">Password <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="password" id="password1" name="password1" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-          <br name="show_in_add">
-          <div class="row" name="show_in_add">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="password2" name="password2">Konfirmasi Password <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="password" id="password2" name="password2" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="level">Level <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <select class="form-control" name="level" id="level">
-                  <optgroup label="Admin">
-                    <option value="1">Super Admin</option>
-                    <option value="2">Manager</option>
-                    <option value="3">HRD</option>
-                  </optgroup>
-                  <optgroup label="Operator">
-                    <option value="4">Operator Absen & SPL</option>
-                    <option value="5">Operator Payroll</option>
-                  </optgroup>
-                </select>
-              </div>
-            </div>
-          </div>
-          <br>
-          <div class="row" name="show_in_edit">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="is_active">Status <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <select class="form-control" name="is_active" id="is_active">
-                  <option value="1">Aktif</option>
-                  <option value="0">Tidak Aktif</option>
-                </select>
+                <input type="text" id="nama" name="nama" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -179,7 +136,7 @@
         <h4 class="modal-title">Hapus Data</h4>
       </div>
       <div class="modal-body">
-        <input type="hidden" name="id_data" id="id_data">
+        <input type="hidden" name="id_2" id="id_2">
         <h5>Apakah Anda Yakin ?</h5>
       </div>
       <div class="modal-footer">
@@ -197,15 +154,34 @@
 <script type="text/javascript">
   $(document).ready(function() {
     tampil_data();
+    getSegmen1();
     var kondisi;
 
 
+    //get segmen 1
+    function getSegmen1() {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= base_url() ?>setting/getSegmen1',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option value="">--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].id_1 + '">' + data[i].kd_1 + ' - '+ data[i].nama +'</option>';
+          }
+          $('#id_1').html(html);
+        }
+
+      });
+    }
 
     //fungsi tampil data
     function tampil_data() {
       $.ajax({
         type: 'ajax',
-        url: '<?= base_url() ?>user/get_data',
+        url: '<?= base_url() ?>setting/getSegmen2',
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -216,13 +192,12 @@
           for (i = 0; i < data.length; i++) {
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].email + '</td>' +
-              '<td>' + data[i].username + '</td>' +
-              '<td>' + data[i].level + '</td>' +
-              '<td>' + data[i].is_active + '</td>' +
+              '<td>' + data[i].id_1 + '</td>' +
+              '<td>' + data[i].kd_2 + '</td>' +
+              '<td>' + data[i].nama + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].id_user + '"><?= $this->lang->line('bt_edit'); ?></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_user + '"><?= $this->lang->line('bt_hapus'); ?></a>' +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].id_2 + '">Edit</a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_2 + '">Hapus</a>' +
               '</td>' +
               '</tr>';
           }
@@ -245,10 +220,11 @@
       $('#form_add')[0].reset();
       $('[name="show_in_add"]').show();
       $('[name="show_in_edit"]').hide();
-      $('#email').attr('readonly', false);
-      $('#username').attr('readonly', false);
+      $('#id_1').attr('disabled', false);
+      $('#kd_2').attr('readonly', false);
+      $('#nama').attr('readonly', false);
       $('#modal_add').on('shown.bs.modal', function() {
-        $('#email').focus()
+        $('#kode').focus()
       });
     });
 
@@ -258,23 +234,22 @@
       var id = $(this).attr('data');
       $.ajax({
         type: "GET",
-        url: "<?= base_url() ?>user/get_kode",
+        url: "<?= base_url() ?>setting/getDataByKode2",
         dataType: "JSON",
         data: {
           id: id
         },
         success: function(data) {
-          $.each(data, function(id_user, email, username, level, is_active) {
+          $.each(data, function(id_2, kd_2, nama, id_1) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
-            $('#id_user').val(data.id_user);
-            $('#email').val(data.email).attr('readonly', true);
-            $('#username').val(data.username).attr('readonly', false);
-            $('#level').val(data.level);
-            $('#is_active').val(data.is_active);
+            $('#id_2').val(data.id_2);
+            $('#id_1').val(data.id_1).attr('disabled', true);
+            $('#kd_2').val(data.kd_2).attr('readonly', true);
+            $('#nama').val(data.nama);
             $('#modal_add').on('shown.bs.modal', function() {
-              $('#username').focus()
+              $('#nama').focus()
             });
           });
         }
@@ -286,7 +261,7 @@
     $('#show_data').on('click', '.item_hapus', function() {
       var id = $(this).attr('data');
       $('#modal_delete').modal('show');
-      $('[name="id_data"]').val(id);
+      $('[name="id_2"]').val(id);
     });
 
     //SIMPAN DATA
@@ -294,19 +269,17 @@
       if (kondisi == "tambah") {
         $.ajax({
           type: "POST",
-          url: "<?= base_url() ?>user/simpan_data",
+          url: "<?= base_url() ?>setting/setSegmen2",
           dataType: "JSON",
           data: {
-            email: $('#email').val(),
-            username: $('#username').val(),
-            password1: $('#password1').val(),
-            password2: $('#password2').val(),
-            level: $('#level').val()
+            id_1: $('#id_1').val(),
+            kd_2: $('#kd_2').val(),
+            nama: $('#nama').val(),
           },
           success: function(data) {
             if (data.success == true) {
               $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
-                ' <?= $this->lang->line('notif_simpan'); ?> ' + '</div>');
+                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
               $('.form-group').removeClass('has-error')
                 .removeClass('has-success');
               $('.text-danger').remove();
@@ -337,18 +310,17 @@
       else if (kondisi == "edit") {
         $.ajax({
           type: "POST",
-          url: "<?= base_url() ?>user/update_data",
+          url: "<?= base_url() ?>setting/updateSegmen2",
           dataType: "JSON",
           data: {
-            id_user: $('#id_user').val(),
-            username: $('#username').val(),
-            level: $('#level').val(),
-            is_active: $('#is_active').val()
+            id_2: $('#id_2').val(),
+            kd_2: $('#kd_2').val(),
+            nama: $('#nama').val()
           },
           success: function(data) {
             if (data.success == true) {
               $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
-                ' <?= $this->lang->line('notif_update'); ?> ' + '</div>');
+                ' <b>Berhasil !</b> Data telah diedit !' + '</div>');
               $('.form-group').removeClass('has-error')
                 .removeClass('has-success');
               $('.text-danger').remove();
@@ -380,10 +352,10 @@
 
     //HAPUS DATA
     $('#btn_hapus').on('click', function() {
-      var kode = $('#id_data').val();
+      var kode = $('#id_2').val();
       $.ajax({
         type: "POST",
-        url: "<?= base_url() ?>user/hapus_data",
+        url: "<?= base_url() ?>setting/deleteSegmen2",
         dataType: "JSON",
         data: {
           kode: kode
@@ -392,7 +364,7 @@
           $('#modal_delete').modal('hide');
           tampil_data();
           $('#info').append('<div class="alert alert-danger"><i class="fa fa-trash-o"></i>' +
-            ' <?= $this->lang->line('notif_hapus'); ?>' + '</div>');
+            ' <b>Berhasil !</b> Data telah dihapus !</b>' + '</div>');
           $('.alert-danger').delay(500).show(1000, function() {
             $(this).delay(2000).slideUp(500, function() {
               $(this).remove();
