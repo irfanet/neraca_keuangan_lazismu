@@ -16,6 +16,18 @@
           <span>Jurnal</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'donasiMasuk' ? 'active': '' ?>">
+        <a href="#" data-target="donasiMasuk">
+          <i class="fa fa-book"></i>
+          <span>Donasi Masuk</span>
+        </a>
+      </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'muzaki' ? 'active': '' ?>">
+        <a href="#" data-target="muzaki">
+          <i class="fa fa-book"></i>
+          <span>Muzaki</span>
+        </a>
+      </li>
       <li class="<?php echo $this->uri->segment(1) == 'user' ? 'active': '' ?>">
         <a href="#" data-target="user">
           <i class="fa fa-user"></i> <span>User</span>
