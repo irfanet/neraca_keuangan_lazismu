@@ -22,15 +22,21 @@
           <span>Donasi Masuk</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'mustahikKhusus' ? 'active': '' ?>">
+        <a href="#" data-target="mustahikKhusus">
+          <i class="fa fa-book"></i>
+          <span>Mustahik Khusus</span>
+        </a>
+      </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'muzaki' ? 'active': '' ?>">
         <a href="#" data-target="muzaki">
           <i class="fa fa-book"></i>
           <span>Muzaki</span>
         </a>
       </li>
-      <li class="<?php echo $this->uri->segment(1) == 'user' ? 'active': '' ?>">
-        <a href="#" data-target="user">
-          <i class="fa fa-user"></i> <span>User</span>
+      <li class="<?php echo $this->uri->segment(1) == 'admin' ? 'active': '' ?>">
+        <a href="#" data-target="admin">
+          <i class="fa fa-user"></i> <span>Admin</span>
         </a>
       </li>
       <li class="treeview  <?php echo $this->uri->segment(1) == 'setting' ? 'active': '' ?>">
