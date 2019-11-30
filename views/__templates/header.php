@@ -50,10 +50,10 @@
                 <!-- Menu Footer-->
                 <li class="user-footer">
                   <div class="pull-left">
-                    <a data-toggle="modal" data-target="#modal_profile" id="edit_profile" class="btn btn-default btn-flat"><?= $this->lang->line('bt_profil'); ?></a>
+                    <a data-toggle="modal" data-target="#modal_profile" id="edit_profile" class="btn btn-default btn-flat">Profil</a>
                   </div>
                   <div class="pull-right">
-                    <a href="<?= base_url() ?>auth/logout" class="btn btn-default btn-flat"><?= $this->lang->line('bt_logout'); ?></a>
+                    <a href="<?= base_url() ?>auth/logout" class="btn btn-default btn-flat">Keluar</a>
                   </div>
                 </li>
               </ul>
@@ -74,7 +74,7 @@
             </button>
             <h4 class="modal-title" name="show_in_edit"><?= $this->lang->line('edit_profil'); ?></h4>
           </div>
-          <form autocomplete="off" id="form_profile" class="form-horizontal form-label-left" method="post" action="<?= base_url(); ?>user/edit_profile">
+          <form autocomplete="off" id="form_profile" class="form-horizontal form-label-left" method="post" action="<?= base_url(); ?>admin/edit_profile">
             <div class="modal-body">
               <div class="box-body">
                 <input type="hidden" id="id_user_profile" name="id_user_profile" value="<?= $this->session->userdata('id_user'); ?>">
@@ -82,7 +82,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">
                     </label>
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="email_profile"><?= $this->lang->line('email'); ?> <span class="required">*</span>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="email_profile">Email <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <input type="text" id="email_profile" name="email_profile" required class="form-control col-md-7 col-xs-12" value="<?= $this->session->userdata('email'); ?>">
@@ -94,7 +94,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">
                     </label>
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="username_profile"><?= $this->lang->line('username'); ?> <span class="required">*</span>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="username_profile">Username <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <input type="text" id="username_profile" name="username_profile" required class="form-control col-md-7 col-xs-12" value="<?= $this->session->userdata('username'); ?>">
@@ -106,7 +106,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-2 col-sm-2 col-xs-12">
                     </label>
-                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="password1_profile"><?= $this->lang->line('password'); ?> <span class="required">*</span>
+                    <label class="control-label col-md-2 col-sm-2 col-xs-12" for="password1_profile">Password <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <input type="password" id="password1_profile" name="password1_profile" class="form-control col-md-7 col-xs-12">
@@ -118,7 +118,7 @@
                   <div class="form-group">
                     <label class="control-label col-md-1 col-sm-1 col-xs-12">
                     </label>
-                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2_profile"><?= $this->lang->line('konfirmasi_password'); ?> <span class="required">*</span>
+                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password2_profile">Konfirmasi Password <span class="required">*</span>
                     </label>
                     <div class="col-md-6 col-sm-6 col-xs-12">
                       <input type="password" id="password2_profile" name="password2_profile" class="form-control col-md-7 col-xs-12">
@@ -129,8 +129,8 @@
               <!-- /.box-body -->
             </div>
             <div class="modal-footer">
-              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_cancel"><?= $this->lang->line('bt_batal'); ?></button>
-              <input type="submit" name="btn_profile" id="btn_profile" value="<?= $this->lang->line('bt_simpan'); ?>" class="btn btn-primary">
+              <button type="button" class="btn btn-default" data-dismiss="modal" id="btn_cancel">Batal</button>
+              <input type="submit" name="btn_profile" id="btn_profile" value="Simpan" class="btn btn-primary">
             </div>
           </form>
         </div>

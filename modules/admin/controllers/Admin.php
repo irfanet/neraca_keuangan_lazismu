@@ -106,7 +106,7 @@ class Admin extends MY_Controller
 					'username' => $username
 				);
 			}
-			$this->db->update('user', $data);
+			$this->db->update('admin', $data);
 			$data = [
 				'id_user' => $id_user,
 				'email' => $email,
@@ -114,7 +114,7 @@ class Admin extends MY_Controller
 				'level' => $this->session->userdata('level')
 			];
 			$this->session->set_userdata($data);
-			$this->load->template('user');
+			$this->load->template('index');
 		}
 	}
 

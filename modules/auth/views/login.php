@@ -30,7 +30,7 @@
 <body class="hold-transition login-page">
 <div class="login-box">
   <div class="login-logo">
-    <a href="<?= base_url()?>"><b>Payroll</b>DCP</a>
+    <a href="<?= base_url()?>"><b>Neraca Keuangan</b>Mu</a>
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
@@ -38,11 +38,11 @@
     <?= $this->session->flashdata('message');?>
     <form action="<?= base_url()?>auth" method="post">
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" name="email" placeholder="<?= $this->lang->line('email'); ?>">
+        <input type="email" class="form-control" name="email" placeholder="Email">
         <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" name="password" placeholder="<?= $this->lang->line('password'); ?>">
+        <input type="password" class="form-control" name="password" placeholder="Password">
         <span class="glyphicon glyphicon-lock form-control-feedback"></span>
       </div>
       <div class="row">
@@ -55,7 +55,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat"><?= $this->lang->line('bt_login'); ?></button>
+          <button type="submit" class="btn btn-primary btn-block btn-flat">Masuk</button>
         </div>
         <!-- /.col -->
       </div>
