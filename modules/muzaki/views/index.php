@@ -1,6 +1,6 @@
-<?php 
-  $title = "Muzaki"; 
-  $url = base_url().'muzaki/';
+<?php
+$title = "Muzaki";
+$url = base_url() . 'muzaki/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -10,8 +10,8 @@
       Data <?= $title ?>
     </h1>
     <ol class="breadcrumb">
-        <li><a href="<?= base_url()?>"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active"><?= $title ?></li>
+      <li><a href="<?= base_url() ?>"><i class="fa fa-dashboard"></i> Home</a></li>
+      <li class="active"><?= $title ?></li>
     </ol>
   </section>
 
@@ -22,7 +22,7 @@
     </div>
     <div class="row">
       <div class="col-xs-12 col-md-12 col-lg-2">
-        <div class="box box-solid box-default">
+        <div class="box box-solid box-primary">
           <div class="box-header">
             <h3 class="box-title">Tambah Data</h3>
           </div>
@@ -30,16 +30,30 @@
           <div class="box-body">
             <center>
               <a class="btn btn-app btn-lg" data-toggle="modal" id="btn_add_modal" data-target="#modal_add">
-                <i class="fa fa-plus"></i> Tambah
+                <i class="fa fa-plus text-primary"></i> Tambah
               </a>
             </center>
           </div>
           <!-- /.box-body -->
         </div>
         <!-- /.box -->
+
+        <!-- /.box-header -->
+        <div class="box box-solid box-primary">
+          <div class="box-header with-border">
+            <h3 class="box-title">Keterangan</h3>
+          </div>
+          <div class="box-body no-padding">
+            <ul class="nav nav-pills nav-stacked">
+              <li><a href="#"><i class="fa fa-pencil text-primary"></i> <span>Edit</span></a></li>
+              <li><a href="#"><i class="fa fa-trash text-red"></i> <span> Hapus</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <!-- /.col -->
       </div>
       <div class="col-xs-12 col-md-12 col-lg-10">
-        <div class="box box-solid box-default">
+        <div class="box box-solid box-primary">
           <div class="box-header">
             <h3 class="box-title"><?= $title ?></h3>
             <div class="box-tools pull-right">
@@ -62,7 +76,7 @@
                   <th>No. KTP</th>
                   <th>Keterangan</th>
                   <th>Foto</th>
-                  <th width="15%">Aksi</th>
+                  <th width="15px">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -92,7 +106,7 @@
         <h4 class="modal-title" name="show_in_edit">Edit Data</h4>
       </div>
       <!-- enctype="multipart/form-data" -->
-      <form id="form_add" data-parsley-validate class="form-horizontal form-label-left" >
+      <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
           <input type="hidden" id="kd_muzaki" name="kd_muzaki">
           <input type="hidden" name="old_image" id="old_image">
@@ -105,7 +119,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="alamat">Alamat <span class="required">*</span>
@@ -115,7 +129,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_hp">No. HP <span class="required">*</span>
@@ -125,7 +139,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_muzaki">Jenis Muzaki <span class="required">*</span>
@@ -139,7 +153,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="agama">Agama <span class="required">*</span>
@@ -155,7 +169,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email">Email <span class="required">*</span>
@@ -165,7 +179,7 @@
               </div>
             </div>
           </div>
-          
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_ktp">No. KTP <span class="required">*</span>
@@ -262,10 +276,10 @@
               '<td>' + data[i].email + '</td>' +
               '<td>' + data[i].no_ktp + '</td>' +
               '<td>' + data[i].keterangan + '</td>' +
-              '<td><img src="<?= base_url()?>assets/uploads/muzaki/' + data[i].foto + '" width="64"></td>' +
+              '<td><img src="<?= base_url() ?>assets/uploads/muzaki/' + data[i].foto + '" width="64"></td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kd_muzaki + '">Edit</a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_muzaki + '">Hapus</a>' +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_muzaki + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_muzaki + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -319,7 +333,6 @@
             $('#email').val(data.email);
             $('#no_ktp').val(data.no_ktp);
             $('#keterangan').val(data.keterangan);
-            $('#foto').val(data.foto);
           });
         }
       });

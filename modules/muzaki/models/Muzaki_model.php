@@ -85,9 +85,7 @@ class Muzaki_model extends CI_Model
 		}else{
 			return "default.jpg";
 		}
-
         // print_r($this->upload->display_errors());
-        // return "default.jpg";
     }
 
     private function _deleteImage($kode)
