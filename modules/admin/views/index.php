@@ -1,10 +1,18 @@
+<?php 
+  $title = "Admin"; 
+  $url = base_url() . 'admin/';
+?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Data User
+      Data <?= $title?>
     </h1>
+    <ol class="breadcrumb">
+        <li><a href="<?= base_url()?>"><i class="fa fa-dashboard"></i> Home</a></li>
+        <li class="active"><?= $title ?></li>
+    </ol>
   </section>
 
   <!-- Main content -->
@@ -16,7 +24,7 @@
       <div class="col-xs-12 col-md-12 col-lg-2">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title">Tambah User</h3>
+            <h3 class="box-title">Tambah Data</h3>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -33,7 +41,7 @@
       <div class="col-xs-12 col-md-12 col-lg-10">
         <div class="box box-solid box-default">
           <div class="box-header">
-            <h3 class="box-title">Data User</h3>
+            <h3 class="box-title"><?= $title ?></h3>
             <div class="box-tools pull-right">
               <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
               </button>
@@ -129,15 +137,8 @@
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select class="form-control" name="level" id="level">
-                  <optgroup label="Admin">
-                    <option value="1">Super Admin</option>
-                    <option value="2">Manager</option>
-                    <option value="3">HRD</option>
-                  </optgroup>
-                  <optgroup label="Operator">
-                    <option value="4">Operator Absen & SPL</option>
-                    <option value="5">Operator Payroll</option>
-                  </optgroup>
+                  <option value="1">Super Admin</option>
+                  <option value="2">Admin</option>
                 </select>
               </div>
             </div>
@@ -204,7 +205,7 @@
     function tampil_data() {
       $.ajax({
         type: 'ajax',
-        url: '<?= base_url() ?>user/get_data',
+        url: '<?= $url ?>get_data',
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -220,8 +221,8 @@
               '<td>' + data[i].level + '</td>' +
               '<td>' + data[i].is_active + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].id_user + '"><?= $this->lang->line('bt_edit'); ?></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_user + '"><?= $this->lang->line('bt_hapus'); ?></a>' +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_user + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_user + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -257,7 +258,7 @@
       var id = $(this).attr('data');
       $.ajax({
         type: "GET",
-        url: "<?= base_url() ?>user/get_kode",
+        url: "<?= $url ?>get_kode",
         dataType: "JSON",
         data: {
           id: id
@@ -293,7 +294,7 @@
       if (kondisi == "tambah") {
         $.ajax({
           type: "POST",
-          url: "<?= base_url() ?>user/simpan_data",
+          url: "<?= $url ?>simpan_data",
           dataType: "JSON",
           data: {
             email: $('#email').val(),
@@ -336,7 +337,7 @@
       else if (kondisi == "edit") {
         $.ajax({
           type: "POST",
-          url: "<?= base_url() ?>user/update_data",
+          url: "<?= $url ?>update_data",
           dataType: "JSON",
           data: {
             id_user: $('#id_user').val(),
@@ -382,7 +383,7 @@
       var kode = $('#id_data').val();
       $.ajax({
         type: "POST",
-        url: "<?= base_url() ?>user/hapus_data",
+        url: "<?= $url ?>hapus_data",
         dataType: "JSON",
         data: {
           kode: kode

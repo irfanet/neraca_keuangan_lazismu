@@ -2,13 +2,13 @@
 
 (defined('BASEPATH')) or exit('No direct script access allowed');
 
-class User extends MY_Controller
+class Admin extends MY_Controller
 {
 
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->model('user_model');
+		$this->load->model('admin_model');
 		if ($this->session->userdata('id_user') == TRUE) {
 			redirect('auth');
 		}
@@ -16,19 +16,19 @@ class User extends MY_Controller
 
 	function index()
 	{
-		$this->load->view('user');
+		$this->load->view('index');
 	}
 
 	function get_data()
 	{
-		$data = $this->user_model->data_list();
+		$data = $this->admin_model->data_list();
 		echo json_encode($data);
 	}
 
 	function get_kode()
 	{
 		$kode = $this->input->get('id');
-		$data = $this->user_model->get_data_by_kode($kode);
+		$data = $this->admin_model->get_data_by_kode($kode);
 		echo json_encode($data);
 	}
 
@@ -37,18 +37,18 @@ class User extends MY_Controller
 		$data = array('success' => false, 'messages' => array());
 		$this->form_validation->set_rules(
 			'email',
-			'lang:email',
-			'valid_email|required|trim|strip_tags|is_unique[user.email]',
+			'Email',
+			'valid_email|required|trim|strip_tags|is_unique[admin.email]',
 			[
-				'is_unique' => 'Email telah digunakan user lain!'
+				'is_unique' => 'Email telah digunakan admin lain!'
 			]
 		);
 		$this->form_validation->set_rules('username', 'Username', 'required|trim|strip_tags');
-		$this->form_validation->set_rules('password1', 'lang:password', 'required|trim|min_length[6]|matches[password2]', [
+		$this->form_validation->set_rules('password1', 'password', 'required|trim|min_length[6]|matches[password2]', [
 			'matches' => 'Password dont match!',
 			'min_length' => 'Password to short!'
 		]);
-		$this->form_validation->set_rules('password2', 'lang:password', 'required|trim|matches[password1]');
+		$this->form_validation->set_rules('password2', 'password', 'required|trim|matches[password1]');
 		$this->form_validation->set_rules('level', 'Level', 'required|trim');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
@@ -58,7 +58,7 @@ class User extends MY_Controller
 			}
 		} else {
 			$data['success'] = true;
-			$this->user_model->simpan_data();
+			$this->admin_model->simpan_data();
 		}
 		echo json_encode($data);
 	}
@@ -66,7 +66,7 @@ class User extends MY_Controller
 	function update_data()
 	{
 		$data = array('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('username', 'lang:username', 'required|trim');
+		$this->form_validation->set_rules('username', 'username', 'required|trim');
 		$this->form_validation->set_rules('level', 'Level', 'required|trim');
 		$this->form_validation->set_rules('is_active', 'Status', 'required|trim');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
@@ -77,7 +77,7 @@ class User extends MY_Controller
 			}
 		} else {
 			$data['success'] = true;
-			$this->user_model->update_data();
+			$this->admin_model->update_data();
 		}
 		echo json_encode($data);
 	}
@@ -121,7 +121,7 @@ class User extends MY_Controller
 	function hapus_data()
 	{
 		$kode = $this->input->post('kode');
-		$data = $this->user_model->hapus_data($kode);
+		$data = $this->admin_model->hapus_data($kode);
 		echo json_encode($data);
 	}
 }
