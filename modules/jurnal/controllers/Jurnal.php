@@ -13,14 +13,9 @@ class Jurnal extends MY_Controller{
         }
     }
 
-    function index_awal()
-    {
-        $this->load->template('jurnal');
-	}
-
     function index()
     {
-        $this->load->view('jurnal');
+        $this->load->view('index');
 	}
 
     function get_data(){
