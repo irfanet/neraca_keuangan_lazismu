@@ -23,8 +23,14 @@ class Dashboard extends MY_Controller{
         $this->load->view('dashboard');
 	}
 
-    function get_data(){
-		$data=$this->dashboard_model->data_list();
+
+    function getAktiva(){
+		$data=$this->dashboard_model->getAktiva();
+		echo json_encode($data);
+	}
+
+	function getPasiva(){
+		$data=$this->dashboard_model->getPasiva();
 		echo json_encode($data);
 	}
 
