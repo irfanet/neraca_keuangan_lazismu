@@ -68,6 +68,13 @@ class DonasiMasuk extends MY_Controller{
 		echo json_encode($data);
 	}
 
+	function getDetailByKode()
+	{
+		$kode = $this->input->get('id');
+		$data = $this->donasiMasuk_model->getDetailByKode($kode);
+		echo json_encode($data);
+	}
+
 	function getMuzaki(){
 		$data=$this->donasiMasuk_model->getMuzaki();
 		echo json_encode($data);

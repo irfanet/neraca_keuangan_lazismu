@@ -118,6 +118,11 @@ class DonasiMasuk_model extends CI_Model
 		$hasil = $this->db->get_where("donasi_masuk", array('kd_donasi' => $kode))->row();
 		return $hasil;
 	}
+	function getDetailByKode($kode)
+	{
+		$hasil = $this->db->get_where("jurnal", array('status' => $kode))->result();
+		return $hasil;
+	}
 	function updateData()
 	{
 		$this->kd_data = $this->input->post('kd_donasi');

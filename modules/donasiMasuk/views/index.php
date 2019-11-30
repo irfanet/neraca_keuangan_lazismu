@@ -1,5 +1,7 @@
 <?php
-$title = "Donasi Masuk";
+$prefix = chr(rand(97,121));  
+$uniqid =  $prefix.uniqid();
+$title = 'DM-'.date('dmy').time();
 $url = base_url() . 'donasiMasuk/';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -73,7 +75,7 @@ $url = base_url() . 'donasiMasuk/';
                   <th>Jenis Donasi</th>
                   <th>Jenis Dana</th>
                   <th>Jumlah Dana</th>
-                  <th width="15px">Aksi</th>
+                  <th width="80px">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -153,8 +155,8 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Metode Pembayaran <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" checked/> CASH<br> 
-                <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod"/> BANK<br/>
+                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" checked /> CASH<br>
+                <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod" /> BANK<br />
               </div>
             </div>
           </div>
@@ -164,7 +166,7 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_dana">Jenis Dana <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" style="width: 100%;"  id="jenis_dana" name="jenis_dana" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="jenis_dana" name="jenis_dana" required>
                 </select>
               </div>
             </div>
@@ -217,6 +219,41 @@ $url = base_url() . 'donasiMasuk/';
 </div>
 <!-- /.modal hapus -->
 
+<!-- /.modal detail -->
+<div class="modal fade" id="modal_detail">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Default Modal</h4>
+      </div>
+      <div class="modal-body">
+        <table id="detail_table" class="table table-bordered">
+          <thead>
+            <tr>
+              <th width="10px">No</th>
+              <th>Tanggal</th>
+              <th>Kode Akun</th>
+              <th>Keterangan</th>
+              <th>Debit</th>
+              <th>Kredit</th>
+            </tr>
+          </thead>
+          <tbody id="show_detail"> 
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -272,7 +309,7 @@ $url = base_url() . 'donasiMasuk/';
     function getAktiva() {
       $.ajax({
         type: 'ajax',
-        url: "<?= $url ?>"+ paymentMethod +"",
+        url: "<?= $url ?>" + paymentMethod + "",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -326,7 +363,8 @@ $url = base_url() . 'donasiMasuk/';
               '<td>' + data[i].jenis_dana + '</td>' +
               '<td>' + data[i].jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-search "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
               '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_donasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
@@ -343,6 +381,46 @@ $url = base_url() . 'donasiMasuk/';
         }
       });
     }
+
+    //TOMBOL DETAIL -> GET KODE
+    $('#show_data').on('click', '.item_detail', function() {
+      var id = $(this).attr('data');
+      $('#modal_detail').modal('show');
+      $.ajax({
+        async: true,
+        type: "GET",
+        url: "<?= $url ?>getDetailByKode",
+        dataType: "JSON",
+        data: {
+          id: id
+        },
+        success: function(data) {
+          $('#detail_table').dataTable().fnDestroy();
+          var html = '';
+          var i;
+          var no = 1;
+          for (i = 0; i < data.length; i++) {
+            html += '<tr>' +
+              '<td>' + no++ + '</td>' +
+              '<td>' + data[i].tgl + '</td>' +
+              '<td>' + data[i].kd_akun + '</td>' +
+              '<td>' + data[i].keterangan + '</td>' +
+              '<td>' + data[i].debit + '</td>' +
+              '<td>' + data[i].kredit + '</td>' +
+              '</tr>';
+          }
+          $('#show_detail').html(html);
+          $('#detail_table').DataTable({
+            'paging': false,
+            'lengthChange': true,
+            'searching': false,
+            'ordering': true,
+            'info': true,
+            'autoWidth': true
+          });
+        }
+      });
+    });
 
     //ATUR HIDE AND SHOW
     $('#btn_add_modal').on('click', function() {
