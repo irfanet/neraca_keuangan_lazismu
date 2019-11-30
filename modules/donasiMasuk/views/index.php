@@ -1,6 +1,6 @@
 <?php
-  $title = "Donasi Masuk";
-  $url = base_url() . 'donasiMasuk/';
+$title = "Donasi Masuk";
+$url = base_url() . 'donasiMasuk/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -111,7 +111,7 @@
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_donasi">Tanggal Donasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="tgl_donasi" name="tgl_donasi" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="tgl_donasi" name="tgl_donasi" required class="form-control col-md-7 col-xs-12" value="<?= date('Y/m/d') ?>">
               </div>
             </div>
           </div>
@@ -121,7 +121,8 @@
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_muzaki">Muzaki <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="kd_muzaki" name="kd_muzaki" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="kd_muzaki" name="kd_muzaki" required>
+                </select>
               </div>
             </div>
           </div>
@@ -142,9 +143,18 @@
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select type="text" class="form-control" id="jenis_donasi" name="jenis_donasi" required>
-                  <option value="Zakat">Zakat</option>
-                  <option value="Infak">Infak</option>
                 </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Metode Pembayaran <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" checked/> CASH<br> 
+                <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod"/> BANK<br/>
               </div>
             </div>
           </div>
@@ -154,10 +164,7 @@
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_dana">Jenis Dana <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="jenis_dana" name="jenis_dana" required>
-                  <option value="Kas Zakat">Kas Zakat</option>
-                  <option value="Kas Infak">Kas Infak</option>
-                  <option value="Transfer Bank">Transfer Bank</option>
+                <select type="text" class="form-control select2" style="width: 100%;"  id="jenis_dana" name="jenis_dana" required>
                 </select>
               </div>
             </div>
@@ -213,8 +220,89 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-    tampil_data();
     var kondisi;
+    var paymentMethod;
+    paymentMethod = "getKasAktiva";
+
+    $('.select2').select2();
+    tampil_data();
+    getMuzaki();
+    getAktiva();
+    getPasiva();
+
+    //icheck
+    // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    //   checkboxClass: 'icheckbox_minimal-blue',
+    //   radioClass   : 'iradio_minimal-blue'
+    // })
+
+    //radio event
+    $('input[type=radio][name=paymentMethod]').on('change', function() {
+      switch ($(this).val()) {
+        case 'cash':
+          paymentMethod = "getKasAktiva";
+          getAktiva();
+          break;
+        case 'bank':
+          paymentMethod = "getBankAktiva";
+          getAktiva();
+          break;
+      }
+    });
+
+    //get muzaki
+    function getMuzaki() {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= $url ?>getMuzaki',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option value="">--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_muzaki + '">' + data[i].nama_muzaki + ' - ' + data[i].alamat + '</option>';
+          }
+          $('#kd_muzaki').html(html);
+        }
+      });
+    }
+
+    //get aktiva
+    function getAktiva() {
+      $.ajax({
+        type: 'ajax',
+        url: "<?= $url ?>"+ paymentMethod +"",
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option value="">--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#jenis_dana').html(html);
+        }
+      });
+    }
+
+    //get pasiva
+    function getPasiva() {
+      $.ajax({
+        type: 'ajax',
+        url: "<?= $url ?>getDanaPasiva",
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option value="">--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#jenis_donasi').html(html);
+        }
+      });
+    }
 
     //fungsi tampil data
     function tampil_data() {

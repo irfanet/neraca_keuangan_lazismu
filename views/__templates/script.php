@@ -25,6 +25,8 @@
      <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/select2/dist/css/select2.min.css">
      <!-- iCheck -->
      <link rel="stylesheet" href="<?= base_url()?>assets/plugins/iCheck/square/blue.css">
+     <!-- iCheck for checkboxes and radio inputs -->
+     <link rel="stylesheet" href="<?= base_url()?>assets/plugins/iCheck/all.css">
      <!-- Theme style -->
      <link rel="stylesheet" href="<?= base_url(); ?>assets/dist/css/AdminLTE.min.css">
      <!-- AdminLTE Skins. Choose a skin from the css/skins

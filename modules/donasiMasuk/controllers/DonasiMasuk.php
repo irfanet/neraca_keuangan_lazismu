@@ -11,7 +11,8 @@ class DonasiMasuk extends MY_Controller{
 		if($this->session->userdata('id_user') == TRUE){
             redirect('auth');
         }
-    }
+	}
+	
     function index()
     {
         $this->load->view('index');
@@ -37,6 +38,7 @@ class DonasiMasuk extends MY_Controller{
 		}
 		echo json_encode($data);
 	}
+
 	function getDataByKode()
 	{
 		$kode = $this->input->get('id');
@@ -65,6 +67,27 @@ class DonasiMasuk extends MY_Controller{
 		$data=$this->donasiMasuk_model->deleteData($kode);
 		echo json_encode($data);
 	}
+
+	function getMuzaki(){
+		$data=$this->donasiMasuk_model->getMuzaki();
+		echo json_encode($data);
+	}
+
+	function getKasAktiva(){
+		$data=$this->donasiMasuk_model->getKasAktiva();
+		echo json_encode($data);
+	
+	}
+	function getBankAktiva(){
+		$data=$this->donasiMasuk_model->getBankAktiva();
+		echo json_encode($data);
+	}
+
+	function getDanaPasiva(){
+		$data=$this->donasiMasuk_model->getDanaPasiva();
+		echo json_encode($data);
+	}
+
 
 }
 

@@ -12,30 +12,19 @@ class Jurnal extends MY_Controller{
             redirect('auth');
         }
     }
-
     function index()
     {
         $this->load->view('index');
 	}
 
-    function get_data(){
-		$data=$this->jurnal_model->data_list();
+    function getData(){
+		$data=$this->jurnal_model->getData();
 		echo json_encode($data);
 	}
 
-	function get_kode(){
-		$kode=$this->input->get('id');
-		$data=$this->jurnal_model->get_data_by_kode($kode);
-		echo json_encode($data);
-	}
-
-	function simpan_data(){
+	function setData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('kode_bagian','Kode Bagian', 'required|trim|strip_tags|is_unique[bagian.kode_bagian]'
-		,[
-            'is_unique' => 'Kode bagian tidak boleh sama!'
-        ]);
-		$this->form_validation->set_rules('nama_bagian','Nama Bagian', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('nama_muzaki','Nama', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -44,14 +33,20 @@ class Jurnal extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->jurnal_model->simpan_data();	
+			$this->jurnal_model->setData();	
 		}
 		echo json_encode($data);
 	}
+	function getDataByKode()
+	{
+		$kode = $this->input->get('id');
+		$data = $this->jurnal_model->getDataByKode($kode);
+		echo json_encode($data);
+	}
 
-	function update_data(){
+	function updateData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('nama_bagian', 'Nama bagian', 'required|trim');
+		$this->form_validation->set_rules('nama_muzaki', 'Nama', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -60,57 +55,16 @@ class Jurnal extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->jurnal_model->update_data();	
+			$this->jurnal_model->updateData();	
 		}
 		echo json_encode($data);
 	}
 
-	function hapus_data(){
+	function deleteData(){
 		$kode=$this->input->post('kode');
-		$data=$this->jurnal_model->hapus_data($kode);
+		$data=$this->jurnal_model->deleteData($kode);
 		echo json_encode($data);
 	}
-
-	function form_upload(){
-		$this->load->view('import');
-	}
-	
-	function import_excel(){
-		error_reporting(E_ALL ^ E_NOTICE);
-        include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
-        $upload = $this->jurnal_model->upload_file($this->filename);
-        if ($upload['result'] == 'failed') {
-          $data['upload_error'] = $upload['error'];
-        }
-        $excelreader =  new PHPExcel_Reader_Excel5();
-        $loadexcel = $excelreader->load('upload/excel/'.$this->filename.'.xls'); 
-        $sheet = $loadexcel->getActiveSheet()->getRowIterator();
-
-	
-        $data = array();
-        
-        $numrow = 0;
-        foreach($sheet as $row){
-        //    if ($numrow>0){
-            $cellIterator = $row->getCellIterator();
-            $cellIterator->setIterateOnlyExistingCells(false); 
-            
-            $get = array(); 
-            foreach ($cellIterator as $cell) {
-            	array_push($get, $cell->getValue()); 
-            }           
-            array_push($data, array(
-                'kode_bagian'=>$get[0], 
-                'nama_bagian'=>$get[1],
-            	));
-            }        
-          $numrow++; 
-        // }
-      
-        $this->jurnal_model->insert_multiple($data);
-        $this->session->set_flashdata('flash','Pegawai Berhasil ditambahkan');
-        redirect("bagian");
-    }
 
 }
 
