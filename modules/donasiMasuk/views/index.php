@@ -1,7 +1,6 @@
-<?php
-$prefix = chr(rand(97,121));  
-$uniqid =  $prefix.uniqid();
-$title = 'DM-'.date('dmy').time();
+<?php 
+$uniqid =  date('h')*3600;
+$title = 'DM-'.date('dmy').$uniqid;
 $url = base_url() . 'donasiMasuk/';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -226,27 +225,31 @@ $url = base_url() . 'donasiMasuk/';
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span></button>
-        <h4 class="modal-title">Default Modal</h4>
+        <h4 class="modal-title">Detail Data</h4>
       </div>
-      <div class="modal-body">
-        <table id="detail_table" class="table table-bordered">
-          <thead>
-            <tr>
-              <th width="10px">No</th>
-              <th>Tanggal</th>
-              <th>Kode Akun</th>
-              <th>Keterangan</th>
-              <th>Debit</th>
-              <th>Kredit</th>
-            </tr>
-          </thead>
-          <tbody id="show_detail"> 
-          </tbody>
-        </table>
-      </div>
+      <form id="form_jurnal">
+        <div class="modal-body">
+          <input type="hidden" id="jml_data" >
+          <input type="text" id="kd_transaksi" >
+          <table id="detail_table" class="table table-bordered">
+            <thead>
+              <tr>
+                <th width="10px">No</th>
+                <th>Tanggal</th>
+                <th>Kode Akun</th>
+                <th>Keterangan</th>
+                <th>Debit</th>
+                <th>Kredit</th>
+              </tr>
+            </thead>
+            <tbody id="show_detail"> 
+            </tbody>
+          </table>
+        </div>
+      </form>
       <div class="modal-footer">
         <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">Save changes</button>
+        <button type="submit" class="btn btn-primary" id="btn_posting">Posting</button>
       </div>
     </div>
     <!-- /.modal-content -->
@@ -398,8 +401,10 @@ $url = base_url() . 'donasiMasuk/';
           $('#detail_table').dataTable().fnDestroy();
           var html = '';
           var i;
+          var kd_transaksi;
           var no = 1;
           for (i = 0; i < data.length; i++) {
+            kd_transaksi = data[i].kd_transaksi
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl + '</td>' +
@@ -418,8 +423,55 @@ $url = base_url() . 'donasiMasuk/';
             'info': true,
             'autoWidth': true
           });
+          $('#kd_transaksi').val(kd_transaksi);
+          $('#jml_data').val(data.length);
         }
       });
+    });
+
+    //POSTING JURNAL
+    $('#btn_posting').on('click', function() {
+      // var myform = new FormData($('#form_add')[0]);
+      // if (kondisi == "tambah") {
+        $.ajax({
+          async: true,
+          type: "POST",
+          url: "<?= $url ?>postJurnal",
+          dataType: "JSON",
+          data: {
+            kd_transaksi: $('#kd_transaksi').val(),
+            jml_data: $('#jml_data').val()
+          },
+          success: function(data) {
+            if (data.success == true) {
+              $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
+                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
+              $('.form-group').removeClass('has-error')
+                .removeClass('has-success');
+              $('.text-danger').remove();
+              $('.alert-success').delay(500).show(1000, function() {
+                $(this).delay(2000).slideUp(500, function() {
+                  $(this).remove();
+                });
+              })
+              $('#form_jurnal')[0].reset();
+              $('#modal_detail').modal('hide');
+              tampil_data();
+            } else {
+              $.each(data.messages, function(key, value) {
+                var element = $('#' + key);
+                element.closest('div.form-group')
+                  .removeClass('has-error')
+                  .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                  .find('.text-danger')
+                  .remove();
+                element.after(value);
+              });
+            }
+          }
+        });
+        return false;
+      // }
     });
 
     //ATUR HIDE AND SHOW

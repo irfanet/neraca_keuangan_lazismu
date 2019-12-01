@@ -68,6 +68,22 @@ class DonasiMasuk extends MY_Controller{
 		echo json_encode($data);
 	}
 
+	function postJurnal(){
+		$data = array ('success' => false, 'messages' => array());
+		$this->form_validation->set_rules('jml_data', 'Jumlah Data', 'required|trim');
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+		if ($this->form_validation->run() == FALSE) {
+			foreach ($_POST as $key => $value) {
+				$data['messages'][$key] = form_error($key);
+			}   
+		}else{
+			$data['success'] = true;
+			$this->donasiMasuk_model->postJurnal();	
+		}
+		echo json_encode($data);
+	}
+
 	function getDetailByKode()
 	{
 		$kode = $this->input->get('id');

@@ -70,7 +70,8 @@ class DonasiMasuk_model extends CI_Model
 			   'keterangan' => 'Donasi dari '.$this->kd_muzaki.' secara '.$this->jenis_dana.' untuk '.$this->jenis_donasi,
 			   'debit' => $this->input->post('jumlah_dana'),
 			   'kredit' => 0,
-			   'status' => $kode
+			   'status' => 0,
+			   'kd_transaksi' => 'DM-'.$kode
 			),
 			//pasiva
 			array(
@@ -79,7 +80,8 @@ class DonasiMasuk_model extends CI_Model
 				'keterangan' => 'Donasi dari '.$this->kd_muzaki.' secara '.$this->jenis_dana.' untuk '.$this->jenis_donasi,
 				'debit' => 0,
 				'kredit' => $dana_donasi,
-				'status' => $kode
+				'status' => 0,
+			   	'kd_transaksi' => 'DM-'.$kode
 			),
 			//pasiva amil
 			array(
@@ -88,11 +90,43 @@ class DonasiMasuk_model extends CI_Model
 				'keterangan' => 'Donasi dari '.$this->kd_muzaki.' secara '.$this->jenis_dana.' untuk '.$this->akun_amil,
 				'debit' => 0,
 				'kredit' => $dana_amil,
-				'status' => $kode
+				'status' => 0,
+			   	'kd_transaksi' => 'DM-'.$kode
 			)
 		);
 		return $this->db->insert_batch('jurnal', $data); 
 	}
+
+	function postJurnal(){
+		$jml_data = $this->input->post('jml_data');
+		$kd_transaksi =  $this->input->post('kd_transaksi');
+		for($i = 0; $i<$jml_data; $i++){ 
+			$data[] = array( 
+				'kd_transaksi' => $kd_transaksi,
+				'status' => 1
+			); 
+		}
+		$this->db->update_batch('jurnal', $data, 'kd_transaksi');
+		$this->updateNeraca($kd_transaksi);
+	}
+
+	function updateNeraca($kode){
+		$jurnal = $this->db->get_where("jurnal", array('kd_transaksi' => $kode))->result_array();
+		foreach($jurnal as $j){
+			$kd_akun = $j['kd_akun'];
+			$aktiva = 'A01';
+			$pasiva = 'A02';
+			if(strpos($kd_akun,$aktiva) !== false){
+				$nominal = $j['debit'];
+			}else{
+				$nominal = $j['kredit'];
+			}
+			$this->db->where('kd_akun', $kd_akun);
+			$this->db->set('saldo', 'saldo+'.$nominal, FALSE);
+			$this->db->update('akun');
+		}
+	}
+	
 	function getMuzaki()
 	{
 		$hasil = $this->db->query("SELECT * FROM muzaki")->result();
@@ -120,7 +154,7 @@ class DonasiMasuk_model extends CI_Model
 	}
 	function getDetailByKode($kode)
 	{
-		$hasil = $this->db->get_where("jurnal", array('status' => $kode))->result();
+		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'DM-'.$kode))->result();
 		return $hasil;
 	}
 	function updateData()
