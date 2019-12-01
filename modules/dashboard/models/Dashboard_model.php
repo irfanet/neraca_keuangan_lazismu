@@ -12,12 +12,12 @@ class Dashboard_model extends CI_Model
 
 	function getAktiva()
 	{
-		$hasil = $this->db->query("SELECT * FROM akun")->result();
+		$hasil = $this->db->query("SELECT * FROM akun WHERE kd_akun LIKE 'A01.%' ")->result_array();
 		return $hasil;
 	}
 	function getPasiva()
 	{
-		$hasil = $this->db->query("SELECT *, a.nama as nama_1, b.nama as nama_2, c.nama as nama_3, d.nama as nama_4 FROM tb_kd_1 a, tb_kd_2 b, tb_kd_3 c, tb_kd_4 d WHERE a.id_1='2' AND b.id_2=c.id_2 AND c.id_3=d.id_3")->result();
+		$hasil = $this->db->query("SELECT * FROM akun WHERE kd_akun LIKE 'A02.%' ")->result_array();
 		return $hasil;
 	}
 	function getSegmenById2($id)

@@ -142,7 +142,7 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Jenis Donasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="jenis_donasi" name="jenis_donasi" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="jenis_donasi" name="jenis_donasi" required>
                 </select>
               </div>
             </div>
@@ -301,7 +301,7 @@ $url = base_url() . 'donasiMasuk/';
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<option value="">--- Pilih Satu ---</option>';
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_muzaki + '">' + data[i].nama_muzaki + ' - ' + data[i].alamat + '</option>';
@@ -319,7 +319,7 @@ $url = base_url() . 'donasiMasuk/';
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<option value="">--- Pilih Satu ---</option>';
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
@@ -337,7 +337,7 @@ $url = base_url() . 'donasiMasuk/';
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<option value="">--- Pilih Satu ---</option>';
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
@@ -347,6 +347,13 @@ $url = base_url() . 'donasiMasuk/';
       });
     }
 
+    //to Rupiah
+    function toRupiah(nominal){
+      var	reverse = nominal.toString().split('').reverse().join(''),
+      ribuan 	= reverse.match(/\d{1,3}/g);
+      ribuan	= ribuan.join('.').split('').reverse().join('');
+      return ribuan
+    }
     //fungsi tampil data
     function tampil_data() {
       $.ajax({
@@ -366,6 +373,7 @@ $url = base_url() . 'donasiMasuk/';
             } else {
               btn = "";
             }
+            var jumlah_dana = toRupiah(data[i].jumlah_dana);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl_donasi + '</td>' +
@@ -373,7 +381,7 @@ $url = base_url() . 'donasiMasuk/';
               '<td>' + data[i].ket + '</td>' +
               '<td>' + data[i].jenis_donasi + '</td>' +
               '<td>' + data[i].jenis_dana + '</td>' +
-              '<td>' + data[i].jumlah_dana + '</td>' +
+              '<td style="text-align:right;">' + jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
               '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-search "></i></a>' + " " +
               '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
@@ -415,14 +423,16 @@ $url = base_url() . 'donasiMasuk/';
           var no = 1;
           for (i = 0; i < data.length; i++) {
             status = data[i].status;
-            kd_transaksi = data[i].kd_transaksi
+            kd_transaksi = data[i].kd_transaksi;
+            var debit = toRupiah(data[i].debit);
+            var kredit = toRupiah(data[i].kredit);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl + '</td>' +
               '<td>' + data[i].kd_akun + '</td>' +
               '<td>' + data[i].keterangan + '</td>' +
-              '<td>' + data[i].debit + '</td>' +
-              '<td>' + data[i].kredit + '</td>' +
+              '<td style="text-align:right;">' + debit + '</td>' +
+              '<td style="text-align:right;">' + kredit + '</td>' +
               '</tr>';
           }
           $('#show_detail').html(html);

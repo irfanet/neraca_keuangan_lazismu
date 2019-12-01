@@ -16,12 +16,13 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table class="table table-bordered" id="tb_aktiva">
+            <table class="table table-bordered table-hover" id="tb_aktiva">
               <thead>
                 <tr>
-                  <th style="width: 10px">Kode</th>
-                  <th style="width: 200px">Keterangan</th>
-                  <th style="width: 50px">Detail</th>
+                  <th style="width: 5%">No</th>
+                  <th style="width: 80%">Keterangan</th>
+                  <th style="width: 15%">Saldo</th>
+                  <th><i class="fa fa-ellipsis-v"></i> </th>
                 </tr>
               </thead>
               <tbody id="show_data1">
@@ -40,13 +41,13 @@
           </div>
           <!-- /.box-header -->
           <div class="box-body">
-            <table class="table table-bordered" id="tb_pasiva">
-              <thead>
+            <table class="table table-bordered table-hover" id="tb_pasiva">
+            <thead>
                 <tr>
-                  <th style="width: 10px">Kode</th>
-                  <th style="width: 200px">Keterangan</th>
-                  <th>Jumlah</th>
-                  <th style="width: 50px">Detail</th>
+                  <th style="width: 5%">No</th>
+                  <th style="width: 80%">Keterangan</th>
+                  <th style="width: 15%">Saldo</th>
+                  <th><i class="fa fa-ellipsis-v"></i> </th>
                 </tr>
               </thead>
               <tbody id="show_data2">
@@ -114,13 +115,14 @@
               data[i].kd_akun = a+"."+b;
             else if(g == '00')
               data[i].kd_akun = a+"."+b+"."+c;
-
+            
+            var saldo = toRupiah(data[i].saldo)
             html += '<tr>' +
                   '<td>' + no + '</td>' +
-                  '<td>' + d + e + f + data[i].kd_akun + " " + data[i].nama_akun + '</td>' +
+                  '<td><b>' + d + e + f + data[i].kd_akun + "</b> " + data[i].nama_akun + '</td>' +
+                  '<td style="text-align:right;">' + saldo + '</td>' +
                   '<td style="text-align:center;">' +
-                  '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kd_akun + '">Detail</a>' + ' ' +
-
+                  '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kd_akun + '"><i class="fa  fa-list-ul"></i></a>' + ' ' +
                   '</td>' +
                   '</tr>';
           }
@@ -137,6 +139,13 @@
       });
     }
 
+    function toRupiah(nominal){
+      var	reverse = nominal.toString().split('').reverse().join(''),
+      ribuan 	= reverse.match(/\d{1,3}/g);
+      ribuan	= ribuan.join('.').split('').reverse().join('');
+      return ribuan
+    }
+
     function tampil_data_pasiva() {
       $.ajax({
         type: 'ajax',
@@ -148,15 +157,51 @@
           var html = '';
           var i;
           var no = 1;
-          for (i = 0; i < data.length; i++) {
+          var a, b, c, g;
+          var d = '', e = '', f = '';
+          for (i = 0; i < data.length; i++, no++) {
+            if (i == 0) {
+              a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
+              b = data[i].kd_akun[4] + data[i].kd_akun[5];
+              c = data[i].kd_akun[7] + data[i].kd_akun[8];
+              g = data[i].kd_akun[10] + data[i].kd_akun[11];
+            }
+            if (data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2] == a && a != '00' && i != 0) {
+              d = "&nbsp ";
+              if (data[i].kd_akun[4] + data[i].kd_akun[5] == b && b != '00') {
+                e = "&nbsp ";
+                if(data[i].kd_akun[7] + data[i].kd_akun[8] == c && c != '00'){
+                  f = "&nbsp ";
+                }
+                else{
+                  c = data[i].kd_akun[7] + data[i].kd_akun[8];
+                  f = "";
+                }
+              }
+              else{
+                b = data[i].kd_akun[4] + data[i].kd_akun[5];
+                e = "";
+              }
+            } else {
+              a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
+              d = "";
+            }
+            if(b == '00')
+              data[i].kd_akun = a;
+            else if(c == '00')
+              data[i].kd_akun = a+"."+b;
+            else if(g == '00')
+              data[i].kd_akun = a+"."+b+"."+c;
+            
+            var saldo = toRupiah(data[i].saldo)
             html += '<tr>' +
-              '<td>' + no++ + '</td>' +
-              '<td>' + data[i].nama_4 + '</td>' +
-              '<td>' + +'</td>' +
-              '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].id_1 + '">Detail</a>' + ' ' +
-              '</td>' +
-              '</tr>';
+                  '<td>' + no + '</td>' +
+                  '<td><b>' + d + e + f + data[i].kd_akun + "</b> " + data[i].nama_akun + '</td>' +
+                  '<td style="text-align:right;">' + saldo + '</td>' +
+                  '<td style="text-align:center;">' +
+                  '<a href="javascript:;" class="btn btn-info btn-xs item_edit" data="' + data[i].kd_akun + '"><i class="fa  fa-list-ul"></i></a>' + ' ' +
+                  '</td>' +
+                  '</tr>';
           }
           $('#show_data2').html(html);
           $('#tb_pasiva').DataTable({

@@ -248,6 +248,14 @@ $url = base_url() . 'jurnal/';
     tampil_data();
     var kondisi;
 
+    //to Rupiah
+    function toRupiah(nominal){
+      var	reverse = nominal.toString().split('').reverse().join(''),
+      ribuan 	= reverse.match(/\d{1,3}/g);
+      ribuan	= ribuan.join('.').split('').reverse().join('');
+      return ribuan
+    }
+
     //fungsi tampil data
     function tampil_data() {
       $.ajax({
@@ -261,13 +269,15 @@ $url = base_url() . 'jurnal/';
           var i;
           var no = 1;
           for (i = 0; i < data.length; i++) {
+            var debit = toRupiah(data[i].debit);
+            var kredit = toRupiah(data[i].kredit);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl + '</td>' +
               '<td>' + data[i].kd_akun + '</td>' +
               '<td>' + data[i].keterangan + '</td>' +
-              '<td>' + data[i].debit + '</td>' +
-              '<td>' + data[i].kredit + '</td>' +
+              '<td style="text-align:right;">' + debit + '</td>' +
+              '<td style="text-align:right;">' + kredit + '</td>' +
               '</tr>';
           }
           $('#show_data').html(html);
