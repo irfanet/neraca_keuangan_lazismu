@@ -1,6 +1,5 @@
-<?php 
-$uniqid =  date('h')*3600;
-$title = 'DM-'.date('dmy').$uniqid;
+<?php
+$title = 'Donasi Masuk';
 $url = base_url() . 'donasiMasuk/';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -229,8 +228,12 @@ $url = base_url() . 'donasiMasuk/';
       </div>
       <form id="form_jurnal">
         <div class="modal-body">
-          <input type="hidden" id="jml_data" >
-          <input type="text" id="kd_transaksi" >
+          <input type="hidden" id="jml_data">
+          <input type="hidden" id="kd_transaksi">
+          <div class="callout callout-primary">
+            <!-- <h4 id="info_jurnal_judul"></h4> -->
+            <p id="info_jurnal"></p>
+          </div>
           <table id="detail_table" class="table table-bordered">
             <thead>
               <tr>
@@ -242,13 +245,13 @@ $url = base_url() . 'donasiMasuk/';
                 <th>Kredit</th>
               </tr>
             </thead>
-            <tbody id="show_detail"> 
+            <tbody id="show_detail">
             </tbody>
           </table>
         </div>
       </form>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
         <button type="submit" class="btn btn-primary" id="btn_posting">Posting</button>
       </div>
     </div>
@@ -355,20 +358,26 @@ $url = base_url() . 'donasiMasuk/';
           $('#example2').dataTable().fnDestroy();
           var html = '';
           var i;
+          var btn;
           var no = 1;
           for (i = 0; i < data.length; i++) {
+            if (data[i].status == "1") {
+              btn = "disabled";
+            } else {
+              btn = "";
+            }
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl_donasi + '</td>' +
               '<td>' + data[i].kd_muzaki + '</td>' +
-              '<td>' + data[i].keterangan + '</td>' +
+              '<td>' + data[i].ket + '</td>' +
               '<td>' + data[i].jenis_donasi + '</td>' +
               '<td>' + data[i].jenis_dana + '</td>' +
               '<td>' + data[i].jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
               '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-search "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_donasi + '"><i class="fa fa-trash "></i></a>' +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -402,8 +411,10 @@ $url = base_url() . 'donasiMasuk/';
           var html = '';
           var i;
           var kd_transaksi;
+          var status;
           var no = 1;
           for (i = 0; i < data.length; i++) {
+            status = data[i].status;
             kd_transaksi = data[i].kd_transaksi
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
@@ -420,11 +431,18 @@ $url = base_url() . 'donasiMasuk/';
             'lengthChange': true,
             'searching': false,
             'ordering': true,
-            'info': true,
+            'info': false,
             'autoWidth': true
           });
           $('#kd_transaksi').val(kd_transaksi);
           $('#jml_data').val(data.length);
+          if (status == "1") {
+            $('#btn_posting').attr("disabled", true);
+            $('#info_jurnal').html("<i class='fa fa-check'></i> <b>Jurnal sudah diposting !</b>");
+          } else {
+            $('#btn_posting').attr("disabled", false);
+            $('#info_jurnal').html("<i class='fa fa-warning'></i> <b>Jurnal belum diposting !</b> Pastikan data sudah benar sebelum memposting !");
+          }
         }
       });
     });
@@ -433,44 +451,44 @@ $url = base_url() . 'donasiMasuk/';
     $('#btn_posting').on('click', function() {
       // var myform = new FormData($('#form_add')[0]);
       // if (kondisi == "tambah") {
-        $.ajax({
-          async: true,
-          type: "POST",
-          url: "<?= $url ?>postJurnal",
-          dataType: "JSON",
-          data: {
-            kd_transaksi: $('#kd_transaksi').val(),
-            jml_data: $('#jml_data').val()
-          },
-          success: function(data) {
-            if (data.success == true) {
-              $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
-                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
-              $('.form-group').removeClass('has-error')
-                .removeClass('has-success');
-              $('.text-danger').remove();
-              $('.alert-success').delay(500).show(1000, function() {
-                $(this).delay(2000).slideUp(500, function() {
-                  $(this).remove();
-                });
-              })
-              $('#form_jurnal')[0].reset();
-              $('#modal_detail').modal('hide');
-              tampil_data();
-            } else {
-              $.each(data.messages, function(key, value) {
-                var element = $('#' + key);
-                element.closest('div.form-group')
-                  .removeClass('has-error')
-                  .addClass(value.length > 0 ? 'has-error' : 'has-success')
-                  .find('.text-danger')
-                  .remove();
-                element.after(value);
+      $.ajax({
+        async: true,
+        type: "POST",
+        url: "<?= $url ?>postJurnal",
+        dataType: "JSON",
+        data: {
+          kd_transaksi: $('#kd_transaksi').val(),
+          jml_data: $('#jml_data').val()
+        },
+        success: function(data) {
+          if (data.success == true) {
+            $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
+              ' <b>Berhasil ! </b>Data telah disimpan ! ' + '</div>');
+            $('.form-group').removeClass('has-error')
+              .removeClass('has-success');
+            $('.text-danger').remove();
+            $('.alert-success').delay(500).show(1000, function() {
+              $(this).delay(2000).slideUp(500, function() {
+                $(this).remove();
               });
-            }
+            })
+            $('#form_jurnal')[0].reset();
+            $('#modal_detail').modal('hide');
+            tampil_data();
+          } else {
+            $.each(data.messages, function(key, value) {
+              var element = $('#' + key);
+              element.closest('div.form-group')
+                .removeClass('has-error')
+                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                .find('.text-danger')
+                .remove();
+              element.after(value);
+            });
           }
-        });
-        return false;
+        }
+      });
+      return false;
       // }
     });
 
@@ -538,7 +556,7 @@ $url = base_url() . 'donasiMasuk/';
           success: function(data) {
             if (data.success == true) {
               $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
-                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
+                ' <b>Berhasil ! </b>Data telah disimpan ! ' + '</div>');
               $('.form-group').removeClass('has-error')
                 .removeClass('has-success');
               $('.text-danger').remove();

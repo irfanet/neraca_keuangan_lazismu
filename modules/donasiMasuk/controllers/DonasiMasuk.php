@@ -111,6 +111,24 @@ class DonasiMasuk extends MY_Controller{
 		echo json_encode($data);
 	}
 
+	function getIdJurnal($kd_transaksi){
+		$i = 0;
+		$jurnal = $this->db->get_where("jurnal", array('kd_transaksi' => $kd_transaksi))->result_array();
+		foreach($jurnal as $j){
+			$id_jurnal[$i] = $j['id'];
+			$i++;
+		}
+		return $id_jurnal;
+	}
+	function test(){
+		$id = $this->getIdJurnal("DM-14");
+		for($i = 0; $i<3; $i++){
+            $id_jurnal[$i] = $id[$i];
+		}
+		print_r($id_jurnal);
+		print_r($id);
+	}
+
 
 }
 
