@@ -12,25 +12,25 @@
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'jurnal' ? 'active': '' ?>">
         <a href="#" data-target="jurnal">
-          <i class="fa fa-book"></i>
+          <i class="fa   fa-list-ol"></i>
           <span>Jurnal</span>
         </a>
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'donasiMasuk' ? 'active': '' ?>">
         <a href="#" data-target="donasiMasuk">
-          <i class="fa fa-book"></i>
+          <i class="fa fa-calculator"></i>
           <span>Donasi Masuk</span>
         </a>
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'mustahikKhusus' ? 'active': '' ?>">
         <a href="#" data-target="mustahikKhusus">
-          <i class="fa fa-book"></i>
+          <i class="fa fa-child"></i>
           <span>Mustahik Khusus</span>
         </a>
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'muzaki' ? 'active': '' ?>">
         <a href="#" data-target="muzaki">
-          <i class="fa fa-book"></i>
+          <i class="fa  fa-smile-o"></i>
           <span>Muzaki</span>
         </a>
       </li>

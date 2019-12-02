@@ -383,7 +383,7 @@ $url = base_url() . 'donasiMasuk/';
               '<td>' + data[i].jenis_dana + '</td>' +
               '<td style="text-align:right;">' + jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-search "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-list-ol "></i></a>' + " " +
               '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
               '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
