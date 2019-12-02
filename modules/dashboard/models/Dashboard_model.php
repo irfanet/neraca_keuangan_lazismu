@@ -19,7 +19,7 @@ class Dashboard_model extends CI_Model
 	}
 	function getDetailByKode($kode)
 	{
-		$hasil = $this->db->get_where("jurnal", array('kd_akun' => $kode))->result();
+		$hasil = $this->db->get_where("jurnal", array('kd_akun' => $kode, 'status' => 1))->result();
 		return $hasil;
 	}
 

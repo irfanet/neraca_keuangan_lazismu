@@ -40,14 +40,14 @@
         </a>
       </li>
       <li class="treeview  <?php echo $this->uri->segment(1) == 'setting' ? 'active': '' ?>">
-        <a href="#">
+        <a href="#" data-target="tree">
           <i class="fa fa-cog"></i><span> Setting</span>
           <span class="pull-right-container">
             <i class="fa fa-angle-left pull-right"></i>
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#" data-target="setting"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
+          <li><a href="#" data-target="setting/viewSegmen1"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
           <li><a href="#" data-target="setting/viewSegmen2"><i class="fa fa-circle-o"></i> Kode Segmen 2</a></li>
           <li><a href="#" data-target="setting/viewSegmen3"><i class="fa fa-circle-o"></i> Kode Segmen 3</a></li>
           <li><a href="#" data-target="setting/viewSegmen4"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
@@ -67,8 +67,10 @@
     $('#section ul li a').on('click', function(){
       var $this = $(this),
       target = $this.data('target');
-      $('#isi').load('<?= base_url()?>'+target);
-      return false;
+      if(target != "tree"){
+        $('#isi').load('<?= base_url()?>'+target);
+        return false;
+      }
     });
   });
 </script>
