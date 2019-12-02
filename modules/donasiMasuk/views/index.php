@@ -348,12 +348,16 @@ $url = base_url() . 'donasiMasuk/';
     }
 
     //to Rupiah
-    function toRupiah(nominal){
-      var	reverse = nominal.toString().split('').reverse().join(''),
-      ribuan 	= reverse.match(/\d{1,3}/g);
-      ribuan	= ribuan.join('.').split('').reverse().join('');
+    function toRupiah(nominal, rp = 0) {
+      var reverse = nominal.toString().split('').reverse().join(''),
+      ribuan = reverse.match(/\d{1,3}/g);
+      if(rp == 1)
+        ribuan = 'Rp. ' + ribuan.join('.').split('').reverse().join('');
+      else
+        ribuan = ribuan.join('.').split('').reverse().join('');
       return ribuan
     }
+
     //fungsi tampil data
     function tampil_data() {
       $.ajax({

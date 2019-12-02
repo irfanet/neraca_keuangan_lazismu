@@ -21,6 +21,9 @@ $url = base_url() . 'dashboard/';
         <div class="box">
           <div class="box-header with-border">
             <h3 class="box-title">Aktiva</h3>
+            <div class="pull-right">
+              <h3 class="box-title" id="total_aktiva"></h3>
+            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -46,6 +49,9 @@ $url = base_url() . 'dashboard/';
         <div class="box">
           <div class="box-header with-border">
             <h3 class="box-title">Pasiva</h3>
+            <div class="pull-right">
+              <h3 class="box-title" id="total_pasiva"></h3>
+            </div>
           </div>
           <!-- /.box-header -->
           <div class="box-body">
@@ -221,6 +227,8 @@ $url = base_url() . 'dashboard/';
           $('#tb_aktiva').dataTable().fnDestroy();
           var html = '';
           var kode_akun;
+          var saldo;
+          var total_aktiva = 0;
           var i;
           var no = 1;
           var a, b, c, g;
@@ -229,6 +237,8 @@ $url = base_url() . 'dashboard/';
             f = '';
           for (i = 0; i < data.length; i++, no++) {
             kode_akun = data[i].kd_akun;
+            saldo = toRupiah(data[i].saldo)
+            total_aktiva += parseFloat(data[i].saldo);
             if (i == 0) {
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
@@ -259,8 +269,6 @@ $url = base_url() . 'dashboard/';
               data[i].kd_akun = a + "." + b;
             else if (g == '00')
               data[i].kd_akun = a + "." + b + "." + c;
-
-            var saldo = toRupiah(data[i].saldo)
             html += '<tr>' +
               '<td>' + no + '</td>' +
               '<td><b>' + d + e + f + data[i].kd_akun + "</b> " + data[i].nama_akun + '</td>' +
@@ -270,6 +278,7 @@ $url = base_url() . 'dashboard/';
               '</td>' +
               '</tr>';
           }
+          $('#total_aktiva').html(toRupiah(total_aktiva,1));
           $('#show_data1').html(html);
           $('#tb_aktiva').DataTable({
             'paging': true,
@@ -292,6 +301,9 @@ $url = base_url() . 'dashboard/';
         success: function(data) {
           $('#tb_pasiva').dataTable().fnDestroy();
           var html = '';
+          var kode_akun;
+          var saldo;
+          var total_pasiva = 0;
           var i;
           var no = 1;
           var a, b, c, g;
@@ -300,6 +312,8 @@ $url = base_url() . 'dashboard/';
             f = '';
           for (i = 0; i < data.length; i++, no++) {
             kode_akun = data[i].kd_akun;
+            saldo = toRupiah(data[i].saldo)
+            total_pasiva += parseFloat(data[i].saldo);
             if (i == 0) {
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
@@ -330,8 +344,6 @@ $url = base_url() . 'dashboard/';
               data[i].kd_akun = a + "." + b;
             else if (g == '00')
               data[i].kd_akun = a + "." + b + "." + c;
-
-            var saldo = toRupiah(data[i].saldo)
             html += '<tr>' +
               '<td>' + no + '</td>' +
               '<td><b>' + d + e + f + data[i].kd_akun + "</b> " + data[i].nama_akun + '</td>' +
@@ -341,6 +353,7 @@ $url = base_url() . 'dashboard/';
               '</td>' +
               '</tr>';
           }
+          $('#total_pasiva').html(toRupiah(total_pasiva,1));
           $('#show_data2').html(html);
           $('#tb_pasiva').DataTable({
             'paging': true,
@@ -354,10 +367,13 @@ $url = base_url() . 'dashboard/';
       });
     }
 
-    function toRupiah(nominal) {
+    function toRupiah(nominal, rp = 0) {
       var reverse = nominal.toString().split('').reverse().join(''),
-        ribuan = reverse.match(/\d{1,3}/g);
-      ribuan = ribuan.join('.').split('').reverse().join('');
+      ribuan = reverse.match(/\d{1,3}/g);
+      if(rp == 1)
+        ribuan = 'Rp. ' + ribuan.join('.').split('').reverse().join('');
+      else
+        ribuan = ribuan.join('.').split('').reverse().join('');
       return ribuan
     }
 
