@@ -16,7 +16,7 @@ class Admin extends MY_Controller
 
 	function index()
 	{
-		$this->load->view('index');
+		$this->load->template('index');
 	}
 
 	function get_data()
