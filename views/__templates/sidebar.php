@@ -46,11 +46,21 @@
           <span>Muzaki</span>
         </a>
       </li>
-      <li class="<?php echo $this->uri->segment(1) == 'admin' ? 'active' : '' ?>">
-        <a href="#" data-target="admin">
-          <i class="fa fa-user"></i> <span>Admin</span>
+
+
+      <li class="treeview  <?php echo $this->uri->segment(1) == 'user' ? 'active' : '' ?>">
+        <a href="#" data-target="tree">
+          <i class="fa fa-user"></i><span> User</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
         </a>
+        <ul class="treeview-menu">
+          <li><a href="#" data-target="user/admin"><i class="fa fa-circle-o"></i> Admin</a></li>
+          <li><a href="#" data-target="user"><i class="fa fa-circle-o"></i> User</a></li>
+        </ul>
       </li>
+
       <li class="treeview  <?php echo $this->uri->segment(1) == 'setting' ? 'active' : '' ?>">
         <a href="#" data-target="tree">
           <i class="fa fa-cog"></i><span> Setting</span>

@@ -31,16 +31,28 @@ class Auth extends MY_Controller{
 		$email = $this->input->post('email');
 		$password = $this->input->post('password');
 
-		$user = $this->db->get_where('admin', ['email' => $email])->row_array();
+		$admin = $this->db->get_where('admin', ['email' => $email])->row_array();
+		$user = $this->db->get_where('user', ['email' => $email])->row_array();
 		
-		if($user){
-			if($user['is_active']==1){
-				if(password_verify($password, $user['password'])){
+		if($admin || $user){
+			if($admin['is_active']==1 || $user['is_active']==1){
+				if(password_verify($password, $admin['password'])){
+					$data= [
+						'id_admin' => $admin['id_user'],
+						'email' => $admin['email'],
+						'username' => $admin['username'],
+						'level' => $admin['level'],
+						'status' => 'admin'
+					]; 
+					$this->session->set_userdata($data);
+                    redirect('dashboard/index_awal');	
+				}else if(password_verify($password, $user['password'])){
 					$data= [
 						'id_user' => $user['id_user'],
 						'email' => $user['email'],
 						'username' => $user['username'],
-						'level' => $user['level']
+						'level' => $user['sekolah'],
+						'status' => 'user'
 					];
 					$this->session->set_userdata($data);
                     redirect('dashboard/index_awal');	

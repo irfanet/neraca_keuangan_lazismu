@@ -1,6 +1,6 @@
 <?php 
-  $title = "Admin"; 
-  $url = base_url() . 'admin/';
+  $title = "User"; 
+  $url = base_url() . 'user/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -57,7 +57,7 @@
                   <th>No</th>
                   <th>Email</th>
                   <th>Nama</th>
-                  <th>Level</th>
+                  <th>Sekolah</th>
                   <th>Status</th>
                   <th width="15%">Aksi</th>
                 </tr>
@@ -133,13 +133,10 @@
           <br>
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="level">Level <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sekolah">Sekolah <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select class="form-control" name="level" id="level">
-                  <option value="1">Super Admin</option>
-                  <option value="2">Admin</option>
-                </select>
+                <input type="text" id="sekolah" name="sekolah" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -198,9 +195,7 @@
   $(document).ready(function() {
     tampil_data();
     var kondisi;
-
-
-
+    
     //fungsi tampil data
     function tampil_data() {
       $.ajax({
@@ -218,7 +213,7 @@
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].email + '</td>' +
               '<td>' + data[i].username + '</td>' +
-              '<td>' + data[i].level + '</td>' +
+              '<td>' + data[i].sekolah + '</td>' +
               '<td>' + data[i].is_active + '</td>' +
               '<td style="text-align:center;">' +
               '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_user + '"><i class="fa fa-pencil "></i></a>' + ' ' +
@@ -264,14 +259,14 @@
           id: id
         },
         success: function(data) {
-          $.each(data, function(id_user, email, username, level, is_active) {
+          $.each(data, function(id_user, email, username, sekolah, is_active) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
             $('#id_user').val(data.id_user);
             $('#email').val(data.email).attr('readonly', true);
             $('#username').val(data.username).attr('readonly', false);
-            $('#level').val(data.level);
+            $('#sekolah').val(data.sekolah);
             $('#is_active').val(data.is_active);
             $('#modal_add').on('shown.bs.modal', function() {
               $('#username').focus()
@@ -301,7 +296,7 @@
             username: $('#username').val(),
             password1: $('#password1').val(),
             password2: $('#password2').val(),
-            level: $('#level').val()
+            sekolah: $('#sekolah').val()
           },
           success: function(data) {
             if (data.success == true) {
@@ -342,7 +337,7 @@
           data: {
             id_user: $('#id_user').val(),
             username: $('#username').val(),
-            level: $('#level').val(),
+            sekolah: $('#sekolah').val(),
             is_active: $('#is_active').val()
           },
           success: function(data) {

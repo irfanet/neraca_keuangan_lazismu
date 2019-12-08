@@ -8,7 +8,7 @@ class B2 extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('b2_model');
-		if($this->session->userdata('id_user') != TRUE){
+		if($this->session->userdata('id_admin') != TRUE){
             redirect('auth');
         }
     }

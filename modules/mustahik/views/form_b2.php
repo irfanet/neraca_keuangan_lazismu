@@ -103,6 +103,8 @@ $url = base_url() . 'mustahik/b2/';
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
+          
+        <!-- Data survey -->
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">*</span>
@@ -110,6 +112,15 @@ $url = base_url() . 'mustahik/b2/';
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select type="text" class="form-control select2" style="width: 100%;" id="no_registrasi" name="no_registrasi" required>
                 </select>
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="petugas_survey">Petugas Survey <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="petugas_survey" name="petugas_survey" value="<?= $this->session->userdata('username'); ?>" readonly class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -323,6 +334,8 @@ $url = base_url() . 'mustahik/b2/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="barang_elektronik_yg_dimiliki">Barang Elektronik yg Dimiliki <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
+                <select type="text" class="form-control select2 tag" style="width: 100%;" id="barang_elektronik_yg_dimiliki" name="barang_elektronik_yg_dimiliki" multiple required>
+                </select>
               </div>
             </div>
           </div>
@@ -415,10 +428,11 @@ $url = base_url() . 'mustahik/b2/';
           <!-- Bantuan dari Lembaga lain -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_pengeluaran_bulanan">Status Bantuan dari Lembaga Lain <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_bantuan_dari_lembaga_lain">Status Bantuan dari Lembaga Lain <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-
+                <select type="text" class="form-control select2 tag" style="width: 100%;" id="status_bantuan_dari_lembaga_lain" name="status_bantuan_dari_lembaga_lain" multiple required>
+                </select>
               </div>
             </div>
           </div>
@@ -426,10 +440,10 @@ $url = base_url() . 'mustahik/b2/';
           <!-- Catatan tambahan -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_pengeluaran_bulanan">Catatan Tambahan <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="catatan_tambahan">Catatan Tambahan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-
+                <input type="text" id="catatan_tambahan" name="catatan_tambahan" class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -476,7 +490,11 @@ $url = base_url() . 'mustahik/b2/';
 <script type="text/javascript">
   $(document).ready(function() {
     // tampil_data();
-    $('.select2').select2({
+    $('.select2').select2();
+    $('#barang_elektronik_yg_dimiliki').select2({
+      tags: true
+    });
+    $('#status_bantuan_dari_lembaga_lain').select2({
       tags: true
     });
     var kondisi;
