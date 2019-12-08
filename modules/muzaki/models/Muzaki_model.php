@@ -26,6 +26,7 @@ class Muzaki_model extends CI_Model
 			'agama' => $this->input->post('agama'),
 			'email' => $this->input->post('email'),
 			'no_ktp' => $this->input->post('no_ktp'),
+			'npwp' => $this->input->post('npwp'),
 			'keterangan' => $this->input->post('keterangan'),
 			'foto' => $this->_uploadImage()
 		);
@@ -54,6 +55,7 @@ class Muzaki_model extends CI_Model
 			'agama' => $this->input->post('agama'),
 			'email' => $this->input->post('email'),
 			'no_ktp' => $this->input->post('no_ktp'),
+			'npwp' => $this->input->post('npwp'),
 			'keterangan' => $this->input->post('keterangan'),
 			'foto' => $foto
 		);

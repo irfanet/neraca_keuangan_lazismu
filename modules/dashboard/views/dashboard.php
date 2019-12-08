@@ -239,12 +239,12 @@ $url = base_url() . 'dashboard/';
             kode_akun = data[i].kd_akun;
             saldo = toRupiah(data[i].saldo)
             total_aktiva += parseFloat(data[i].saldo);
-            if (i == 0) {
+            // if (i == 0) {
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
               c = data[i].kd_akun[7] + data[i].kd_akun[8];
               g = data[i].kd_akun[10] + data[i].kd_akun[11];
-            }
+            // }
             if (data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2] == a && a != '00' && i != 0) {
               d = "&nbsp ";
               if (data[i].kd_akun[4] + data[i].kd_akun[5] == b && b != '00') {
@@ -314,12 +314,12 @@ $url = base_url() . 'dashboard/';
             kode_akun = data[i].kd_akun;
             saldo = toRupiah(data[i].saldo)
             total_pasiva += parseFloat(data[i].saldo);
-            if (i == 0) {
+            // if (i == 0) {
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
               c = data[i].kd_akun[7] + data[i].kd_akun[8];
               g = data[i].kd_akun[10] + data[i].kd_akun[11];
-            }
+            // }
             if (data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2] == a && a != '00' && i != 0) {
               d = "&nbsp ";
               if (data[i].kd_akun[4] + data[i].kd_akun[5] == b && b != '00') {

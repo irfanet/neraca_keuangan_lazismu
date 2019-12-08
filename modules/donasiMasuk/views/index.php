@@ -111,7 +111,7 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_donasi">Tanggal Donasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="tgl_donasi" name="tgl_donasi" required class="form-control col-md-7 col-xs-12" value="<?= date('Y/m/d') ?>">
+                <input type="date" id="tgl_donasi" name="tgl_donasi" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -153,7 +153,7 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Metode Pembayaran <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" checked /> CASH<br>
+                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" /> CASH<br>
                 <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod" /> BANK<br />
               </div>
             </div>

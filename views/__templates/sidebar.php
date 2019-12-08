@@ -12,7 +12,7 @@
       </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'jurnal' ? 'active' : '' ?>">
         <a href="#" data-target="jurnal">
-          <i class="fa   fa-list-ol"></i>
+          <i class="fa fa-list-ol"></i>
           <span>Jurnal</span>
         </a>
       </li>
@@ -20,6 +20,18 @@
         <a href="#" data-target="donasiMasuk">
           <i class="fa fa-calculator"></i>
           <span>Donasi Masuk</span>
+        </a>
+      </li>
+      <li id="mustahik" class="treeview <?php echo $this->uri->segment(1) == 'mustahik' ? 'active' : '' ?>">
+        <a href="#" data-target="mustahik">
+          <i class="fa fa-child"></i>
+          <span>Mustahik</span>
+        </a>
+      </li>
+      <li id="b2" class="treeview <?php echo $this->uri->segment(1) == 'b2' ? 'active' : '' ?>">
+        <a href="#" data-target="mustahik/b2">
+          <i class="fa fa-child"></i>
+          <span>Survey Mustahik</span>
         </a>
       </li>
       <li id="mustahikKhusus" class="treeview <?php echo $this->uri->segment(1) == 'mustahikKhusus' ? 'active' : '' ?>">
@@ -68,13 +80,13 @@
     $('#section ul li a').on('click', function() {
       var $this = $(this),
       target = $this.data('target');
-      if (temp != target) {
-        $('#' + target).removeClass("active");
-      }
+      // if (temp != target) {
+      //   $('#' + target).removeClass("active");
+      // }
       if (target != "tree") {
         $('#isi').load('<?= base_url() ?>' + target);
-        $('#' + target).addClass("active");
-        temp = target;
+        // $('#' + target).addClass("active");
+        // temp = target;
         return false;
       }
     });

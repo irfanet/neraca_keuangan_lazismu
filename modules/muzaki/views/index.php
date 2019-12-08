@@ -192,6 +192,16 @@ $url = base_url() . 'muzaki/';
 
           <div class="row">
             <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="npwp">NPWP <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="npwp" name="npwp" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">Keterangan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
@@ -319,7 +329,7 @@ $url = base_url() . 'muzaki/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(kd_muzaki, nama_muzaki, alamat, no_hp, jenis_muzaki, agama, email, no_ktp, keterangan, foto) {
+          $.each(data, function(kd_muzaki, nama_muzaki, alamat, no_hp, jenis_muzaki, agama, email, no_ktp,npwp, keterangan, foto) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
@@ -333,6 +343,7 @@ $url = base_url() . 'muzaki/';
             $('#agama').val(data.agama);
             $('#email').val(data.email);
             $('#no_ktp').val(data.no_ktp);
+            $('#npwp').val(data.npwp);
             $('#keterangan').val(data.keterangan);
           });
         }

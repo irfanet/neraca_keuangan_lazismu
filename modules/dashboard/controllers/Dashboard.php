@@ -15,7 +15,7 @@ class Dashboard extends MY_Controller{
 
     function index()
     {
-        $this->load->view('dashboard');
+        $this->load->template('dashboard');
 	}
 	
 	function getDetailByKode()

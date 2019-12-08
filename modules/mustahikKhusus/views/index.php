@@ -141,7 +141,7 @@ $url = base_url() . 'mustahikKhusus/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_lahir">Tanggal Lahir <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="tgl_lahir" name="tgl_lahir" required class="form-control col-md-7 col-xs-12">
+                <input type="date" id="tgl_lahir" name="tgl_lahir" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -151,7 +151,7 @@ $url = base_url() . 'mustahikKhusus/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="foto">Foto <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="file" id="foto" name="foto" required>
+                <input type="file" id="foto" accept="image/*" name="foto" required>
               </div>
             </div>
           </div>
