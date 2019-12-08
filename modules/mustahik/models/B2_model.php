@@ -11,44 +11,60 @@ class B2_model extends CI_Model
 
 	function getData()
 	{
-		$hasil = $this->db->get("mustahik");
+		$this->db->select('*');    
+		$this->db->from('mustahik a');
+		$this->db->join("mustahik_b2 b", "a.no_registrasi = b.no_mustahik");
+		$hasil = $this->db->get();
 		return $hasil->result();
 	}
 	function setData()
 	{
 		$this->kd_data = uniqid();
 		$data = array(
-			'no_registrasi' => $this->input->post('no_registrasi'),
-			'no_kk' => $this->input->post('no_kk'),
-			'nik' => $this->input->post('nik'),
-			'nama' => $this->input->post('nama'),
-			'tempat_lahir' => $this->input->post('tempat_lahir'),
-			'tgl_lahir' => $this->input->post('tgl_lahir'),
-			'alamat' => $this->input->post('alamat'),
-			'dusun' => $this->input->post('dusun'),
-			'desa' => $this->input->post('desa'),
-			'kecamatan' => $this->input->post('kecamatan'),
-			'kota' => $this->input->post('kota'),
-			'propinsi' => $this->input->post('propinsi'),
-			'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-			'agama' => $this->input->post('agama'),
-			'status_marital' => $this->input->post('status_marital'),
-			'status_pendidikan' => $this->input->post('status_pendidikan'),
-			'pekerjaan' => $this->input->post('pekerjaan'),
-			'penghasilan' => $this->input->post('penghasilan'),
-			'no_telp' => $this->input->post('no_telp'),
-			'jumlah_keluarga' => $this->input->post('jumlah_keluarga'),
-			'detail_pengajuan' => $this->input->post('detail_pengajuan'),
-			'persyaratan' => $this->input->post('persyaratan'),
-			'status_acc_pengurus' => 0,
-			'status_acc_direktur' => 0
+			'no_mustahik' => $this->input->post('no_registrasi'),
+			'tgl' => $this->input->post('tgl'),
+			'petugas_survey' => $this->input->post('petugas_survey'),
+			'jumlah_tanggungan_keluarga' => $this->input->post('jumlah_tanggungan_keluarga'),
+			'jumlah_anak_yg_masih_sekolah' => $this->input->post('jumlah_anak_yg_masih_sekolah'),
+			'jumlah_anak_yg_putus_sekolah' => $this->input->post('jumlah_anak_yg_putus_sekolah'),
+			'jumlah_pengeluaran_bulanan' => $this->input->post('jumlah_pengeluaran_bulanan'),
+			'obat_rutin_anggota_keluarga_yg_sakit' => $this->input->post('obat_rutin_anggota_keluarga_yg_sakit'),
+			'biaya_pendidikan_yg_ditanggung' => $this->input->post('biaya_pendidikan_yg_ditanggung'),
+			'riwayat_hutang_berjalan' => $this->input->post('riwayat_hutang_berjalan'),
+			'keperluan_hutang' => $this->input->post('keperluan_hutang'),
+			'pekerjaan_kepala_keluarga' => $this->input->post('pekerjaan_kepala_keluarga'),
+			'merokok' => $this->input->post('merokok'),
+			'pekerjaan_suami_istri' => $this->input->post('pekerjaan_suami_istri'),
+			'usia_mustahik' => $this->input->post('usia_mustahik'),
+			'kondisi_kepala_keluarga' => $this->input->post('kondisi_kepala_keluarga'),
+			'kepemilikan_rumah' => $this->input->post('kepemilikan_rumah'),
+			'luas_rumah' => $this->input->post('luas_rumah'),
+			'dinding_rumah' => $this->input->post('dinding_rumah'),
+			'lantai' => $this->input->post('lantai'),
+			'atap' => $this->input->post('atap'),
+			'sumber_air_minum' => $this->input->post('sumber_air_minum'),
+			'mck' => $this->input->post('mck'),
+			'penerangan' => $this->input->post('penerangan'),
+			'daya_terpasang' => $this->input->post('daya_terpasang'),
+			'kelayakan_tidur' => $this->input->post('kelayakan_tidur'),
+			'barang_elektronik_yg_dimiliki' => implode(',',$this->input->post('barang_elektronik_yg_dimiliki')),
+			'jumlah_makan_perhari' => $this->input->post('jumlah_makan_perhari'),
+			'ayam' => $this->input->post('ayam'),
+			'daging' => $this->input->post('daging'),
+			'susu' => $this->input->post('susu'),
+			'belanja_harian' => $this->input->post('belanja_harian'),
+			'aset_tidak_bergerak' => $this->input->post('aset_tidak_bergerak'),
+			'sawah_pekarangan' => $this->input->post('sawah_pekarangan'),
+			'aset_bergerak' => $this->input->post('aset_bergerak'),
+			'status_bantuan_dari_lembaga_lain' => $this->input->post('status_bantuan_dari_lembaga_lain'),
+			'catatan_tambahan' => $this->input->post('catatan_tambahan'),
 		);
-		$hasil = $this->db->insert("mustahik", $data);
+		$hasil = $this->db->insert("mustahik_b2", $data);
 		return $hasil;
 	}
 	function getDataByKode($kode)
 	{
-		$hasil = $this->db->get_where("mustahik", array('no_registrasi' => $kode))->row();
+		$hasil = $this->db->get_where("mustahik_b2", array('id_survey' => $kode))->row();
 		return $hasil;
 	}
 
@@ -56,46 +72,60 @@ class B2_model extends CI_Model
 	{
 		$no_registrasi = $this->input->post('no_registrasi');     
 		$data = array(
-			'no_registrasi' => $this->input->post('no_registrasi'),
-			'no_kk' => $this->input->post('no_kk'),
-			'nik' => $this->input->post('nik'),
-			'nama' => $this->input->post('nama'),
-			'tempat_lahir' => $this->input->post('tempat_lahir'),
-			'tgl_lahir' => $this->input->post('tgl_lahir'),
-			'alamat' => $this->input->post('alamat'),
-			'dusun' => $this->input->post('dusun'),
-			'desa' => $this->input->post('desa'),
-			'kecamatan' => $this->input->post('kecamatan'),
-			'kota' => $this->input->post('kota'),
-			'propinsi' => $this->input->post('propinsi'),
-			'jenis_kelamin' => $this->input->post('jenis_kelamin'),
-			'agama' => $this->input->post('agama'),
-			'status_marital' => $this->input->post('status_marital'),
-			'status_pendidikan' => $this->input->post('status_pendidikan'),
-			'pekerjaan' => $this->input->post('pekerjaan'),
-			'penghasilan' => $this->input->post('penghasilan'),
-			'no_telp' => $this->input->post('no_telp'),
-			'jumlah_keluarga' => $this->input->post('jumlah_keluarga'),
-			'detail_pengajuan' => $this->input->post('detail_pengajuan'),
-			'persyaratan' => $this->input->post('persyaratan'),
-			'status_acc_pengurus' => 0,
-			'status_acc_direktur' => 0
+			'no_mustahik' => $this->input->post('no_registrasi'),
+			'tgl' => $this->input->post('tgl'),
+			'petugas_survey' => $this->input->post('petugas_survey'),
+			'jumlah_tanggungan_keluarga' => $this->input->post('jumlah_tanggungan_keluarga'),
+			'jumlah_anak_yg_masih_sekolah' => $this->input->post('jumlah_anak_yg_masih_sekolah'),
+			'jumlah_anak_yg_putus_sekolah' => $this->input->post('jumlah_anak_yg_putus_sekolah'),
+			'jumlah_pengeluaran_bulanan' => $this->input->post('jumlah_pengeluaran_bulanan'),
+			'obat_rutin_anggota_keluarga_yg_sakit' => $this->input->post('obat_rutin_anggota_keluarga_yg_sakit'),
+			'biaya_pendidikan_yg_ditanggung' => $this->input->post('biaya_pendidikan_yg_ditanggung'),
+			'riwayat_hutang_berjalan' => $this->input->post('riwayat_hutang_berjalan'),
+			'keperluan_hutang' => $this->input->post('keperluan_hutang'),
+			'pekerjaan_kepala_keluarga' => $this->input->post('pekerjaan_kepala_keluarga'),
+			'merokok' => $this->input->post('merokok'),
+			'pekerjaan_suami_istri' => $this->input->post('pekerjaan_suami_istri'),
+			'usia_mustahik' => $this->input->post('usia_mustahik'),
+			'kondisi_kepala_keluarga' => $this->input->post('kondisi_kepala_keluarga'),
+			'kepemilikan_rumah' => $this->input->post('kepemilikan_rumah'),
+			'luas_rumah' => $this->input->post('luas_rumah'),
+			'dinding_rumah' => $this->input->post('dinding_rumah'),
+			'lantai' => $this->input->post('lantai'),
+			'atap' => $this->input->post('atap'),
+			'sumber_air_minum' => $this->input->post('sumber_air_minum'),
+			'mck' => $this->input->post('mck'),
+			'penerangan' => $this->input->post('penerangan'),
+			'daya_terpasang' => $this->input->post('daya_terpasang'),
+			'kelayakan_tidur' => $this->input->post('kelayakan_tidur'),
+			'barang_elektronik_yg_dimiliki' => $this->input->post('barang_elektronik_yg_dimiliki'),
+			'jumlah_makan_perhari' => $this->input->post('jumlah_makan_perhari'),
+			'ayam' => $this->input->post('ayam'),
+			'daging' => $this->input->post('daging'),
+			'susu' => $this->input->post('susu'),
+			'belanja_harian' => $this->input->post('belanja_harian'),
+			'aset_tidak_bergerak' => $this->input->post('aset_tidak_bergerak'),
+			'sawah_pekarangan' => $this->input->post('sawah_pekarangan'),
+			'aset_bergerak' => $this->input->post('aset_bergerak'),
+			'status_bantuan_dari_lembaga_lain' => $this->input->post('status_bantuan_dari_lembaga_lain'),
+			'catatan_tambahan' => $this->input->post('catatan_tambahan'),
+
 		);
 		$this->db->where('no_registrasi', $no_registrasi);
-		$hasil = $this->db->update("mustahik", $data);
+		$hasil = $this->db->update("mustahik_b2", $data);
 		return $hasil;
 	}
 
 	function deleteData($kode)
 	{
-		$this->db->where('no_registrasi', $kode);
-		$hasil = $this->db->delete("mustahik");
+		$this->db->where('id_survey', $kode);
+		$hasil = $this->db->delete("mustahik_b2");
 		return $hasil;
 	}
 
 	private function _uploadImage()
     {
-        $config['upload_path']          = './assets/uploads/mustahik/';
+        $config['upload_path']          = './assets/uploads/mustahik_b2/';
         $config['allowed_types']        = 'gif|jpg|png';
         $config['file_name']            = $this->kd_data;
         $config['overwrite']			= true;
@@ -116,7 +146,7 @@ class B2_model extends CI_Model
 		$data = $this->getDataByKode($kode);
         if ($data->foto != "default.jpg") {
             $filename = explode(".", $data->foto)[0];
-            return array_map('unlink', glob(FCPATH."assets/uploads/mustahik/$filename.*"));
+            return array_map('unlink', glob(FCPATH."assets/uploads/mustahik_b2/$filename.*"));
         }
     }
 }

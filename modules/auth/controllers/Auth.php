@@ -51,7 +51,7 @@ class Auth extends MY_Controller{
 						'id_user' => $user['id_user'],
 						'email' => $user['email'],
 						'username' => $user['username'],
-						'level' => $user['sekolah'],
+						'sekolah' => $user['sekolah'],
 						'status' => 'user'
 					];
 					$this->session->set_userdata($data);

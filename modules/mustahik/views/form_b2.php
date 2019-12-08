@@ -68,10 +68,9 @@ $url = base_url() . 'mustahik/b2/';
                 <tr>
                   <th width="10px">No</th>
                   <th>no_registrasi</th>
-                  <th>no_kk</th>
-                  <th>Tempat Lahir</th>
-                  <th>Tanggal Lahir</th>
-                  <th>Foto</th>
+                  <th>nama</th>
+                  <th>alamat</th>
+                  <th>skor</th>
                   <th width="15px">Aksi</th>
                 </tr>
               </thead>
@@ -107,7 +106,7 @@ $url = base_url() . 'mustahik/b2/';
         <!-- Data survey -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select type="text" class="form-control select2" style="width: 100%;" id="no_registrasi" name="no_registrasi" required>
@@ -117,10 +116,20 @@ $url = base_url() . 'mustahik/b2/';
           </div>
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="petugas_survey">Petugas Survey <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl">Tanggal <span class="required">:</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="date" id="tgl" name="tgl" class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="petugas_survey">Petugas Survey <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="petugas_survey" name="petugas_survey" value="<?= $this->session->userdata('username'); ?>" readonly class="form-control col-md-7 col-xs-12">
+                <!-- <input type="hidden" id="petugas_survey" name="petugas_survey" value="<?= $this->session->userdata('id_user'); ?>"> -->
               </div>
             </div>
           </div>
@@ -135,7 +144,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_tanggungan_keluarga">Jumlah Tanggungan Keluarga <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_tanggungan_keluarga">Jumlah Tanggungan Keluarga <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="jumlah_tanggungan_keluarga">
                 </div>
@@ -143,7 +152,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_anak_yg_masih_sekolah">Jumlah Anak yg Masih Sekolah <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_anak_yg_masih_sekolah">Jumlah Anak yg Masih Sekolah <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="jumlah_anak_yg_masih_sekolah">
                 </div>
@@ -151,7 +160,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_anak_yg_putus_sekolah">Jumlah Anak yg Putus Sekolah <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_anak_yg_putus_sekolah">Jumlah Anak yg Putus Sekolah <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="jumlah_anak_yg_putus_sekolah">
                 </div>
@@ -159,7 +168,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_pengeluaran_bulanan">Jumlah Pengeluaran Bulanan <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_pengeluaran_bulanan">Jumlah Pengeluaran Bulanan <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="jumlah_pengeluaran_bulanan">
                 </div>
@@ -167,7 +176,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="obat_rutin_anggota_keluarga_yg_sakit">Obat Rutin Anggota Keluarga yg Sakit <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="obat_rutin_anggota_keluarga_yg_sakit">Obat Rutin Anggota Keluarga yg Sakit <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="obat_rutin_anggota_keluarga_yg_sakit">
                 </div>
@@ -175,7 +184,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="biaya_pendidikan_yg_ditanggung">Biaya Pendidikan yg Ditanggung <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="biaya_pendidikan_yg_ditanggung">Biaya Pendidikan yg Ditanggung <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="biaya_pendidikan_yg_ditanggung">
                 </div>
@@ -183,7 +192,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="riwayat_hutang_berjalan">Riwayat Hutang Berjalan <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="riwayat_hutang_berjalan">Riwayat Hutang Berjalan <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="riwayat_hutang_berjalan">
                 </div>
@@ -191,7 +200,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keperluan_hutang">Keperluan Hutang <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keperluan_hutang">Keperluan Hutang <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="keperluan_hutang">
                 </div>
@@ -208,7 +217,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan_kepala_keluarga">Pekerjaan Kepala Keluarga <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan_kepala_keluarga">Pekerjaan Kepala Keluarga <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="pekerjaan_kepala_keluarga">
                 </div>
@@ -216,7 +225,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="merokok">Merokok <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="merokok">Merokok <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="merokok">
                 </div>
@@ -224,7 +233,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan_suami_istri">Pekerjaan Suami / Istri <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan_suami_istri">Pekerjaan Suami / Istri <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="pekerjaan_suami_istri">
                 </div>
@@ -232,7 +241,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="usia_mustahik">Usia Mustahik <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="usia_mustahik">Usia Mustahik <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="usia_mustahik">
                 </div>
@@ -240,7 +249,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kondisi_kepala_keluarga">Kondisi Kepala Keluarga <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kondisi_kepala_keluarga">Kondisi Kepala Keluarga <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="kondisi_kepala_keluarga">
                 </div>
@@ -248,7 +257,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kepemilikan_rumah">Kepemilikan Rumah <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kepemilikan_rumah">Kepemilikan Rumah <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="kepemilikan_rumah">
                 </div>
@@ -256,7 +265,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="luas_rumah">Luas Rumah <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="luas_rumah">Luas Rumah <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="luas_rumah">
                 </div>
@@ -264,7 +273,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="dinding_rumah">Dinding Lantai <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="dinding_rumah">Dinding Lantai <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="dinding_rumah">
                 </div>
@@ -272,7 +281,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="lantai">Lantai <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="lantai">Lantai <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="lantai">
                 </div>
@@ -280,7 +289,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="atap">Atap <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="atap">Atap <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="atap">
                 </div>
@@ -288,7 +297,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sumber_air_minum">Sumber Air Minum <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sumber_air_minum">Sumber Air Minum <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="sumber_air_minum">
                 </div>
@@ -296,7 +305,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="mck">MCK <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="mck">MCK <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="mck">
                 </div>
@@ -304,7 +313,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="penerangan">Penerangan <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="penerangan">Penerangan <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="penerangan">
                 </div>
@@ -312,7 +321,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="daya_terpasang">Daya Terpasang <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="daya_terpasang">Daya Terpasang <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="daya_terpasang">
                 </div>
@@ -320,7 +329,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kelayakan_tidur">Kelayakan Tidur <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kelayakan_tidur">Kelayakan Tidur <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="kelayakan_tidur">
                 </div>
@@ -331,10 +340,10 @@ $url = base_url() . 'mustahik/b2/';
           <!-- Barang Elektronik -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="barang_elektronik_yg_dimiliki">Barang Elektronik yg Dimiliki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="barang_elektronik_yg_dimiliki">Barang Elektronik yg Dimiliki <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2 tag" style="width: 100%;" id="barang_elektronik_yg_dimiliki" name="barang_elektronik_yg_dimiliki" multiple required>
+                <select type="text" class="form-control select2 tag" style="width: 100%;" id="barang_elektronik_yg_dimiliki" name="barang_elektronik_yg_dimiliki[]" multiple required>
                 </select>
               </div>
             </div>
@@ -350,7 +359,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_makan_perhari">Jumlah Makan / hari <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_makan_perhari">Jumlah Makan / hari <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="jumlah_makan_perhari">
                 </div>
@@ -358,7 +367,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ayam">Ayam <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ayam">Ayam <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="ayam">
                 </div>
@@ -366,7 +375,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="daging">Daging <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="daging">Daging <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="daging">
                 </div>
@@ -374,7 +383,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="susu">Susu <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="susu">Susu <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="susu">
                 </div>
@@ -382,7 +391,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="belanja_harian">Belanja Harian <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="belanja_harian">Belanja Harian <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="belanja_harian">
                 </div>
@@ -400,7 +409,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_tidak_bergerak">Aset Tidak Bergerak <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_tidak_bergerak">Aset Tidak Bergerak <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="aset_tidak_bergerak">
                 </div>
@@ -408,7 +417,7 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sawah_pekarangan">Sawah Pekarangan <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sawah_pekarangan">Sawah Pekarangan <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="sawah_pekarangan">
                 </div>
@@ -417,7 +426,7 @@ $url = base_url() . 'mustahik/b2/';
 
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_bergerak">Aset Bergerak <span class="required">*</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_bergerak">Aset Bergerak <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="aset_bergerak">
                 </div>
@@ -428,10 +437,10 @@ $url = base_url() . 'mustahik/b2/';
           <!-- Bantuan dari Lembaga lain -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_bantuan_dari_lembaga_lain">Status Bantuan dari Lembaga Lain <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_bantuan_dari_lembaga_lain">Status Bantuan dari Lembaga Lain <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2 tag" style="width: 100%;" id="status_bantuan_dari_lembaga_lain" name="status_bantuan_dari_lembaga_lain" multiple required>
+                <select type="text" class="form-control select2 tag" style="width: 100%;" id="status_bantuan_dari_lembaga_lain" name="status_bantuan_dari_lembaga_lain[]" multiple required>
                 </select>
               </div>
             </div>
@@ -440,7 +449,7 @@ $url = base_url() . 'mustahik/b2/';
           <!-- Catatan tambahan -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="catatan_tambahan">Catatan Tambahan <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="catatan_tambahan">Catatan Tambahan <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="catatan_tambahan" name="catatan_tambahan" class="form-control col-md-7 col-xs-12">
@@ -489,7 +498,7 @@ $url = base_url() . 'mustahik/b2/';
 
 <script type="text/javascript">
   $(document).ready(function() {
-    // tampil_data();
+    tampil_data();
     $('.select2').select2();
     $('#barang_elektronik_yg_dimiliki').select2({
       tags: true
@@ -517,7 +526,7 @@ $url = base_url() . 'mustahik/b2/';
           for (i = 0; i < data.length; i++) {
             html += "<div class='row'>" +
                 "<div class='form-group'>" +
-                "<label class='control-label col-md-4 col-sm-4 col-xs-4' for='penghasilan'> " + data[i].keterangan +" <span class='required'>*</span></label>"+
+                "<label class='control-label col-md-4 col-sm-4 col-xs-4' for='penghasilan'> " + data[i].keterangan +" <span class='required'>:</span></label>"+
                 "<div class='col-md-6 col-sm-6 col-xs-6 id='"+ data[i].keterangan +"'>"+    
                 "</div>"+
             "</div>";
@@ -550,7 +559,7 @@ $url = base_url() . 'mustahik/b2/';
           var i;
           var html ='';
           for (i = 0; i < data.length; i++) {
-            html += "<input type='radio' id='' class='minimal' value='"+ data[i].keterangan + "' name=' "+field+"' /> "+ data[i].keterangan + "&nbsp; ";
+            html += "<input type='radio' id='" + data[i].kd_data + "' class='minimal' value='"+ data[i].kd_data + "' name=' "+field+"' /> "+ data[i].keterangan + "&nbsp; ";
           }
           $('#'+field).append(html);
         }
@@ -592,13 +601,12 @@ $url = base_url() . 'mustahik/b2/';
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].no_registrasi + '</td>' +
-              '<td>' + data[i].no_kk + '</td>' +
-              '<td>' + data[i].tempat_lahir + '</td>' +
+              '<td>' + data[i].nama + '</td>' +
+              '<td>' + data[i].alamat + '</td>' +
               '<td>' + data[i].tgl_lahir + '</td>' +
-              '<td><img src="<?= base_url() ?>assets/uploads/mustahik_khusus/' + data[i].foto + '" width="64"></td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].no_registrasi + '"><i class="fa fa-pencil "></i></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].no_registrasi + '"><i class="fa fa-trash "></i></a>' +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_survey + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_survey + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }

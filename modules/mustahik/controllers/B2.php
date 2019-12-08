@@ -25,7 +25,7 @@ class B2 extends MY_Controller{
 
 	function setData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('nama','Nama', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('no_registrasi','No Registrasi', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
