@@ -102,21 +102,4 @@ class MustahikKhusus_model extends CI_Model
         }
 	}
 	
-	public function resizeImage($filename){
-		$source_path = $_SERVER['DOCUMENT_ROOT'] . 'assets/uploads/mustahik_khusus/'.$filename;
-		$target_path = $_SERVER['DOCUMENT_ROOT'] . 'assets/uploads/mustahik_khusus/';
-		$config_manip = array(
-			'image_library' => 'gd2',
-			'source_image' => $source_path,
-			'new_image' => $target_path,
-			'maintain_ratio' => TRUE,
-			'quality' => 50,
-		);
-
-		$this->load->library('image_lib', $config_manip);
-		if(!$this->image_lib->resize()){
-			echo $this->image_lib->display_errors();
-		}
-		$this->image_lib->clear();
-	}
 }
