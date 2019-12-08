@@ -8,7 +8,7 @@ class B2 extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('b2_model');
-		if($this->session->userdata('id_user') == TRUE){
+		if($this->session->userdata('id_user') != TRUE){
             redirect('auth');
         }
     }
@@ -65,6 +65,14 @@ class B2 extends MY_Controller{
 		$kode=$this->input->post('kode');
 		$data=$this->b2_model->deleteData($kode);
 		echo json_encode($data);
+	}
+
+	function getMustahik(){
+		$this->db->from('mustahik');
+		$this->db->where('status_acc_pengurus',0);
+		$this->db->or_where('status_acc_direktur',0);
+		$hasil = $this->db->get();
+		echo json_encode($hasil->result());
 	}
 
 	function getField($id){

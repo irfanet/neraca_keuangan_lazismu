@@ -103,15 +103,13 @@ $url = base_url() . 'mustahik/b2/';
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-            <div id="form_b2">
-            </div>
-          <!-- <input type="hidden" id="kd_mustahik" name="kd_mustahik"> -->
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="no_registrasi" name="no_registrasi" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="no_registrasi" name="no_registrasi" required>
+                </select>
               </div>
             </div>
           </div>
@@ -477,22 +475,18 @@ $url = base_url() . 'mustahik/b2/';
 
 <script type="text/javascript">
   $(document).ready(function() {
-    tampil_data();
+    // tampil_data();
     $('.select2').select2({
       tags: true
     });
     var kondisi;
-
-    //icheck
-    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
-      checkboxClass: 'icheckbox_minimal-blue',
-      radioClass   : 'iradio_minimal-blue'
-    })
+    getMustahik();
+    //get radio
     for (i = 1; i <= 31; i++) {
         getRadio('tb_b2_3',i);
     }
 
-    //get 
+    //get gatot
     function getField(kategori) {
       $.ajax({
         type: 'ajax',
@@ -515,6 +509,7 @@ $url = base_url() . 'mustahik/b2/';
       });
     }
 
+    //get radio & keterangan
     function getRadio(name,id) {
     var field;
      $.ajax({
@@ -543,6 +538,25 @@ $url = base_url() . 'mustahik/b2/';
         }
       });
     }
+
+    //get mustahik
+    function getMustahik() {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= $url ?>getMustahik',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].no_registrasi + '">' + data[i].nama + ' - ' + data[i].alamat + '</option>';
+          }
+          $('#no_registrasi').html(html);
+        }
+      });
+    }
+
     
     //fungsi tampil data
     function tampil_data() {

@@ -8,7 +8,7 @@ class Mustahik extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('mustahik_model');
-		if($this->session->userdata('id_user') == TRUE){
+		if($this->session->userdata('id_user') != TRUE){
             redirect('auth');
         }
     }
