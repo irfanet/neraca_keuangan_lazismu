@@ -15,6 +15,11 @@ class Dashboard extends MY_Controller{
 
     function index()
     {
+        $this->load->view('dashboard');
+	}
+
+	function index_awal()
+    {
         $this->load->template('dashboard');
 	}
 	
