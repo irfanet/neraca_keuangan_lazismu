@@ -58,7 +58,7 @@ class DonasiMasuk_model extends CI_Model
 		return $hasil;
 	}
 	function setJurnal($kd_transaksi){
-		$this->akun_amil = 'A02.02.04.00';
+		$this->akun_amil = 'A02.02.05.00';
 		//zakat = potongan 12.5%
 		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
 			$dana_donasi = 0.875*$this->jumlah_dana;
@@ -216,7 +216,7 @@ class DonasiMasuk_model extends CI_Model
 	}
 	function updateJurnal($kd_transaksi){
 		$id = $this->getIdJurnal($this->kd_transaksi);
-		$this->akun_amil = 'A02.02.04.00';
+		$this->akun_amil = 'A02.02.05.00';
 		//zakat = potongan 12.5%
 		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
 			$dana_donasi = 0.875*$this->jumlah_dana;

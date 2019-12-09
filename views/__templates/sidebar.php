@@ -25,6 +25,12 @@
           <span>Donasi Masuk</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'biayaOperasional' ? 'active' : '' ?>">
+        <a href="#" data-target="biayaOperasional">
+          <i class="fa fa-calculator"></i>
+          <span>Biaya Operasional</span>
+        </a>
+      </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'mutasi' ? 'active' : '' ?>">
         <a href="#" data-target="mutasi">
           <i class="fa fa-calculator"></i>

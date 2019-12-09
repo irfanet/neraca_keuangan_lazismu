@@ -1,19 +1,20 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class Mutasi_model extends CI_Model
+class BiayaOperasional_model extends CI_Model
 {
 	public $kd_data;
-	public $tgl_mutasi;
-	public $dari_akun;
-	public $ke_akun;
-	public $nominal;
+	public $tgl_dana_keluar;
+	public $jenis_biaya;
+	public $keterangan;
+	public $jenis_donasi;
+	public $jenis_dana;
 	public $jumlah_dana;
 	public $akun_amil;
 	public $kd_transaksi;
 
 	public $nama_muzaki;
 	public $nama_akunA;
-	public $nama_akunB;
+	public $nama_akunP;
 	public $nama_akun_amil;
 	public $jenis_pembayaran;
 
@@ -24,50 +25,53 @@ class Mutasi_model extends CI_Model
 
 	function getData()
 	{
-		$hasil = $this->db->get('mutasi');
+		$hasil = $this->db->get('biaya_operasional');
 		return $hasil->result();
 	}
 	function setData()
 	{
 		// $this->kd_data = uniqid();
 
-		$this->tgl_mutasi = $this->input->post('tgl_mutasi');
-		$this->dari_akun = $this->input->post('dari_akun');
-		$this->ke_akun = $this->input->post('ke_akun');
-		$this->nominal = $this->input->post('nominal');
+		$this->tgl_dana_keluar = $this->input->post('tgl_dana_keluar');
+		$this->jenis_biaya = $this->input->post('jenis_biaya');
+		$this->keterangan = $this->input->post('keterangan');
+		$this->jenis_dana = $this->input->post('jenis_dana');
+		$this->jumlah_dana = $this->input->post('jumlah_dana');
 		$data = array(
-			// 'kd_mutasi' => $this->kd_data,
-			'tgl_mutasi' => $this->tgl_mutasi,
-			'dari_akun' => $this->dari_akun,
-			'ke_akun' => $this->ke_akun,
-			'nominal' => $this->nominal,
+			// 'kd_operasional' => $this->kd_data,
+			'tgl_dana_keluar' => $this->tgl_dana_keluar,
+			'jenis_biaya' => $this->jenis_biaya,
+			'keterangan' => $this->keterangan,
+			'jenis_dana' => $this->jenis_dana,
+			'jumlah_dana' => $this->jumlah_dana,
 		);
-		$hasil = $this->db->insert("mutasi", $data);
+		$hasil = $this->db->insert("biaya_operasional", $data);
 		$this->kd_data = $this->db->insert_id(); // get last auto increment
-		$this->kd_transaksi = 'M-'.$this->kd_data;
+		$this->kd_transaksi = 'BO-'.$this->kd_data;
 		$this->setJurnal($this->kd_transaksi);
 		return $hasil;
 	}
 	function setJurnal($kd_transaksi){
-		$this->getKetDetail($this->dari_akun,$this->ke_akun);
+		$this->akun_amil = 'A02.02.05.00';
+		$this->getKetDetail($this->jenis_dana,$this->akun_amil);
 		$data = array(
-			//aktiva
+			//pasiva
 			array(
-			   'tgl' => $this->tgl_mutasi ,
-			   'kd_akun' => $this->ke_akun ,
-			   'keterangan' => 'Pindah Buku '.$this->nama_akunA.' ke '.$this->nama_akunB,
-			   'debit' => $this->nominal,
+			   'tgl' => $this->tgl_dana_keluar ,
+			   'kd_akun' => $this->akun_amil ,
+			   'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' dari '.$this->nama_akun_amil,
+			   'debit' => $this->input->post('jumlah_dana'),
 			   'kredit' => 0,
 			   'status' => 0,
 			   'kd_transaksi' => $kd_transaksi
 			),
-			//pasiva
+			//aktiva
 			array(
-				'tgl' => $this->tgl_mutasi ,
-				'kd_akun' => $this->dari_akun ,
-				'keterangan' => 'Pindah Buku '.$this->nama_akunA.' ke '.$this->nama_akunB,
+				'tgl' => $this->tgl_dana_keluar ,
+				'kd_akun' => $this->jenis_dana ,
+				'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA,
 				'debit' => 0,
-				'kredit' => $this->nominal,
+				'kredit' =>  $this->input->post('jumlah_dana'),
 				'status' => 0,
 			   	'kd_transaksi' => $kd_transaksi
 			)
@@ -75,11 +79,17 @@ class Mutasi_model extends CI_Model
 		return $this->db->insert_batch('jurnal', $data); 
 	}
 
-	function getKetDetail($dari_akun,$ke_akun){
-		$aktiva = $this->db->get_where("akun", array('kd_akun' => $dari_akun))->row_array();
+	function getKetDetail($kd_akunA,$kd_akun_amil){
+		$aktiva = $this->db->get_where("akun", array('kd_akun' => $kd_akunA))->row_array();
 		$this->nama_akunA = $aktiva['nama_akun'];
-		$pasiva = $this->db->get_where("akun", array('kd_akun' => $ke_akun))->row_array();
-		$this->nama_akunB = $pasiva['nama_akun'];
+		$amil = $this->db->get_where("akun", array('kd_akun' => $kd_akun_amil))->row_array();
+		$this->nama_akun_amil = $amil['nama_akun'];
+		$bank = 'A01.01.02';
+		if(strpos($kd_akunA,$bank) !== false){
+			$this->jenis_pembayaran = 'Transfer';
+		}else{
+			$this->jenis_pembayaran = 'Cash';
+		}
 	}
 
 	function postJurnal(){
@@ -99,20 +109,16 @@ class Mutasi_model extends CI_Model
 		$jurnal = $this->db->get_where("jurnal", array('kd_transaksi' => $kode))->result_array();
 		foreach($jurnal as $j){
 			$kd_akun = $j['kd_akun'];
-			$debit = $j['debit'];
-			$kredit = $j['kredit'];
-			//check saldo akun
-			$s = $this->db->get_where("akun", array('kd_akun' => $kode))->row_array();
-			$saldo = $s['saldo'];
-			if ($debit != 0) {
-				$this->db->where('kd_akun', $kd_akun);
-				$this->db->set('saldo', 'saldo+' . $debit, FALSE);
-				$this->db->update('akun');
-			} else {
-				$this->db->where('kd_akun', $kd_akun);
-				$this->db->set('saldo', 'saldo-' . $kredit, FALSE);
-				$this->db->update('akun');
+			$aktiva = 'A01';
+			$pasiva = 'A02';
+			if(strpos($kd_akun,$pasiva) !== false){
+				$nominal = $j['debit'];
+			}else{
+				$nominal = $j['kredit'];
 			}
+			$this->db->where('kd_akun', $kd_akun);
+			$this->db->set('saldo', 'saldo-'.$nominal, FALSE);
+			$this->db->update('akun');
 		}
 	}
 	
@@ -121,19 +127,14 @@ class Mutasi_model extends CI_Model
 		$hasil = $this->db->query("SELECT * FROM muzaki")->result();
 		return $hasil;
 	}
-	function getCash()
+	function getKasAktiva()
 	{
 		$hasil = $this->db->query("SELECT * FROM akun WHERE kd_akun LIKE 'A01.01.01.%' AND NOT kd_akun='A01.01.01.00' ")->result();
 		return $hasil;
 	}
-	function getBank()
+	function getBankAktiva()
 	{
 		$hasil = $this->db->query("SELECT * FROM akun WHERE kd_akun LIKE 'A01.01.02.%' AND NOT kd_akun='A01.01.02.00' ")->result();
-		return $hasil;
-	}
-	function getAsetLancar()
-	{
-		$hasil = $this->db->query("SELECT * FROM akun WHERE kd_akun LIKE 'A01.01.%.00' AND NOT kd_akun='A01.01.00.00' AND NOT kd_akun='A01.01.01.00' AND NOT kd_akun='A01.01.02.00' ")->result();
 		return $hasil;
 	}
 	function getDanaPasiva()
@@ -143,30 +144,32 @@ class Mutasi_model extends CI_Model
 	}
 	function getDataByKode($kode)
 	{
-		$hasil = $this->db->get_where("mutasi", array('kd_mutasi' => $kode))->row();
+		$hasil = $this->db->get_where("biaya_operasional", array('kd_operasional' => $kode))->row();
 		return $hasil;
 	}
 	function getDetailByKode($kode)
 	{
-		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'M-'.$kode))->result();
+		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'BO-'.$kode))->result();
 		return $hasil;
 	}
 	function updateData()
 	{
-		$this->kd_data = $this->input->post('kd_mutasi');
-		$this->tgl_mutasi = $this->input->post('tgl_mutasi');
-		$this->dari_akun = $this->input->post('dari_akun');
-		$this->ke_akun = $this->input->post('ke_akun');
-		$this->nominal = $this->input->post('nominal');   
+		$this->kd_data = $this->input->post('kd_operasional');
+		$this->tgl_dana_keluar = $this->input->post('tgl_dana_keluar');
+		$this->jenis_biaya = $this->input->post('jenis_biaya');
+		$this->keterangan = $this->input->post('keterangan');
+		$this->jenis_dana = $this->input->post('jenis_dana');
+		$this->jumlah_dana = $this->input->post('jumlah_dana');   
 		$data = array(
-			'tgl_mutasi' => $this->tgl_mutasi,
-			'dari_akun' => $this->dari_akun,
-			'ke_akun' => $this->ke_akun,
-			'nominal' => $this->nominal,
+			'tgl_dana_keluar' => $this->tgl_dana_keluar,
+			'jenis_biaya' => $this->jenis_biaya,
+			'keterangan' => $this->keterangan,
+			'jenis_dana' => $this->jenis_dana,
+			'jumlah_dana' => $this->jumlah_dana,
 		);
-		$this->db->where('kd_mutasi', $this->kd_data);
-		$hasil = $this->db->update("mutasi", $data);
-		$this->kd_transaksi = 'M-'.$this->kd_data;
+		$this->db->where('kd_operasional', $this->kd_data);
+		$hasil = $this->db->update("biaya_operasional", $data);
+		$this->kd_transaksi = 'BO-'.$this->kd_data;
 		$this->updateJurnal($this->kd_transaksi);
 		return $hasil;
 	}
@@ -181,27 +184,28 @@ class Mutasi_model extends CI_Model
 	}
 	function updateJurnal($kd_transaksi){
 		$id = $this->getIdJurnal($this->kd_transaksi);
-		$this->getKetDetail($this->dari_akun,$this->ke_akun);
+		$this->akun_amil = 'A02.02.05.00';
+		$this->getKetDetail($this->jenis_dana,$this->akun_amil);
 		$data = array(
-			//aktiva
+			//pasiva
 			array(
 				'id' => $id[0],
-			   'tgl' => $this->tgl_mutasi ,
-			   'kd_akun' => $this->ke_akun ,
-			   'keterangan' => 'Pindah buku dari '.$this->nama_akunA.' ke Akun '.$this->nama_akunB,
-			   'debit' => $this->nominal,
+			   'tgl' => $this->tgl_dana_keluar ,
+			   'kd_akun' => $this->akun_amil ,
+			   'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' dari '.$this->nama_akun_amil,
+			   'debit' => $this->input->post('jumlah_dana'),
 			   'kredit' => 0,
 			   'status' => 0,
 			   'kd_transaksi' => $kd_transaksi
 			),
-			//pasiva
+			//aktiva
 			array(
 				'id' => $id[1],
-				'tgl' => $this->tgl_mutasi ,
-				'kd_akun' => $this->dari_akun ,
-				'keterangan' => 'Pindah buku dari '.$this->nama_akunA.' ke Akun '.$this->nama_akunB,
+				'tgl' => $this->tgl_dana_keluar ,
+				'kd_akun' => $this->jenis_dana ,
+				'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA,
 				'debit' => 0,
-				'kredit' => $this->nominal,
+				'kredit' =>  $this->input->post('jumlah_dana'),
 				'status' => 0,
 			   	'kd_transaksi' => $kd_transaksi
 			)
@@ -211,9 +215,9 @@ class Mutasi_model extends CI_Model
 	function deleteData($kode)
 	{
 		// $this->_deleteImage($kode);
-		$this->db->where('kd_mutasi', $kode);
-		$hasil = $this->db->delete("mutasi");
-		$this->deleteJurnal('M-'.$kode);
+		$this->db->where('kd_operasional', $kode);
+		$hasil = $this->db->delete("biaya_operasional");
+		$this->deleteJurnal('BO-'.$kode);
 		return $hasil;
 	}
 	function deleteJurnal($kd_transaksi){
