@@ -112,9 +112,7 @@ class B2 extends MY_Controller{
 	function getNilai($id){
 		$n = $this->db->get_where("tb_b2_3", array('kd_data' => $id))->row_array();
 		$nilai = $n['nilai'];
-		echo json_encode($nilai);
 		return $nilai;
-
 	}
 
 

@@ -37,6 +37,12 @@
           <span>Mutasi</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'penyaluran' ? 'active' : '' ?>">
+        <a href="#" data-target="penyaluran">
+          <i class="fa fa-calculator"></i>
+          <span>Penyaluran</span>
+        </a>
+      </li>
       <li id="mustahik" class="treeview <?php echo $this->uri->segment(1) == 'mustahik' ? 'active' : '' ?>">
         <a href="#" data-target="mustahik">
           <i class="fa fa-child"></i>

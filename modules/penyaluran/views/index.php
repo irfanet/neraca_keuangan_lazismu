@@ -1,6 +1,6 @@
 <?php
-$title = 'Mutasi';
-$url = base_url() . 'mutasi/';
+$title = 'Penyaluran';
+$url = base_url() . 'penyaluran/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -41,7 +41,7 @@ $url = base_url() . 'mutasi/';
         <!-- /.box-header -->
         <div class="box box-solid box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">ke_akun</h3>
+            <h3 class="box-title">Keterangan</h3>
           </div>
           <div class="box-body no-padding">
             <ul class="nav nav-pills nav-stacked">
@@ -68,9 +68,11 @@ $url = base_url() . 'mutasi/';
                 <tr>
                   <th width="10px">No</th>
                   <th>Tanggal</th>
-                  <th>Dari Akun</th>
-                  <th>Ke Akun</th>
-                  <th>Nominal</th>
+                  <th>Kode Muzaki</th>
+                  <th>Keterangan</th>
+                  <th>Jenis Donasi</th>
+                  <th>Jenis Dana</th>
+                  <th>Jumlah Dana</th>
                   <th width="80px">Aksi</th>
                 </tr>
               </thead>
@@ -102,24 +104,24 @@ $url = base_url() . 'mutasi/';
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-          <input type="hidden" id="kd_mutasi" name="kd_mutasi">
+          <input type="hidden" id="kd_penyaluran" name="kd_penyaluran">
           <!-- <input type="hidden" name="old_image" id="old_image"> -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_mutasi">Tanggal Mutasi <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_penyaluran">Tanggal Penyaluran <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="date" id="tgl_mutasi" name="tgl_mutasi" required class="form-control col-md-7 col-xs-12">
+                <input type="date" id="tgl_penyaluran" name="tgl_penyaluran" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="dari_akun">Dari Akun <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_mustahik">Muzaki <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" style="width: 100%;" id="dari_akun" name="dari_akun" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="kd_mustahik" name="kd_mustahik" required>
                 </select>
               </div>
             </div>
@@ -127,10 +129,18 @@ $url = base_url() . 'mutasi/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ke_akun">Ke Akun <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="asnaf">Asnaf <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-              <select type="text" class="form-control select2" style="width: 100%;" id="ke_akun" name="ke_akun" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="asnaf" name="asnaf" required>
+                  <option value="Ibnu Sabil">Ibnu Sabil</option>
+                  <option value="Muallaf">Muallaf</option>
+                  <option value="Miskin">Miskin</option>
+                  <option value="Fisabililah">Fisabililah</option>
+                  <option value="Janda">Janda</option>
+                  <option value="Ghorim">Ghorim</option>
+                  <option value="Dana Qord">Dana Qord</option>
+                  <option value="Tasharuf Amwal">Tasharuf Amwal</option>
                 </select>
               </div>
             </div>
@@ -138,10 +148,64 @@ $url = base_url() . 'mutasi/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nominal">Nominal <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="program">Program <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="nominal" name="nominal" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="program" name="program" required>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">Keterangan <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="keterangan" name="keterangan" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sumber_dana">Sumber Dana <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <select type="text" class="form-control select2" style="width: 100%;" id="sumber_dana" name="sumber_dana" required>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="paymentMethod">Metode Pembayaran <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" /> CASH<br>
+                <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod" /> BANK<br />
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_dana">Jenis Dana <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <select type="text" class="form-control select2" style="width: 100%;" id="jenis_dana" name="jenis_dana" required>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_dana">Jumlah Dana <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="jumlah_dana" name="jumlah_dana" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -234,67 +298,106 @@ $url = base_url() . 'mutasi/';
     paymentMethod = "getKasAktiva";
 
     $('.select2').select2();
+    $('#asnaf').select2({
+      tags: true,
+    });
     tampil_data();
-    getCash('dari_akun');
-    getBank('dari_akun');
-    getAsetLancar('dari_akun');
-    getCash('ke_akun');
-    getBank('ke_akun');
-    getAsetLancar('ke_akun');
+    getMustahik();
+    getIbnuSabil();
+    getProgram();
+    getAktiva();
+    getPasiva();
+
+    //icheck
+    // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+    //   checkboxClass: 'icheckbox_minimal-blue',
+    //   radioClass   : 'iradio_minimal-blue'
+    // })
+
+    //radio event
+    $('input[type=radio][name=paymentMethod]').on('change', function() {
+      switch ($(this).val()) {
+        case 'cash':
+          paymentMethod = "getKasAktiva";
+          getAktiva();
+          break;
+        case 'bank':
+          paymentMethod = "getBankAktiva";
+          getAktiva();
+          break;
+      }
+    });
 
     //get muzaki
-    function getCash(ke) {
+    function getMustahik() {
       $.ajax({
         type: 'ajax',
-        url: '<?= $url ?>getCash',
+        url: '<?= $url ?>getMustahik',
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<optgroup label="CASH">';
+          var html = '<option selected disabled>--- Pilih Satu ---</option> <optgroup label="Mustahik (Form B2) ">';
           var i;
           for (i = 0; i < data.length; i++) {
-            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+            html += '<option value="' + data[i].no_registrasi + '">' + data[i].nama + ' - ' + data[i].alamat + '</option>';
           }
           html += '</optgroup>';
-          $('#'+ke).html(html);
+          $('#kd_mustahik').html(html);
+        }
+      });
+    }
+
+    //get ibnu sabil
+    function getIbnuSabil() {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= $url ?>getIbnuSabil',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<optgroup label="Ibnu Sabil">';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_mustahik_khusus + '">' + data[i].nama + ' - ' + data[i].alamat + '</option>';
+          }
+          html += '</optgroup>';
+          $('#kd_mustahik').append(html);
         }
       });
     }
 
     //get aktiva
-    function getBank(ke) {
+    function getAktiva() {
       $.ajax({
         type: 'ajax',
-        url: "<?= $url ?>getBank",
+        url: "<?= $url ?>" + paymentMethod + "",
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<optgroup label="BANK">';
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
           }
-          html += '</optgroup>';
-          $('#'+ke).append(html);
+          $('#jenis_dana').html(html);
         }
       });
     }
 
-    //get Aset
-    function getAsetLancar(ke) {
+    //get program
+    function getProgram() {
       $.ajax({
         type: 'ajax',
-        url: '<?= $url ?>getAsetLancar',
+        url: "<?= $url ?>getProgram",
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<optgroup label="ASET LANCAR">';
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
-            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+            html += '<option value="' + data[i].kd_program + '">' + data[i].nama + ' - ' + data[i].tipe + '</option>';
           }
-          html += '</optgroup>';
-          $('#'+ke).append(html);
+          $('#program').html(html);
         }
       });
     }
@@ -312,7 +415,7 @@ $url = base_url() . 'mutasi/';
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
           }
-          $('#ke_akun').html(html);
+          $('#sumber_dana').html(html);
         }
       });
     }
@@ -347,17 +450,19 @@ $url = base_url() . 'mutasi/';
             } else {
               btn = "";
             }
-            var nominal = toRupiah(data[i].nominal);
+            var jumlah_dana = toRupiah(data[i].jumlah_dana);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].tgl_mutasi + '</td>' +
-              '<td>' + data[i].dari_akun + '</td>' +
-              '<td>' + data[i].ke_akun + '</td>' +
-              '<td>' + nominal + '</td>' +
+              '<td>' + data[i].tgl_penyaluran + '</td>' +
+              '<td>' + data[i].kd_mustahik + '</td>' +
+              '<td>' + data[i].keterangan + '</td>' +
+              '<td>' + data[i].sumber_dana + '</td>' +
+              '<td>' + data[i].jenis_dana + '</td>' +
+              '<td style="text-align:right;">' + jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_mutasi + '"><i class="fa  fa-list-ol "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_mutasi + '"><i class="fa fa-pencil "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_mutasi + '"><i class="fa fa-trash "></i></a>' +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_penyaluran + '"><i class="fa  fa-list-ol "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_penyaluran + '"><i class="fa fa-pencil "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_penyaluran + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -480,8 +585,8 @@ $url = base_url() . 'mutasi/';
       $('#form_add')[0].reset();
       $('[name="show_in_add"]').show();
       $('[name="show_in_edit"]').hide();
-      $('#tgl_mutasi').attr('readonly', false);
-      $('#dari_akun').attr('readonly', false);
+      $('#tgl_penyaluran').attr('readonly', false);
+      $('#kd_mustahik').attr('readonly', false);
     });
 
     //TOMBOL EDIT -> GET KODE & ATUR HIDE AND SHOW
@@ -497,16 +602,18 @@ $url = base_url() . 'mutasi/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(kd_mutasi, tgl_mutasi, dari_akun, ke_akun, nominal) {
+          $.each(data, function(kd_penyaluran, tgl_penyaluran, kd_mustahik, keterangan, sumber_dana, jenis_dana, jumlah_dana) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
             // $('#old_image').val(data.foto);
-            $('#kd_mutasi').val(data.kd_mutasi);
-            $('#tgl_mutasi').val(data.tgl_mutasi);
-            $('#dari_akun').val(data.dari_akun);
-            $('#ke_akun').val(data.ke_akun);
-            $('#nominal').val(data.nominal);
+            $('#kd_penyaluran').val(data.kd_penyaluran);
+            $('#tgl_penyaluran').val(data.tgl_penyaluran);
+            $('#kd_mustahik').val(data.kd_mustahik);
+            $('#keterangan').val(data.keterangan);
+            $('#sumber_dana').val(data.sumber_dana);
+            $('#jenis_dana').val(data.jenis_dana);
+            $('#jumlah_dana').val(data.jumlah_dana);
           });
         }
       });

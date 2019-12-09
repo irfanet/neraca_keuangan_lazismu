@@ -64,6 +64,11 @@ class B2_model extends CI_Model
 		$this->db->update('mustahik', array('status_survey' => 1));
 		return $hasil;
 	}
+	function getNilai($id){
+		$n = $this->db->get_where("tb_b2_3", array('kd_data' => $id))->row_array();
+		$nilai = $n['nilai'];
+		return $nilai;
+	}
 	function getDataByKode($kode)
 	{
 		$hasil = $this->db->get_where("mustahik_b2", array('id_survey' => $kode))->row();

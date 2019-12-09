@@ -16,7 +16,7 @@ class MustahikKhusus_model extends CI_Model
 	}
 	function setData()
 	{
-		$this->kd_data = uniqid();
+		$this->kd_data = 'IS-'.time();
 		$data = array(
 			'kd_mustahik_khusus' => $this->kd_data,
 			'nama' => $this->input->post('nama'),
@@ -87,8 +87,8 @@ class MustahikKhusus_model extends CI_Model
 			$gambar=$gbr['file_name'];			
             return $this->upload->data('file_name');
 		}else{
-			// return "default.jpg";
-			echo json_encode($this->upload->display_errors());
+			return "default.jpg";
+			// echo json_encode($this->upload->display_errors());
 		}
         // print_r($this->upload->display_errors());
     }
