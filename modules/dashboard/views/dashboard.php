@@ -243,8 +243,8 @@ $url = base_url() . 'dashboard/';
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
               c = data[i].kd_akun[7] + data[i].kd_akun[8];
-              g = data[i].kd_akun[10] + data[i].kd_akun[11];
             }
+            g = data[i].kd_akun[10] + data[i].kd_akun[11];
             if (data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2] == a && a != '00' && i != 0) {
               d = "&nbsp ";
               if (data[i].kd_akun[4] + data[i].kd_akun[5] == b && b != '00') {
@@ -278,7 +278,7 @@ $url = base_url() . 'dashboard/';
               '</td>' +
               '</tr>';
           }
-          $('#total_aktiva').html(toRupiah(total_aktiva,1));
+          $('#total_aktiva').html(toRupiah(total_aktiva, 1));
           $('#show_data1').html(html);
           $('#tb_aktiva').DataTable({
             'paging': true,
@@ -318,8 +318,8 @@ $url = base_url() . 'dashboard/';
               a = data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2];
               b = data[i].kd_akun[4] + data[i].kd_akun[5];
               c = data[i].kd_akun[7] + data[i].kd_akun[8];
-              g = data[i].kd_akun[10] + data[i].kd_akun[11];
             }
+            g = data[i].kd_akun[10] + data[i].kd_akun[11];
             if (data[i].kd_akun[0] + data[i].kd_akun[1] + data[i].kd_akun[2] == a && a != '00' && i != 0) {
               d = "&nbsp ";
               if (data[i].kd_akun[4] + data[i].kd_akun[5] == b && b != '00') {
@@ -344,6 +344,8 @@ $url = base_url() . 'dashboard/';
               data[i].kd_akun = a + "." + b;
             else if (g == '00')
               data[i].kd_akun = a + "." + b + "." + c;
+            else
+              data[i].kd_akun = a + "." + b + "." + c + "." + g;
             html += '<tr>' +
               '<td>' + no + '</td>' +
               '<td><b>' + d + e + f + data[i].kd_akun + "</b> " + data[i].nama_akun + '</td>' +
@@ -353,7 +355,7 @@ $url = base_url() . 'dashboard/';
               '</td>' +
               '</tr>';
           }
-          $('#total_pasiva').html(toRupiah(total_pasiva,1));
+          $('#total_pasiva').html(toRupiah(total_pasiva, 1));
           $('#show_data2').html(html);
           $('#tb_pasiva').DataTable({
             'paging': true,
@@ -369,8 +371,8 @@ $url = base_url() . 'dashboard/';
 
     function toRupiah(nominal, rp = 0) {
       var reverse = nominal.toString().split('').reverse().join(''),
-      ribuan = reverse.match(/\d{1,3}/g);
-      if(rp == 1)
+        ribuan = reverse.match(/\d{1,3}/g);
+      if (rp == 1)
         ribuan = 'Rp. ' + ribuan.join('.').split('').reverse().join('');
       else
         ribuan = ribuan.join('.').split('').reverse().join('');
