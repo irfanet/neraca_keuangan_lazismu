@@ -5,6 +5,9 @@
     <!-- sidebar menu: : style can be found in sidebar.less -->
     <ul class="sidebar-menu" data-widget="tree">
       <li class="header">MAIN NAVIGATION</li>
+      <?php
+        if ($this->session->userdata('status') == 'admin'){ 
+      ?>
       <li class="<?php echo $this->uri->segment(1) == 'dashboard' ? 'active' : '' ?>">
         <a href="#" data-target="dashboard">
           <i class="fa fa-balance-scale"></i> <span>Neraca</span>
@@ -22,6 +25,12 @@
           <span>Donasi Masuk</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'mutasi' ? 'active' : '' ?>">
+        <a href="#" data-target="mutasi">
+          <i class="fa fa-calculator"></i>
+          <span>Mutasi</span>
+        </a>
+      </li>
       <li id="mustahik" class="treeview <?php echo $this->uri->segment(1) == 'mustahik' ? 'active' : '' ?>">
         <a href="#" data-target="mustahik">
           <i class="fa fa-child"></i>
@@ -34,6 +43,7 @@
           <span>Survey Mustahik</span>
         </a>
       </li>
+
       <li id="mustahikKhusus" class="treeview <?php echo $this->uri->segment(1) == 'mustahikKhusus' ? 'active' : '' ?>">
         <a href="#" data-target="mustahikKhusus">
           <i class="fa fa-child"></i>
@@ -75,14 +85,38 @@
           <li><a href="#" data-target="setting/viewSegmen4"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
         </ul>
       </li>
+        <?php }
+        else{
+        ?>
+      <li id="mustahik" class="treeview <?php echo $this->uri->segment(1) == 'mustahik' ? 'active' : '' ?>">
+        <a href="#" data-target="mustahik">
+          <i class="fa fa-child"></i>
+          <span>Mustahik</span>
+        </a>
+      </li>
+      <li id="b2" class="treeview <?php echo $this->uri->segment(1) == 'b2' ? 'active' : '' ?>">
+        <a href="#" data-target="mustahik/b2">
+          <i class="fa fa-child"></i>
+          <span>Survey Mustahik</span>
+        </a>
+      </li>
+        <?php } ?>
     </ul>
   </section>
   <!-- /.sidebar -->
 </aside>
 
+<?php
+  if ($this->session->userdata('status') == 'admin'){ 
+?>
 <div id="isi">
   <?php $this->load->view('dashboard'); ?>
 </div>
+<?php } else {
+?>
+  <?php $this->load->view('mustahik'); ?>
+<?php }
+?>
 
 <script>
   $(document).ready(function() {

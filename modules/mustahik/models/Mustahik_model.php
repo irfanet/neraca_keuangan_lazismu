@@ -12,7 +12,13 @@ class Mustahik_model
 
 	function getData()
 	{
-		$hasil = $this->db->get("mustahik");
+		if($this->session->userdata('status')!='admin'){
+			$this->db->from('mustahik');
+			$this->db->where('sekolah',$this->session->userdata('sekolah'));
+			$hasil = $this->db->get();
+		}else{
+			$hasil = $this->db->get("mustahik");
+		}
 		return $hasil->result();
 	}
 	function setData()
@@ -42,7 +48,9 @@ class Mustahik_model
 			'detail_pengajuan' => $this->input->post('detail_pengajuan'),
 			'persyaratan' => $this->input->post('persyaratan'),
 			'status_acc_pengurus' => 0,
-			'status_acc_direktur' => 0
+			'status_acc_direktur' => 0,
+			'status_survey' => 0,
+			'sekolah' => $this->input->post('sekolah')
 		);
 		$hasil = $this->db->insert("mustahik", $data);
 		return $hasil;
@@ -80,7 +88,9 @@ class Mustahik_model
 			'detail_pengajuan' => $this->input->post('detail_pengajuan'),
 			'persyaratan' => $this->input->post('persyaratan'),
 			'status_acc_pengurus' => 0,
-			'status_acc_direktur' => 0
+			'status_acc_direktur' => 0,
+			'status_survey' => 0,
+			'sekolah' => $this->input->post('sekolah')
 		);
 		$this->db->where('no_registrasi', $no_registrasi);
 		$hasil = $this->db->update("mustahik", $data);

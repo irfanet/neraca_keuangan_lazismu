@@ -17,6 +17,11 @@ class B2 extends MY_Controller{
 		// $data['penghasilan'] = $this->getDataStatis('data_keluarga');
         $this->load->view('form_b2');
 	}
+	
+	function index_awal()
+    {
+        $this->load->template('form_b2');
+	}
 
     function getData(){
 		$data=$this->b2_model->getData();
@@ -69,8 +74,7 @@ class B2 extends MY_Controller{
 
 	function getMustahik(){
 		$this->db->from('mustahik');
-		$this->db->where('status_acc_pengurus',0);
-		$this->db->or_where('status_acc_direktur',0);
+		$this->db->where('status_survey',0);
 		$hasil = $this->db->get();
 		echo json_encode($hasil->result());
 	}
@@ -94,6 +98,23 @@ class B2 extends MY_Controller{
 		$this->db->where('kategori',$id);
 		$hasil = $this->db->get();
 		echo json_encode($hasil->result());
+	}
+
+	function getScore(){
+		$kode = $this->input->get('id');
+		$this->db->select('*');    
+		$this->db->from('mustahik_b2 a');
+		$this->db->join("tb_kd_3 b", "a.no_registrasi = b.no_mustahik");
+		$hasil = $this->db->get();
+		return $hasil->result();
+	}
+
+	function getNilai($id){
+		$n = $this->db->get_where("tb_b2_3", array('kd_data' => $id))->row_array();
+		$nilai = $n['nilai'];
+		echo json_encode($nilai);
+		return $nilai;
+
 	}
 
 

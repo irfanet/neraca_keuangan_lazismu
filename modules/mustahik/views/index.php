@@ -67,11 +67,12 @@ $url = base_url() . 'mustahik/';
               <thead>
                 <tr>
                   <th width="10px">No</th>
-                  <th>no_registrasi</th>
-                  <th>no_kk</th>
-                  <th>Tempat Lahir</th>
-                  <th>Tanggal Lahir</th>
-                  <th>Foto</th>
+                  <th>No Registrasi</th>
+                  <th>Nama</th>
+                  <th>Alamat</th>
+                  <th>Detail Pengajuan</th>
+                  <th>Pekerjaan</th>
+                  <th>Pendapatan</th>
                   <th width="15px">Aksi</th>
                 </tr>
               </thead>
@@ -274,27 +275,6 @@ $url = base_url() . 'mustahik/';
                   <?php } ?>
                 </select>
               </div>
-              <!-- <div class="col-md-2 col-sm-2 col-xs-2">
-                <input type="radio" id="" class="minimal" value="Tidak bekerja" name="status_pendidikan" /> Tidak Bekerja<br>
-                <input type="radio" id="SMP" class="minimal" value="SMP" name="status_pendidikan" /> PNS<br>
-                <input type="radio" id="SMA/SMK" class="minimal" value="SMA/SMK" name="status_pendidikan" /> Petani<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Wiraswasta<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Pelajar<br>
-              </div>
-              <div class="col-md-2 col-sm-2 col-xs-2">
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Karyawan BUMN<br>
-                <input type="radio" id="" class="minimal" value="Tidak bekerja" name="status_pendidikan" /> Peternak<br>
-                <input type="radio" id="SMP" class="minimal" value="SMP" name="status_pendidikan" /> Buruh<br>
-                <input type="radio" id="SMA/SMK" class="minimal" value="SMA/SMK" name="status_pendidikan" /> TNI / Polisi<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Nelayan<br>
-              </div>
-              <div class="col-md-2 col-sm-2 col-xs-2">
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Ibu Rumah Tangga<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Guru / Pelajar<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Karyawan Swasta<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> Lain-lain<br>
-              </div> -->
-
             </div>
           </div>
 
@@ -309,18 +289,6 @@ $url = base_url() . 'mustahik/';
                   <?php } ?>
                 </select>
               </div>
-              <!-- <div class="col-md-3 col-sm-3 col-xs-3">
-                <input type="radio" id="" class="minimal" value="Tidak bekerja" name="status_pendidikan" /> Tidak berpenghasilan<br>
-                <input type="radio" id="SMP" class="minimal" value="SMP" name="status_pendidikan" /> 0 s/d 500rb<br>
-                <input type="radio" id="SMA/SMK" class="minimal" value="SMA/SMK" name="status_pendidikan" /> 500rb s/d 1jt<br>
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> 1jt s/d 1,5jt<br>
-              </div>
-              <div class="col-md-3 col-sm-3 col-xs-3">
-                <input type="radio" id="Diploma/Sarjana" class="minimal" value="Diploma/Sarjana" name="status_pendidikan" /> 1,5jt s/d 2jt<br>
-                <input type="radio" id="" class="minimal" value="Tidak bekerja" name="status_pendidikan" /> 2jt s/d 2,5jt<br>
-                <input type="radio" id="SMP" class="minimal" value="SMP" name="status_pendidikan" /> 2,5jt s/d 3jt<br>
-                <input type="radio" id="SMA/SMK" class="minimal" value="SMA/SMK" name="status_pendidikan" /> 3jt lebih<br>
-              </div> -->
             </div>
           </div>
 
@@ -367,6 +335,26 @@ $url = base_url() . 'mustahik/';
               </div>
             </div>
           </div>
+
+          <?php
+            if($this->session->userdata('status')!='admin'){
+          ?>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sekolah">Sekolah <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="sekolah" value="<?= $this->session->userdata('sekolah') ?>" name="sekolah" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+          <?php
+            }else{
+          ?>
+            <input type="hidden" id="sekolah" name="sekolah">
+          <?php
+            }
+          ?>
 
 
         </div>
@@ -438,11 +426,13 @@ $url = base_url() . 'mustahik/';
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].no_registrasi + '</td>' +
               '<td>' + data[i].no_kk + '</td>' +
-              '<td>' + data[i].tempat_lahir + '</td>' +
-              '<td>' + data[i].tgl_lahir + '</td>' +
-              '<td><img src="<?= base_url() ?>assets/uploads/mustahik_khusus/' + data[i].foto + '" width="64"></td>' +
+              '<td>' + data[i].alamat + '</td>' +
+              '<td>' + data[i].detail_pengajuan + '</td>' +
+              '<td>' + data[i].pekerjaan + '</td>' +
+              '<td>' + data[i].penghasilan + '</td>' +
+              // '<td><img src="<?= base_url() ?>assets/uploads/mustahik_khusus/' + data[i].foto + '" width="64"></td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].no_registrasi + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              // '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].no_registrasi + '"><i class="fa fa-pencil "></i></a>' + ' ' +
               '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].no_registrasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';

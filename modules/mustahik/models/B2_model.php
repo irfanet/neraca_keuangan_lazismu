@@ -56,10 +56,12 @@ class B2_model extends CI_Model
 			'aset_tidak_bergerak' => $this->input->post('aset_tidak_bergerak'),
 			'sawah_pekarangan' => $this->input->post('sawah_pekarangan'),
 			'aset_bergerak' => $this->input->post('aset_bergerak'),
-			'status_bantuan_dari_lembaga_lain' => $this->input->post('status_bantuan_dari_lembaga_lain'),
+			'status_bantuan_dari_lembaga_lain' => implode(',',$this->input->post('status_bantuan_dari_lembaga_lain')),
 			'catatan_tambahan' => $this->input->post('catatan_tambahan'),
 		);
 		$hasil = $this->db->insert("mustahik_b2", $data);
+		$this->db->where('no_registrasi', $this->input->post('no_registrasi'));
+		$this->db->update('mustahik', array('status_survey' => 1));
 		return $hasil;
 	}
 	function getDataByKode($kode)

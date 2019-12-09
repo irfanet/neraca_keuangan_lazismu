@@ -1,5 +1,5 @@
 <?php
-$title = "Formulis Survey Calon Mustahik";
+$title = "Form Survey Calon Mustahik (B2)";
 $url = base_url() . 'mustahik/b2/';
 ?>
 <!-- Content Wrapper. Contains page content -->
@@ -67,11 +67,11 @@ $url = base_url() . 'mustahik/b2/';
               <thead>
                 <tr>
                   <th width="10px">No</th>
-                  <th>no_registrasi</th>
-                  <th>nama</th>
-                  <th>alamat</th>
-                  <th>skor</th>
-                  <th width="15px">Aksi</th>
+                  <th>No Registrasi</th>
+                  <th>Nama</th>
+                  <th>Alamat</th>
+                  <th>Detail Pengajuan</th>
+                  <!-- <th width="15px">Aksi</th> -->
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -603,11 +603,11 @@ $url = base_url() . 'mustahik/b2/';
               '<td>' + data[i].no_registrasi + '</td>' +
               '<td>' + data[i].nama + '</td>' +
               '<td>' + data[i].alamat + '</td>' +
-              '<td>' + data[i].tgl_lahir + '</td>' +
-              '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_survey + '"><i class="fa fa-pencil "></i></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_survey + '"><i class="fa fa-trash "></i></a>' +
-              '</td>' +
+              '<td>' + data[i].detail_pengajuan + '</td>' +
+              // '<td style="text-align:center;">' +
+              // '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_survey + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              // '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_survey + '"><i class="fa fa-trash "></i></a>' +
+              // '</td>' +
               '</tr>';
           }
           $('#show_data').html(html);

@@ -12,8 +12,11 @@ class Auth extends MY_Controller{
 
     function index()
     {
-        if($this->session->userdata('id_user') == TRUE){
+        if($this->session->userdata('status') == 'admin'){
 			redirect('dashboard/index_awal');
+		}
+		if($this->session->userdata('status') == 'user'){
+			redirect('mustahik/index_awal');
 		}
 		
 		$this->form_validation->set_rules('email','Email','valid_email|trim|required|strip_tags');
@@ -48,14 +51,14 @@ class Auth extends MY_Controller{
                     redirect('dashboard/index_awal');	
 				}else if(password_verify($password, $user['password'])){
 					$data= [
-						'id_user' => $user['id_user'],
+						'id_admin' => $user['id_user'],
 						'email' => $user['email'],
 						'username' => $user['username'],
 						'sekolah' => $user['sekolah'],
 						'status' => 'user'
 					];
 					$this->session->set_userdata($data);
-                    redirect('dashboard/index_awal');	
+                    redirect('mustahik/index_awal');	
 				}else{
 					$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">
 					Login failed! Wrong password.</div>');
@@ -74,10 +77,13 @@ class Auth extends MY_Controller{
     }
     public function logout(){
 
+		$this->session->unset_userdata('id_admin');
 		$this->session->unset_userdata('id_user');
 		$this->session->unset_userdata('email');
         $this->session->unset_userdata('username');
-        $this->session->unset_userdata('level');
+		$this->session->unset_userdata('level');
+		$this->session->unset_userdata('status');
+		$this->session->unset_userdata('sekolah');
 
 		$this->session->set_flashdata('message','<div class="alert alert-success" role="alert">
 			  You have been logout</div>');
