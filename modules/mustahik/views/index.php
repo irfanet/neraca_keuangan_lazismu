@@ -1,6 +1,6 @@
 <?php
-$title = "Muzaki";
-$url = base_url() . 'muzaki/';
+$title = "Mustahik";
+$url = base_url() . 'mustahik/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -67,15 +67,12 @@ $url = base_url() . 'muzaki/';
               <thead>
                 <tr>
                   <th width="10px">No</th>
+                  <th>No Registrasi</th>
                   <th>Nama</th>
                   <th>Alamat</th>
-                  <th>No. HP</th>
-                  <th>Jenis Muzaki</th>
-                  <th>Agama</th>
-                  <th>Email</th>
-                  <th>No. KTP</th>
-                  <th>Keterangan</th>
-                  <th>Foto</th>
+                  <th>Detail Pengajuan</th>
+                  <th>Pekerjaan</th>
+                  <th>Pendapatan</th>
                   <th width="15px">Aksi</th>
                 </tr>
               </thead>
@@ -105,17 +102,59 @@ $url = base_url() . 'muzaki/';
         <h4 class="modal-title" name="show_in_add">Tambah Data</h4>
         <h4 class="modal-title" name="show_in_edit">Edit Data</h4>
       </div>
-      <!-- enctype="multipart/form-data" -->
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-          <input type="hidden" id="kd_muzaki" name="kd_muzaki">
+          <!-- <input type="hidden" id="kd_mustahik" name="kd_mustahik"> -->
           <input type="hidden" name="old_image" id="old_image">
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nama_muzaki">Nama Muzaki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="nama_muzaki" name="nama_muzaki" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="no_registrasi" name="no_registrasi" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_kk">Nomor KK <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="no_kk" name="no_kk" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nik">Nomor NIK KTP <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="nik" name="nik" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nama">Nama Lengkap <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="nama" name="nama" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tempat_lahir">Tempat , Tanggal Lahir <span class="required">*</span>
+              </label>
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                <input type="text" id="tempat_lahir" name="tempat_lahir" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+              <div class="col-md-3 col-sm-3 col-xs-3">
+                <input type="date" id="tgl_lahir" name="tgl_lahir" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -125,46 +164,115 @@ $url = base_url() . 'muzaki/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="alamat">Alamat <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="alamat" name="alamat" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="alamat" name="alamat" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_hp">No. HP <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="dusun">Dusun <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="no_hp" name="no_hp" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="dusun" name="dusun" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_muzaki">Jenis Muzaki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="desa">Desa / Kelurahan<span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="jenis_muzaki" name="jenis_muzaki" required>
-                  <option value="Pribadi">Pribadi</option>
-                  <option value="Entitas">Entitas</option>
-                  <option value="Lembaga">Lembaga</option>
-                </select>
+                <input type="text" id="desa" name="desa" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kecamatan">Kecamatan <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="kecamatan" name="kecamatan" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kota">Kota / Kabupaten<span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="kota" name="kota" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="propinsi">Provinsi <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="propinsi" placeholder="*data berdasarkan KTP" name="propinsi" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_kelamin">Jenis Kelamin <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="radio" id="L" class="minimal" value="L" name="jenis_kelamin" /> Laki - laki
+                <input type="radio" id="P" class="minimal" value="P" name="jenis_kelamin" /> Perempuan
+              </div>
+            </div>
+          </div>
+
 
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="agama">Agama <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="agama" name="agama" required>
-                  <option value="Islam">Islam</option>
-                  <option value="Kristen">Kristen</option>
-                  <option value="Katholik">Katholik</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Budha">Budha</option>
+                <input type="text" id="agama" name="agama" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_marital">Status Marital <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="status_marital" name="status_marital" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_pendidikan">Status Pendidikan <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                  <?php foreach ($pendidikan as $pend) { ?>
+                    <input type="radio" id="<?= $pend ?>" class="minimal" value="<?= $pend ?>" name="status_pendidikan" /> <?= $pend." "?>
+                  <?php } ?>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan">Pekerjaan <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <select type="text" class="form-control select2" multiple style="width: 100%;" id="pekerjaan" name="pekerjaan" required>
+                  <?php foreach ($pekerjaan as $pek) { ?>
+                    <option value="<?= $pek; ?>"><?= $pek; ?></option>
+                  <?php } ?>
                 </select>
               </div>
             </div>
@@ -172,53 +280,82 @@ $url = base_url() . 'muzaki/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email">Email <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="penghasilan">Penghasilan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="email" name="email" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="penghasilan" name="penghasilan" required>
+                  <?php foreach ($penghasilan as $p) { ?>
+                      <option value="<?= $p; ?>"><?= $p; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_ktp">No. KTP <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_telp">No Telp <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="no_ktp" name="no_ktp" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="no_telp" name="no_telp" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="npwp">NPWP <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_keluarga">Jumlah Keluarga <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="npwp" name="npwp" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="jumlah_keluarga" name="jumlah_keluarga" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">Keterangan <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="detail_pengajuan">Detail Pengajuan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="keterangan" name="keterangan" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="detail_pengajuan" name="detail_pengajuan" required>
+                  <?php foreach ($detail_pengajuan as $dp) { ?>
+                      <option value="<?= $dp; ?>"><?= $dp; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="foto">Foto <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="Persyaratan">Persyaratan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="file" id="foto" name="foto" required>
+                <input type="text" id="persyaratan" name="persyaratan" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
+
+          <?php
+            if($this->session->userdata('status')!='admin'){
+          ?>
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sekolah">Sekolah <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="sekolah" value="<?= $this->session->userdata('sekolah') ?>" name="sekolah" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+          <?php
+            }else{
+          ?>
+            <input type="hidden" id="sekolah" name="sekolah">
+          <?php
+            }
+          ?>
+
 
         </div>
         <div class="modal-footer">
@@ -261,7 +398,16 @@ $url = base_url() . 'muzaki/';
 <script type="text/javascript">
   $(document).ready(function() {
     tampil_data();
+    $('.select2').select2({
+      tags: true
+    });
     var kondisi;
+
+    //icheck
+    $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
+      checkboxClass: 'icheckbox_minimal-blue',
+      radioClass   : 'iradio_minimal-blue'
+    })
 
     //fungsi tampil data
     function tampil_data() {
@@ -278,18 +424,16 @@ $url = base_url() . 'muzaki/';
           for (i = 0; i < data.length; i++) {
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].nama_muzaki + '</td>' +
+              '<td>' + data[i].no_registrasi + '</td>' +
+              '<td>' + data[i].no_kk + '</td>' +
               '<td>' + data[i].alamat + '</td>' +
-              '<td>' + data[i].no_hp + '</td>' +
-              '<td>' + data[i].jenis_muzaki + '</td>' +
-              '<td>' + data[i].agama + '</td>' +
-              '<td>' + data[i].email + '</td>' +
-              '<td>' + data[i].no_ktp + '</td>' +
-              '<td>' + data[i].keterangan + '</td>' +
-              '<td><img src="<?= base_url() ?>assets/uploads/muzaki/' + data[i].foto + '" width="64"></td>' +
+              '<td>' + data[i].detail_pengajuan + '</td>' +
+              '<td>' + data[i].pekerjaan + '</td>' +
+              '<td>' + data[i].penghasilan + '</td>' +
+              // '<td><img src="<?= base_url() ?>assets/uploads/mustahik_khusus/' + data[i].foto + '" width="64"></td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_muzaki + '"><i class="fa fa-pencil "></i></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_muzaki + '"><i class="fa fa-trash "></i></a>' +
+              // '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].no_registrasi + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].no_registrasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -312,8 +456,8 @@ $url = base_url() . 'muzaki/';
       $('#form_add')[0].reset();
       $('[name="show_in_add"]').show();
       $('[name="show_in_edit"]').hide();
-      $('#nama_muzaki').attr('readonly', false);
-      $('#alamat').attr('readonly', false);
+      $('#no_registrasi').attr('readonly', false);
+      $('#no_kk').attr('readonly', false);
     });
 
     //TOMBOL EDIT -> GET KODE & ATUR HIDE AND SHOW
@@ -329,22 +473,18 @@ $url = base_url() . 'muzaki/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(kd_muzaki, nama_muzaki, alamat, no_hp, jenis_muzaki, agama, email, no_ktp,npwp, keterangan, foto) {
+          $.each(data, function(no_registrasi, no_kk,nik, nama, tempat_lahir, tgl_lahir, alamat, dusun, desa, kecamatan, kota, propinsi, jenis_kelamin) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
             $('#old_image').val(data.foto);
-            $('#kd_muzaki').val(data.kd_muzaki);
-            // $('#nama_muzaki').val(data.nama_muzaki).attr('readonly', true);
-            $('#nama_muzaki').val(data.nama_muzaki);
-            $('#alamat').val(data.alamat);
-            $('#no_hp').val(data.no_hp);
-            $('#jenis_muzaki').val(data.jenis_muzaki);
-            $('#agama').val(data.agama);
-            $('#email').val(data.email);
-            $('#no_ktp').val(data.no_ktp);
-            $('#npwp').val(data.npwp);
-            $('#keterangan').val(data.keterangan);
+            $('#no_registrasi').val(data.no_registrasi).attr('readonly', true);
+            $('#no_kk').val(data.no_kk);
+            $('#nik').val(data.nik);
+            $('#nama').val(data.nama);
+            $('#tempat_lahir').val(data.tempat_lahir);
+            $('#tgl_lahir').val(data.tgl_lahir);
+            $('#'+ data.jenis_kelamin).attr('checked',true);
           });
         }
       });

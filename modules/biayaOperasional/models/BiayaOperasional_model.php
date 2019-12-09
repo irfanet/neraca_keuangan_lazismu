@@ -1,10 +1,10 @@
 <?php
 defined('BASEPATH') or exit('No direct script access allowed');
-class DonasiMasuk_model extends CI_Model
+class BiayaOperasional_model extends CI_Model
 {
 	public $kd_data;
-	public $tgl_donasi;
-	public $kd_muzaki;
+	public $tgl_dana_keluar;
+	public $jenis_biaya;
 	public $keterangan;
 	public $jenis_donasi;
 	public $jenis_dana;
@@ -25,79 +25,53 @@ class DonasiMasuk_model extends CI_Model
 
 	function getData()
 	{
-		$this->db->select('*,a.keterangan AS ket');    
-		$this->db->from('donasi_masuk a');
-		$this->db->join("jurnal b", "CONCAT('DM-',a.kd_donasi) = b.kd_transaksi","left");
-		$this->db->group_by('b.kd_transaksi','asc');
-		$hasil = $this->db->get();
+		$hasil = $this->db->get('biaya_operasional');
 		return $hasil->result();
 	}
 	function setData()
 	{
 		// $this->kd_data = uniqid();
 
-		$this->tgl_donasi = $this->input->post('tgl_donasi');
-		$this->kd_muzaki = $this->input->post('kd_muzaki');
+		$this->tgl_dana_keluar = $this->input->post('tgl_dana_keluar');
+		$this->jenis_biaya = $this->input->post('jenis_biaya');
 		$this->keterangan = $this->input->post('keterangan');
-		$this->jenis_donasi = $this->input->post('jenis_donasi');
 		$this->jenis_dana = $this->input->post('jenis_dana');
 		$this->jumlah_dana = $this->input->post('jumlah_dana');
 		$data = array(
-			// 'kd_donasi' => $this->kd_data,
-			'tgl_donasi' => $this->tgl_donasi,
-			'kd_muzaki' => $this->kd_muzaki,
+			// 'kd_operasional' => $this->kd_data,
+			'tgl_dana_keluar' => $this->tgl_dana_keluar,
+			'jenis_biaya' => $this->jenis_biaya,
 			'keterangan' => $this->keterangan,
-			'jenis_donasi' => $this->jenis_donasi,
 			'jenis_dana' => $this->jenis_dana,
 			'jumlah_dana' => $this->jumlah_dana,
 		);
-		$hasil = $this->db->insert("donasi_masuk", $data);
+		$hasil = $this->db->insert("biaya_operasional", $data);
 		$this->kd_data = $this->db->insert_id(); // get last auto increment
-		$this->kd_transaksi = 'DM-'.$this->kd_data;
+		$this->kd_transaksi = 'BO-'.$this->kd_data;
 		$this->setJurnal($this->kd_transaksi);
 		return $hasil;
 	}
 	function setJurnal($kd_transaksi){
 		$this->akun_amil = 'A02.02.05.00';
-		//zakat = potongan 12.5%
-		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
-			$dana_donasi = 0.875*$this->jumlah_dana;
-			$dana_amil = 0.125*$this->jumlah_dana;
-		}
-		//lain-lain potongan 20%
-		else{
-			$dana_donasi = 0.8*$this->jumlah_dana;
-			$dana_amil = 0.2*$this->jumlah_dana;
-		}
-		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil);
+		$this->getKetDetail($this->jenis_dana,$this->akun_amil);
 		$data = array(
-			//aktiva
+			//pasiva
 			array(
-			   'tgl' => $this->tgl_donasi ,
-			   'kd_akun' => $this->jenis_dana ,
-			   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+			   'tgl' => $this->tgl_dana_keluar ,
+			   'kd_akun' => $this->akun_amil ,
+			   'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' dari '.$this->nama_akun_amil,
 			   'debit' => $this->input->post('jumlah_dana'),
 			   'kredit' => 0,
 			   'status' => 0,
 			   'kd_transaksi' => $kd_transaksi
 			),
-			//pasiva
+			//aktiva
 			array(
-				'tgl' => $this->tgl_donasi ,
-				'kd_akun' => $this->jenis_donasi ,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+				'tgl' => $this->tgl_dana_keluar ,
+				'kd_akun' => $this->jenis_dana ,
+				'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA,
 				'debit' => 0,
-				'kredit' => $dana_donasi,
-				'status' => 0,
-			   	'kd_transaksi' => $kd_transaksi
-			),
-			//pasiva amil
-			array(
-				'tgl' => $this->tgl_donasi,
-				'kd_akun' => $this->akun_amil,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
-				'debit' => 0,
-				'kredit' => $dana_amil,
+				'kredit' =>  $this->input->post('jumlah_dana'),
 				'status' => 0,
 			   	'kd_transaksi' => $kd_transaksi
 			)
@@ -105,13 +79,9 @@ class DonasiMasuk_model extends CI_Model
 		return $this->db->insert_batch('jurnal', $data); 
 	}
 
-	function getKetDetail($kd_muzaki,$kd_akunA,$kd_akunP,$kd_akun_amil){
-		$muzaki = $this->db->get_where("muzaki", array('kd_muzaki' => $kd_muzaki))->row_array();
-		$this->nama_muzaki = $muzaki['nama_muzaki'];
+	function getKetDetail($kd_akunA,$kd_akun_amil){
 		$aktiva = $this->db->get_where("akun", array('kd_akun' => $kd_akunA))->row_array();
 		$this->nama_akunA = $aktiva['nama_akun'];
-		$pasiva = $this->db->get_where("akun", array('kd_akun' => $kd_akunP))->row_array();
-		$this->nama_akunP = $pasiva['nama_akun'];
 		$amil = $this->db->get_where("akun", array('kd_akun' => $kd_akun_amil))->row_array();
 		$this->nama_akun_amil = $amil['nama_akun'];
 		$bank = 'A01.01.02';
@@ -141,13 +111,13 @@ class DonasiMasuk_model extends CI_Model
 			$kd_akun = $j['kd_akun'];
 			$aktiva = 'A01';
 			$pasiva = 'A02';
-			if(strpos($kd_akun,$aktiva) !== false){
+			if(strpos($kd_akun,$pasiva) !== false){
 				$nominal = $j['debit'];
 			}else{
 				$nominal = $j['kredit'];
 			}
 			$this->db->where('kd_akun', $kd_akun);
-			$this->db->set('saldo', 'saldo+'.$nominal, FALSE);
+			$this->db->set('saldo', 'saldo-'.$nominal, FALSE);
 			$this->db->update('akun');
 		}
 	}
@@ -174,34 +144,32 @@ class DonasiMasuk_model extends CI_Model
 	}
 	function getDataByKode($kode)
 	{
-		$hasil = $this->db->get_where("donasi_masuk", array('kd_donasi' => $kode))->row();
+		$hasil = $this->db->get_where("biaya_operasional", array('kd_operasional' => $kode))->row();
 		return $hasil;
 	}
 	function getDetailByKode($kode)
 	{
-		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'DM-'.$kode))->result();
+		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'BO-'.$kode))->result();
 		return $hasil;
 	}
 	function updateData()
 	{
-		$this->kd_data = $this->input->post('kd_donasi');
-		$this->tgl_donasi = $this->input->post('tgl_donasi');
-		$this->kd_muzaki = $this->input->post('kd_muzaki');
+		$this->kd_data = $this->input->post('kd_operasional');
+		$this->tgl_dana_keluar = $this->input->post('tgl_dana_keluar');
+		$this->jenis_biaya = $this->input->post('jenis_biaya');
 		$this->keterangan = $this->input->post('keterangan');
-		$this->jenis_donasi = $this->input->post('jenis_donasi');
 		$this->jenis_dana = $this->input->post('jenis_dana');
 		$this->jumlah_dana = $this->input->post('jumlah_dana');   
 		$data = array(
-			'tgl_donasi' => $this->tgl_donasi,
-			'kd_muzaki' => $this->kd_muzaki,
+			'tgl_dana_keluar' => $this->tgl_dana_keluar,
+			'jenis_biaya' => $this->jenis_biaya,
 			'keterangan' => $this->keterangan,
-			'jenis_donasi' => $this->jenis_donasi,
 			'jenis_dana' => $this->jenis_dana,
 			'jumlah_dana' => $this->jumlah_dana,
 		);
-		$this->db->where('kd_donasi', $this->kd_data);
-		$hasil = $this->db->update("donasi_masuk", $data);
-		$this->kd_transaksi = 'DM-'.$this->kd_data;
+		$this->db->where('kd_operasional', $this->kd_data);
+		$hasil = $this->db->update("biaya_operasional", $data);
+		$this->kd_transaksi = 'BO-'.$this->kd_data;
 		$this->updateJurnal($this->kd_transaksi);
 		return $hasil;
 	}
@@ -217,48 +185,27 @@ class DonasiMasuk_model extends CI_Model
 	function updateJurnal($kd_transaksi){
 		$id = $this->getIdJurnal($this->kd_transaksi);
 		$this->akun_amil = 'A02.02.05.00';
-		//zakat = potongan 12.5%
-		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
-			$dana_donasi = 0.875*$this->jumlah_dana;
-			$dana_amil = 0.125*$this->jumlah_dana;
-		}
-		//lain-lain potongan 20%
-		else{
-			$dana_donasi = 0.8*$this->jumlah_dana;
-			$dana_amil = 0.2*$this->jumlah_dana;
-		}
-		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil);
+		$this->getKetDetail($this->jenis_dana,$this->akun_amil);
 		$data = array(
-			//aktiva
-			array(
-				'id' => $id[0],
-				'tgl' => $this->tgl_donasi,
-				'kd_akun' => $this->jenis_dana,
-				'keterangan' => 'Donasi dari ' . $this->nama_muzaki . ' secara ' . $this->jenis_pembayaran . ' ke ' . $this->nama_akunA . ' untuk ' . $this->nama_akunP,
-				'debit' => $this->input->post('jumlah_dana'),
-				'kredit' => 0,
-				'status' => 0,
-				'kd_transaksi' => $kd_transaksi
-			),
 			//pasiva
 			array(
-				'id' => $id[1],
-				'tgl' => $this->tgl_donasi ,
-				'kd_akun' => $this->jenis_donasi ,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
-				'debit' => 0,
-				'kredit' => $dana_donasi,
-				'status' => 0,
-			   	'kd_transaksi' => $kd_transaksi
+				'id' => $id[0],
+			   'tgl' => $this->tgl_dana_keluar ,
+			   'kd_akun' => $this->akun_amil ,
+			   'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' dari '.$this->nama_akun_amil,
+			   'debit' => $this->input->post('jumlah_dana'),
+			   'kredit' => 0,
+			   'status' => 0,
+			   'kd_transaksi' => $kd_transaksi
 			),
-			//pasiva amil
+			//aktiva
 			array(
-				'id' => $id[2],
-				'tgl' => $this->tgl_donasi,
-				'kd_akun' => $this->akun_amil,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+				'id' => $id[1],
+				'tgl' => $this->tgl_dana_keluar ,
+				'kd_akun' => $this->jenis_dana ,
+				'keterangan' => 'Biaya untuk '.$this->jenis_biaya.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA,
 				'debit' => 0,
-				'kredit' => $dana_amil,
+				'kredit' =>  $this->input->post('jumlah_dana'),
 				'status' => 0,
 			   	'kd_transaksi' => $kd_transaksi
 			)
@@ -268,9 +215,9 @@ class DonasiMasuk_model extends CI_Model
 	function deleteData($kode)
 	{
 		// $this->_deleteImage($kode);
-		$this->db->where('kd_donasi', $kode);
-		$hasil = $this->db->delete("donasi_masuk");
-		$this->deleteJurnal('DM-'.$kode);
+		$this->db->where('kd_operasional', $kode);
+		$hasil = $this->db->delete("biaya_operasional");
+		$this->deleteJurnal('BO-'.$kode);
 		return $hasil;
 	}
 	function deleteJurnal($kd_transaksi){

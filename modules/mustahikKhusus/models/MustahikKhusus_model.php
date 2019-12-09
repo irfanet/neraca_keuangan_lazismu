@@ -65,17 +65,30 @@ class MustahikKhusus_model extends CI_Model
 	private function _uploadImage()
     {
         $config['upload_path']          = './assets/uploads/mustahik_khusus/';
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
         $config['file_name']            = $this->kd_data;
-        $config['overwrite']			= true;
-        $config['max_size']             = 1024; // 1MB
+		$config['overwrite']			= true;
+        $config['max_size']             = 64000;
 
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('foto')) {
-            return $this->upload->data("file_name");
+			$gbr = $this->upload->data();
+			//Compress Image
+			$config['image_library']='gd2';
+			$config['source_image']='./assets/uploads/mustahik_khusus/'.$gbr['file_name'];
+			$config['create_thumb']= FALSE;
+			$config['maintain_ratio']= TRUE;
+			$config['quality']= '60%';
+			$config['width']= 500;
+			$config['new_image']= './assets/uploads/mustahik_khusus/'.$gbr['file_name'];
+			$this->load->library('image_lib', $config);
+			$this->image_lib->resize();
+			$gambar=$gbr['file_name'];			
+            return $this->upload->data('file_name');
 		}else{
-			return "default.jpg";
+			// return "default.jpg";
+			echo json_encode($this->upload->display_errors());
 		}
         // print_r($this->upload->display_errors());
     }
@@ -87,5 +100,6 @@ class MustahikKhusus_model extends CI_Model
             $filename = explode(".", $data->foto)[0];
             return array_map('unlink', glob(FCPATH."assets/uploads/mustahik_khusus/$filename.*"));
         }
-    }
+	}
+	
 }

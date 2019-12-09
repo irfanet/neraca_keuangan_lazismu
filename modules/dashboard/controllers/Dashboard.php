@@ -8,19 +8,19 @@ class Dashboard extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('dashboard_model');
-		if($this->session->userdata('id_user') == TRUE){
+		if($this->session->userdata('id_admin') != TRUE){
             redirect('auth');
         }
     }
 
-    function index_awal()
-    {
-        $this->load->template('dashboard');
-	}
-
     function index()
     {
         $this->load->view('dashboard');
+	}
+
+	function index_awal()
+    {
+        $this->load->template('dashboard');
 	}
 	
 	function getDetailByKode()

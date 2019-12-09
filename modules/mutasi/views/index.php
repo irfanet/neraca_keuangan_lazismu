@@ -1,13 +1,13 @@
 <?php
-$title = "Muzaki";
-$url = base_url() . 'muzaki/';
+$title = 'Mutasi';
+$url = base_url() . 'mutasi/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-      Data <?= $title ?>
+      <?= $title ?>
     </h1>
     <ol class="breadcrumb">
       <li><a href="<?= base_url() ?>"><i class="fa fa-dashboard"></i> Home</a></li>
@@ -41,7 +41,7 @@ $url = base_url() . 'muzaki/';
         <!-- /.box-header -->
         <div class="box box-solid box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Keterangan</h3>
+            <h3 class="box-title">ke_akun</h3>
           </div>
           <div class="box-body no-padding">
             <ul class="nav nav-pills nav-stacked">
@@ -67,16 +67,11 @@ $url = base_url() . 'muzaki/';
               <thead>
                 <tr>
                   <th width="10px">No</th>
-                  <th>Nama</th>
-                  <th>Alamat</th>
-                  <th>No. HP</th>
-                  <th>Jenis Muzaki</th>
-                  <th>Agama</th>
-                  <th>Email</th>
-                  <th>No. KTP</th>
-                  <th>Keterangan</th>
-                  <th>Foto</th>
-                  <th width="15px">Aksi</th>
+                  <th>Tanggal</th>
+                  <th>Dari Akun</th>
+                  <th>Ke Akun</th>
+                  <th>Nominal</th>
+                  <th width="80px">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -105,50 +100,26 @@ $url = base_url() . 'muzaki/';
         <h4 class="modal-title" name="show_in_add">Tambah Data</h4>
         <h4 class="modal-title" name="show_in_edit">Edit Data</h4>
       </div>
-      <!-- enctype="multipart/form-data" -->
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-          <input type="hidden" id="kd_muzaki" name="kd_muzaki">
-          <input type="hidden" name="old_image" id="old_image">
+          <input type="hidden" id="kd_mutasi" name="kd_mutasi">
+          <!-- <input type="hidden" name="old_image" id="old_image"> -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nama_muzaki">Nama Muzaki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_mutasi">Tanggal Mutasi <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="nama_muzaki" name="nama_muzaki" required class="form-control col-md-7 col-xs-12">
+                <input type="date" id="tgl_mutasi" name="tgl_mutasi" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="alamat">Alamat <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="dari_akun">Dari Akun <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="alamat" name="alamat" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_hp">No. HP <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="no_hp" name="no_hp" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_muzaki">Jenis Muzaki <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="jenis_muzaki" name="jenis_muzaki" required>
-                  <option value="Pribadi">Pribadi</option>
-                  <option value="Entitas">Entitas</option>
-                  <option value="Lembaga">Lembaga</option>
+                <select type="text" class="form-control select2" style="width: 100%;" id="dari_akun" name="dari_akun" required>
                 </select>
               </div>
             </div>
@@ -156,15 +127,10 @@ $url = base_url() . 'muzaki/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="agama">Agama <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="ke_akun">Ke Akun <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="agama" name="agama" required>
-                  <option value="Islam">Islam</option>
-                  <option value="Kristen">Kristen</option>
-                  <option value="Katholik">Katholik</option>
-                  <option value="Hindu">Hindu</option>
-                  <option value="Budha">Budha</option>
+              <select type="text" class="form-control select2" style="width: 100%;" id="ke_akun" name="ke_akun" required>
                 </select>
               </div>
             </div>
@@ -172,50 +138,10 @@ $url = base_url() . 'muzaki/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="email">Email <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="nominal">Nominal <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="email" name="email" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_ktp">No. KTP <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="no_ktp" name="no_ktp" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="npwp">NPWP <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="npwp" name="npwp" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">Keterangan <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="keterangan" name="keterangan" required class="form-control col-md-7 col-xs-12">
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="foto">Foto <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="file" id="foto" name="foto" required>
+                <input type="text" id="nominal" name="nominal" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -257,11 +183,147 @@ $url = base_url() . 'muzaki/';
 </div>
 <!-- /.modal hapus -->
 
+<!-- /.modal detail -->
+<div class="modal fade" id="modal_detail">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Detail Data</h4>
+      </div>
+      <form id="form_jurnal">
+        <div class="modal-body">
+          <input type="hidden" id="jml_data">
+          <input type="hidden" id="kd_transaksi">
+          <div class="callout callout-primary">
+            <!-- <h4 id="info_jurnal_judul"></h4> -->
+            <p id="info_jurnal"></p>
+          </div>
+          <table id="detail_table" class="table table-bordered">
+            <thead>
+              <tr>
+                <th width="10px">No</th>
+                <th>Tanggal</th>
+                <th>Kode Akun</th>
+                <th>Keterangan</th>
+                <th>Debit</th>
+                <th>Kredit</th>
+              </tr>
+            </thead>
+            <tbody id="show_detail">
+            </tbody>
+          </table>
+        </div>
+      </form>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary" id="btn_posting">Posting</button>
+      </div>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal -->
 
 <script type="text/javascript">
   $(document).ready(function() {
-    tampil_data();
     var kondisi;
+    var paymentMethod;
+    paymentMethod = "getKasAktiva";
+
+    $('.select2').select2();
+    tampil_data();
+    getCash('dari_akun');
+    getBank('dari_akun');
+    getAsetLancar('dari_akun');
+    getCash('ke_akun');
+    getBank('ke_akun');
+    getAsetLancar('ke_akun');
+
+    //get muzaki
+    function getCash(ke) {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= $url ?>getCash',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<optgroup label="CASH"> </optgroup>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#'+ke).html(html);
+        }
+      });
+    }
+
+    //get aktiva
+    function getBank(ke) {
+      $.ajax({
+        type: 'ajax',
+        url: "<?= $url ?>getBank",
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<optgroup label="BANK"> </optgroup>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#'+ke).append(html);
+        }
+      });
+    }
+
+    //get Aset
+    function getAsetLancar(ke) {
+      $.ajax({
+        type: 'ajax',
+        url: '<?= $url ?>getAsetLancar',
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<optgroup label="ASET LANCAR"> </optgroup>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#'+ke).append(html);
+        }
+      });
+    }
+
+    //get pasiva
+    function getPasiva() {
+      $.ajax({
+        type: 'ajax',
+        url: "<?= $url ?>getDanaPasiva",
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '<option selected disabled>--- Pilih Satu ---</option>';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#ke_akun').html(html);
+        }
+      });
+    }
+
+    //to Rupiah
+    function toRupiah(nominal, rp = 0) {
+      var reverse = nominal.toString().split('').reverse().join(''),
+      ribuan = reverse.match(/\d{1,3}/g);
+      if(rp == 1)
+        ribuan = 'Rp. ' + ribuan.join('.').split('').reverse().join('');
+      else
+        ribuan = ribuan.join('.').split('').reverse().join('');
+      return ribuan
+    }
 
     //fungsi tampil data
     function tampil_data() {
@@ -274,22 +336,25 @@ $url = base_url() . 'muzaki/';
           $('#example2').dataTable().fnDestroy();
           var html = '';
           var i;
+          var btn;
           var no = 1;
           for (i = 0; i < data.length; i++) {
+            if (data[i].status == "1") {
+              btn = "disabled";
+            } else {
+              btn = "";
+            }
+            var nominal = toRupiah(data[i].nominal);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].nama_muzaki + '</td>' +
-              '<td>' + data[i].alamat + '</td>' +
-              '<td>' + data[i].no_hp + '</td>' +
-              '<td>' + data[i].jenis_muzaki + '</td>' +
-              '<td>' + data[i].agama + '</td>' +
-              '<td>' + data[i].email + '</td>' +
-              '<td>' + data[i].no_ktp + '</td>' +
-              '<td>' + data[i].keterangan + '</td>' +
-              '<td><img src="<?= base_url() ?>assets/uploads/muzaki/' + data[i].foto + '" width="64"></td>' +
+              '<td>' + data[i].tgl_mutasi + '</td>' +
+              '<td>' + data[i].dari_akun + '</td>' +
+              '<td>' + data[i].ke_akun + '</td>' +
+              '<td>' + nominal + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].kd_muzaki + '"><i class="fa fa-pencil "></i></a>' + ' ' +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].kd_muzaki + '"><i class="fa fa-trash "></i></a>' +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_mutasi + '"><i class="fa  fa-list-ol "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_mutasi + '"><i class="fa fa-pencil "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_mutasi + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -306,14 +371,114 @@ $url = base_url() . 'muzaki/';
       });
     }
 
+    //TOMBOL DETAIL -> GET KODE
+    $('#show_data').on('click', '.item_detail', function() {
+      var id = $(this).attr('data');
+      $('#modal_detail').modal('show');
+      $.ajax({
+        async: true,
+        type: "GET",
+        url: "<?= $url ?>getDetailByKode",
+        dataType: "JSON",
+        data: {
+          id: id
+        },
+        success: function(data) {
+          $('#detail_table').dataTable().fnDestroy();
+          var html = '';
+          var i;
+          var kd_transaksi;
+          var status;
+          var no = 1;
+          for (i = 0; i < data.length; i++) {
+            status = data[i].status;
+            kd_transaksi = data[i].kd_transaksi;
+            var debit = toRupiah(data[i].debit);
+            var kredit = toRupiah(data[i].kredit);
+            html += '<tr>' +
+              '<td>' + no++ + '</td>' +
+              '<td>' + data[i].tgl + '</td>' +
+              '<td>' + data[i].kd_akun + '</td>' +
+              '<td>' + data[i].keterangan + '</td>' +
+              '<td style="text-align:right;">' + debit + '</td>' +
+              '<td style="text-align:right;">' + kredit + '</td>' +
+              '</tr>';
+          }
+          $('#show_detail').html(html);
+          $('#detail_table').DataTable({
+            'paging': false,
+            'lengthChange': true,
+            'searching': false,
+            'ordering': true,
+            'info': false,
+            'autoWidth': true
+          });
+          $('#kd_transaksi').val(kd_transaksi);
+          $('#jml_data').val(data.length);
+          if (status == "1") {
+            $('#btn_posting').attr("disabled", true);
+            $('#info_jurnal').html("<i class='fa fa-check'></i> <b>Jurnal sudah diposting !</b>");
+          } else {
+            $('#btn_posting').attr("disabled", false);
+            $('#info_jurnal').html("<i class='fa fa-warning'></i> <b>Jurnal belum diposting !</b> Pastikan data sudah benar sebelum memposting !");
+          }
+        }
+      });
+    });
+
+    //POSTING JURNAL
+    $('#btn_posting').on('click', function() {
+      // var myform = new FormData($('#form_add')[0]);
+      // if (kondisi == "tambah") {
+      $.ajax({
+        async: true,
+        type: "POST",
+        url: "<?= $url ?>postJurnal",
+        dataType: "JSON",
+        data: {
+          kd_transaksi: $('#kd_transaksi').val(),
+          jml_data: $('#jml_data').val()
+        },
+        success: function(data) {
+          if (data.success == true) {
+            $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
+              ' <b>Berhasil ! </b>Data telah disimpan ! ' + '</div>');
+            $('.form-group').removeClass('has-error')
+              .removeClass('has-success');
+            $('.text-danger').remove();
+            $('.alert-success').delay(500).show(1000, function() {
+              $(this).delay(2000).slideUp(500, function() {
+                $(this).remove();
+              });
+            })
+            $('#form_jurnal')[0].reset();
+            $('#modal_detail').modal('hide');
+            tampil_data();
+          } else {
+            $.each(data.messages, function(key, value) {
+              var element = $('#' + key);
+              element.closest('div.form-group')
+                .removeClass('has-error')
+                .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                .find('.text-danger')
+                .remove();
+              element.after(value);
+            });
+          }
+        }
+      });
+      return false;
+      // }
+    });
+
     //ATUR HIDE AND SHOW
     $('#btn_add_modal').on('click', function() {
       kondisi = "tambah";
       $('#form_add')[0].reset();
       $('[name="show_in_add"]').show();
       $('[name="show_in_edit"]').hide();
-      $('#nama_muzaki').attr('readonly', false);
-      $('#alamat').attr('readonly', false);
+      $('#tgl_mutasi').attr('readonly', false);
+      $('#dari_akun').attr('readonly', false);
     });
 
     //TOMBOL EDIT -> GET KODE & ATUR HIDE AND SHOW
@@ -329,22 +494,16 @@ $url = base_url() . 'muzaki/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(kd_muzaki, nama_muzaki, alamat, no_hp, jenis_muzaki, agama, email, no_ktp,npwp, keterangan, foto) {
+          $.each(data, function(kd_mutasi, tgl_mutasi, dari_akun, ke_akun, nominal) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
-            $('#old_image').val(data.foto);
-            $('#kd_muzaki').val(data.kd_muzaki);
-            // $('#nama_muzaki').val(data.nama_muzaki).attr('readonly', true);
-            $('#nama_muzaki').val(data.nama_muzaki);
-            $('#alamat').val(data.alamat);
-            $('#no_hp').val(data.no_hp);
-            $('#jenis_muzaki').val(data.jenis_muzaki);
-            $('#agama').val(data.agama);
-            $('#email').val(data.email);
-            $('#no_ktp').val(data.no_ktp);
-            $('#npwp').val(data.npwp);
-            $('#keterangan').val(data.keterangan);
+            // $('#old_image').val(data.foto);
+            $('#kd_mutasi').val(data.kd_mutasi);
+            $('#tgl_mutasi').val(data.tgl_mutasi);
+            $('#dari_akun').val(data.dari_akun);
+            $('#ke_akun').val(data.ke_akun);
+            $('#nominal').val(data.nominal);
           });
         }
       });
@@ -374,7 +533,7 @@ $url = base_url() . 'muzaki/';
           success: function(data) {
             if (data.success == true) {
               $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
-                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
+                ' <b>Berhasil ! </b>Data telah disimpan ! ' + '</div>');
               $('.form-group').removeClass('has-error')
                 .removeClass('has-success');
               $('.text-danger').remove();

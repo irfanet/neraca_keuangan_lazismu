@@ -1,6 +1,6 @@
 <?php
-$title = 'Donasi Masuk';
-$url = base_url() . 'donasiMasuk/';
+$title = 'Biaya Operasional';
+$url = base_url() . 'biayaOperasional/';
 ?>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
@@ -41,7 +41,7 @@ $url = base_url() . 'donasiMasuk/';
         <!-- /.box-header -->
         <div class="box box-solid box-primary">
           <div class="box-header with-border">
-            <h3 class="box-title">Keterangan</h3>
+            <h3 class="box-title">keterangan</h3>
           </div>
           <div class="box-body no-padding">
             <ul class="nav nav-pills nav-stacked">
@@ -68,9 +68,9 @@ $url = base_url() . 'donasiMasuk/';
                 <tr>
                   <th width="10px">No</th>
                   <th>Tanggal</th>
-                  <th>Kode Muzaki</th>
+                  <!-- <th>Kode Akun</th> -->
+                  <th>Jenis Biaya</th>
                   <th>Keterangan</th>
-                  <th>Jenis Donasi</th>
                   <th>Jenis Dana</th>
                   <th>Jumlah Dana</th>
                   <th width="80px">Aksi</th>
@@ -104,32 +104,31 @@ $url = base_url() . 'donasiMasuk/';
       </div>
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
-          <input type="hidden" id="kd_donasi" name="kd_donasi">
+          <input type="hidden" id="kd_operasional" name="kd_operasional">
           <!-- <input type="hidden" name="old_image" id="old_image"> -->
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_donasi">Tanggal Donasi <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="tgl_dana_keluar">Tanggal <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="date" id="tgl_donasi" name="tgl_donasi" required class="form-control col-md-7 col-xs-12">
+                <input type="date" id="tgl_dana_keluar" name="tgl_dana_keluar" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_muzaki">Muzaki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_biaya">Jenis Biaya <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" style="width: 100%;" id="kd_muzaki" name="kd_muzaki" required>
-                </select>
+                <input type="text" id="jenis_biaya" name="jenis_biaya" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">Keterangan <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="keterangan">keterangan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="keterangan" name="keterangan" required class="form-control col-md-7 col-xs-12">
@@ -139,27 +138,16 @@ $url = base_url() . 'donasiMasuk/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Jenis Donasi <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="paymentMethod">Metode Pembayaran <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" style="width: 100%;" id="jenis_donasi" name="jenis_donasi" required>
-                </select>
-              </div>
-            </div>
-          </div>
-
-          <div class="row">
-            <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_donasi">Metode Pembayaran <span class="required">*</span>
-              </label>
-              <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" /> CASH<br>
+                <input type="radio" id="cash" class="minimal" value="cash" name="paymentMethod" /> CASH (KAS AMIL)<br>
                 <input type="radio" id="bank" class="minimal" value="bank" name="paymentMethod" /> BANK<br />
               </div>
             </div>
           </div>
 
-          <div class="row">
+          <div class="row" name="field_jenis_dana">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_dana">Jenis Dana <span class="required">*</span>
               </label>
@@ -240,7 +228,7 @@ $url = base_url() . 'donasiMasuk/';
                 <th width="10px">No</th>
                 <th>Tanggal</th>
                 <th>Kode Akun</th>
-                <th>Keterangan</th>
+                <th>keterangan</th>
                 <th>Debit</th>
                 <th>Kredit</th>
               </tr>
@@ -272,7 +260,7 @@ $url = base_url() . 'donasiMasuk/';
     getMuzaki();
     getAktiva();
     getPasiva();
-
+    $('[name="field_jenis_dana"]').hide();
     //icheck
     // $('input[type="checkbox"].minimal, input[type="radio"].minimal').iCheck({
     //   checkboxClass: 'icheckbox_minimal-blue',
@@ -284,11 +272,13 @@ $url = base_url() . 'donasiMasuk/';
       switch ($(this).val()) {
         case 'cash':
           paymentMethod = "getKasAktiva";
-          getAktiva();
+          getKasAmil();
+          $('[name="field_jenis_dana"]').hide();
           break;
         case 'bank':
           paymentMethod = "getBankAktiva";
           getAktiva();
+          $('[name="field_jenis_dana"]').show();
           break;
       }
     });
@@ -304,9 +294,33 @@ $url = base_url() . 'donasiMasuk/';
           var html = '<option selected disabled>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
-            html += '<option value="' + data[i].kd_muzaki + '">' + data[i].nama_muzaki + ' - ' + data[i].alamat + '</option>';
+            html += '<option value="' + data[i].kd_akun + '">' + data[i].nama_muzaki + ' - ' + data[i].alamat + '</option>';
           }
-          $('#kd_muzaki').html(html);
+          $('#kd_akun').html(html);
+        }
+      });
+    }
+
+    //get kas amil
+    function getKasAmil() {
+      $.ajax({
+        type: 'ajax',
+        url: "<?= $url ?>" + paymentMethod + "",
+        async: false,
+        dataType: 'json',
+        success: function(data) {
+          var html = '';
+          var i;
+          for (i = 0; i < data.length; i++) {
+            var selected;
+            if(data[i].kd_akun != 'A01.01.01.05'){
+              selected = 'disabled';
+            }else{
+              selected = '';
+            }
+            html += '<option value="' + data[i].kd_akun + '" '+ selected +'>' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
+          }
+          $('#jenis_dana').html(html);
         }
       });
     }
@@ -342,7 +356,7 @@ $url = base_url() . 'donasiMasuk/';
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].kd_akun + '">' + data[i].kd_akun + ' - ' + data[i].nama_akun + '</option>';
           }
-          $('#jenis_donasi').html(html);
+          $('#jenis_biaya').html(html);
         }
       });
     }
@@ -380,16 +394,16 @@ $url = base_url() . 'donasiMasuk/';
             var jumlah_dana = toRupiah(data[i].jumlah_dana);
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].tgl_donasi + '</td>' +
-              '<td>' + data[i].kd_muzaki + '</td>' +
-              '<td>' + data[i].ket + '</td>' +
-              '<td>' + data[i].jenis_donasi + '</td>' +
+              '<td>' + data[i].tgl_dana_keluar + '</td>' +
+              // '<td>' + data[i].kd_akun + '</td>' +
+              '<td>' + data[i].jenis_biaya + '</td>' +
+              '<td>' + data[i].keterangan + '</td>' +
               '<td>' + data[i].jenis_dana + '</td>' +
               '<td style="text-align:right;">' + jumlah_dana + '</td>' +
               '<td style="text-align:center;">' +
-              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_donasi + '"><i class="fa  fa-list-ol "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-pencil "></i></a>' + " " +
-              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_donasi + '"><i class="fa fa-trash "></i></a>' +
+              '<a href="javascript:;" class="btn btn-info btn-xs item_detail" data="' + data[i].kd_operasional + '"><i class="fa  fa-list-ol "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit ' + btn + '" data="' + data[i].kd_operasional + '"><i class="fa fa-pencil "></i></a>' + " " +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus ' + btn + '" data="' + data[i].kd_operasional + '"><i class="fa fa-trash "></i></a>' +
               '</td>' +
               '</tr>';
           }
@@ -512,8 +526,8 @@ $url = base_url() . 'donasiMasuk/';
       $('#form_add')[0].reset();
       $('[name="show_in_add"]').show();
       $('[name="show_in_edit"]').hide();
-      $('#tgl_donasi').attr('readonly', false);
-      $('#kd_muzaki').attr('readonly', false);
+      $('#tgl_dana_keluar').attr('readonly', false);
+      $('#kd_akun').attr('readonly', false);
     });
 
     //TOMBOL EDIT -> GET KODE & ATUR HIDE AND SHOW
@@ -529,16 +543,16 @@ $url = base_url() . 'donasiMasuk/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(kd_donasi, tgl_donasi, kd_muzaki, keterangan, jenis_donasi, jenis_dana, jumlah_dana) {
+          $.each(data, function(kd_operasional, tgl_dana_keluar, kd_akun, keterangan, jenis_biaya, jenis_dana, jumlah_dana) {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
             // $('#old_image').val(data.foto);
-            $('#kd_donasi').val(data.kd_donasi);
-            $('#tgl_donasi').val(data.tgl_donasi);
-            $('#kd_muzaki').val(data.kd_muzaki);
+            $('#kd_operasional').val(data.kd_operasional);
+            $('#tgl_dana_keluar').val(data.tgl_dana_keluar);
+            $('#kd_akun').val(data.kd_akun);
             $('#keterangan').val(data.keterangan);
-            $('#jenis_donasi').val(data.jenis_donasi);
+            $('#jenis_biaya').val(data.jenis_biaya);
             $('#jenis_dana').val(data.jenis_dana);
             $('#jumlah_dana').val(data.jumlah_dana);
           });

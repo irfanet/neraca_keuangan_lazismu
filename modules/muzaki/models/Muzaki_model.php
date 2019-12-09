@@ -26,6 +26,7 @@ class Muzaki_model extends CI_Model
 			'agama' => $this->input->post('agama'),
 			'email' => $this->input->post('email'),
 			'no_ktp' => $this->input->post('no_ktp'),
+			'npwp' => $this->input->post('npwp'),
 			'keterangan' => $this->input->post('keterangan'),
 			'foto' => $this->_uploadImage()
 		);
@@ -54,6 +55,7 @@ class Muzaki_model extends CI_Model
 			'agama' => $this->input->post('agama'),
 			'email' => $this->input->post('email'),
 			'no_ktp' => $this->input->post('no_ktp'),
+			'npwp' => $this->input->post('npwp'),
 			'keterangan' => $this->input->post('keterangan'),
 			'foto' => $foto
 		);
@@ -70,24 +72,37 @@ class Muzaki_model extends CI_Model
 		return $hasil;
 	}
 
+	
 	private function _uploadImage()
     {
         $config['upload_path']          = './assets/uploads/muzaki/';
-        $config['allowed_types']        = 'gif|jpg|png';
+        $config['allowed_types']        = 'gif|jpg|png|jpeg|bmp';
         $config['file_name']            = $this->kd_data;
-        $config['overwrite']			= true;
-        $config['max_size']             = 1024; // 1MB
+		$config['overwrite']			= true;
+        $config['max_size']             = 64000;
 
         $this->load->library('upload', $config);
 
         if ($this->upload->do_upload('foto')) {
-            return $this->upload->data("file_name");
+			$gbr = $this->upload->data();
+			//Compress Image
+			$config['image_library']='gd2';
+			$config['source_image']='./assets/uploads/muzaki/'.$gbr['file_name'];
+			$config['create_thumb']= FALSE;
+			$config['maintain_ratio']= TRUE;
+			$config['quality']= '60%';
+			$config['width']= 500;
+			$config['new_image']= './assets/uploads/muzaki/'.$gbr['file_name'];
+			$this->load->library('image_lib', $config);
+			$this->image_lib->resize();
+			$gambar=$gbr['file_name'];			
+            return $this->upload->data('file_name');
 		}else{
 			return "default.jpg";
+			// echo json_encode($this->upload->display_errors());
 		}
         // print_r($this->upload->display_errors());
     }
-
     private function _deleteImage($kode)
     {
 		$data = $this->getDataByKode($kode);

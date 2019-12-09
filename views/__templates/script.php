@@ -18,9 +18,9 @@
      <!-- DataTables Checkbox -->
      <link rel="stylesheet" href="<?= base_url(); ?>assets/plugins/datatables-checkboxes/css/dataTables.checkboxes.css">
      <!-- daterange picker -->
-     <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css">
+     <!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.css"> -->
      <!-- bootstrap datepicker -->
-     <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css">
+     <!-- <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/css/bootstrap-datepicker.min.css"> -->
      <!-- Select2 -->
      <link rel="stylesheet" href="<?= base_url(); ?>assets/bower_components/select2/dist/css/select2.min.css">
      <!-- iCheck -->
@@ -66,9 +66,9 @@
      <script src="<?= base_url(); ?>assets/plugins/datatables-checkboxes/js/dataTables.checkboxes.min.js"></script>
      <!-- date-range-picker -->
      <script src="<?= base_url(); ?>assets/bower_components/moment/min/moment.min.js"></script>
-     <script src="<?= base_url(); ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script>
+     <!-- <script src="<?= base_url(); ?>assets/bower_components/bootstrap-daterangepicker/daterangepicker.js"></script> -->
      <!-- bootstrap datepicker -->
-     <script src="<?= base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script>
+     <!-- <script src="<?= base_url(); ?>assets/bower_components/bootstrap-datepicker/dist/js/bootstrap-datepicker.min.js"></script> -->
      <!-- SlimScroll -->
      <script src="<?= base_url(); ?>assets/bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
      <!-- FastClick -->

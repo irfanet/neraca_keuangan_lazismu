@@ -2,12 +2,12 @@
 
 (defined('BASEPATH')) or exit('No direct script access allowed');
 
-class DonasiMasuk extends MY_Controller{
+class BiayaOperasional extends MY_Controller{
 
     function __construct()
     {
         parent::__construct();
-		$this->load->model('donasiMasuk_model');
+		$this->load->model('biayaOperasional_model');
 		if($this->session->userdata('id_admin') != TRUE){
             redirect('auth');
         }
@@ -19,7 +19,7 @@ class DonasiMasuk extends MY_Controller{
 	}
 
     function getData(){
-		$data=$this->donasiMasuk_model->getData();
+		$data=$this->biayaOperasional_model->getData();
 		echo json_encode($data);
 	}
 
@@ -34,7 +34,7 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->setData();	
+			$this->biayaOperasional_model->setData();	
 		}
 		echo json_encode($data);
 	}
@@ -42,7 +42,7 @@ class DonasiMasuk extends MY_Controller{
 	function getDataByKode()
 	{
 		$kode = $this->input->get('id');
-		$data = $this->donasiMasuk_model->getDataByKode($kode);
+		$data = $this->biayaOperasional_model->getDataByKode($kode);
 		echo json_encode($data);
 	}
 
@@ -57,14 +57,14 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->updateData();	
+			$this->biayaOperasional_model->updateData();	
 		}
 		echo json_encode($data);
 	}
 
 	function deleteData(){
 		$kode=$this->input->post('kode');
-		$data=$this->donasiMasuk_model->deleteData($kode);
+		$data=$this->biayaOperasional_model->deleteData($kode);
 		echo json_encode($data);
 	}
 
@@ -79,7 +79,7 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->postJurnal();	
+			$this->biayaOperasional_model->postJurnal();	
 		}
 		echo json_encode($data);
 	}
@@ -87,27 +87,27 @@ class DonasiMasuk extends MY_Controller{
 	function getDetailByKode()
 	{
 		$kode = $this->input->get('id');
-		$data = $this->donasiMasuk_model->getDetailByKode($kode);
+		$data = $this->biayaOperasional_model->getDetailByKode($kode);
 		echo json_encode($data);
 	}
 
 	function getMuzaki(){
-		$data=$this->donasiMasuk_model->getMuzaki();
+		$data=$this->biayaOperasional_model->getMuzaki();
 		echo json_encode($data);
 	}
 
 	function getKasAktiva(){
-		$data=$this->donasiMasuk_model->getKasAktiva();
+		$data=$this->biayaOperasional_model->getKasAktiva();
 		echo json_encode($data);
 	
 	}
 	function getBankAktiva(){
-		$data=$this->donasiMasuk_model->getBankAktiva();
+		$data=$this->biayaOperasional_model->getBankAktiva();
 		echo json_encode($data);
 	}
 
 	function getDanaPasiva(){
-		$data=$this->donasiMasuk_model->getDanaPasiva();
+		$data=$this->biayaOperasional_model->getDanaPasiva();
 		echo json_encode($data);
 	}
 }

@@ -2,12 +2,12 @@
 
 (defined('BASEPATH')) or exit('No direct script access allowed');
 
-class DonasiMasuk extends MY_Controller{
+class Mutasi extends MY_Controller{
 
     function __construct()
     {
         parent::__construct();
-		$this->load->model('donasiMasuk_model');
+		$this->load->model('mutasi_model');
 		if($this->session->userdata('id_admin') != TRUE){
             redirect('auth');
         }
@@ -19,13 +19,13 @@ class DonasiMasuk extends MY_Controller{
 	}
 
     function getData(){
-		$data=$this->donasiMasuk_model->getData();
+		$data=$this->mutasi_model->getData();
 		echo json_encode($data);
 	}
 
 	function setData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('jumlah_dana','Jumlah Dana', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('nominal','Nominal', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -34,7 +34,7 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->setData();	
+			$this->mutasi_model->setData();	
 		}
 		echo json_encode($data);
 	}
@@ -42,13 +42,13 @@ class DonasiMasuk extends MY_Controller{
 	function getDataByKode()
 	{
 		$kode = $this->input->get('id');
-		$data = $this->donasiMasuk_model->getDataByKode($kode);
+		$data = $this->mutasi_model->getDataByKode($kode);
 		echo json_encode($data);
 	}
 
 	function updateData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('jumlah_dana', 'Jumlah Dana', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('nominal', 'Nominal', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -57,14 +57,14 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->updateData();	
+			$this->mutasi_model->updateData();	
 		}
 		echo json_encode($data);
 	}
 
 	function deleteData(){
 		$kode=$this->input->post('kode');
-		$data=$this->donasiMasuk_model->deleteData($kode);
+		$data=$this->mutasi_model->deleteData($kode);
 		echo json_encode($data);
 	}
 
@@ -79,7 +79,7 @@ class DonasiMasuk extends MY_Controller{
 			}   
 		}else{
 			$data['success'] = true;
-			$this->donasiMasuk_model->postJurnal();	
+			$this->mutasi_model->postJurnal();	
 		}
 		echo json_encode($data);
 	}
@@ -87,27 +87,27 @@ class DonasiMasuk extends MY_Controller{
 	function getDetailByKode()
 	{
 		$kode = $this->input->get('id');
-		$data = $this->donasiMasuk_model->getDetailByKode($kode);
+		$data = $this->mutasi_model->getDetailByKode($kode);
 		echo json_encode($data);
 	}
 
 	function getMuzaki(){
-		$data=$this->donasiMasuk_model->getMuzaki();
+		$data=$this->mutasi_model->getMuzaki();
 		echo json_encode($data);
 	}
 
-	function getKasAktiva(){
-		$data=$this->donasiMasuk_model->getKasAktiva();
+	function getCash(){
+		$data=$this->mutasi_model->getCash();
 		echo json_encode($data);
 	
 	}
-	function getBankAktiva(){
-		$data=$this->donasiMasuk_model->getBankAktiva();
+	function getBank(){
+		$data=$this->mutasi_model->getBank();
 		echo json_encode($data);
 	}
 
-	function getDanaPasiva(){
-		$data=$this->donasiMasuk_model->getDanaPasiva();
+	function getAsetLancar(){
+		$data=$this->mutasi_model->getAsetLancar();
 		echo json_encode($data);
 	}
 }
