@@ -8,10 +8,11 @@ class Mustahik extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('mustahik_model');
-		if($this->session->userdata('id_admin') != TRUE){
+		if($this->session->userdata('id_user') != TRUE){
 			redirect('auth');
         }
-    }
+	}
+	
     function index()
     {
 		$data['penghasilan'] = $this->getDataStatis('penghasilan');
@@ -20,7 +21,6 @@ class Mustahik extends MY_Controller{
 		$data['pekerjaan'] =  $this->getDataStatis('pekerjaan');
         $this->load->view('index',$data);
 	}
-
 	function index_awal()
     {
 		$data['penghasilan'] = $this->getDataStatis('penghasilan');
@@ -29,7 +29,6 @@ class Mustahik extends MY_Controller{
 		$data['pekerjaan'] =  $this->getDataStatis('pekerjaan');
         $this->load->template("index", $data);
 	}
-
     function getData(){
 		$data=$this->mustahik_model->getData();
 		echo json_encode($data);

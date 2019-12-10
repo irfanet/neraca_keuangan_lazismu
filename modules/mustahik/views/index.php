@@ -236,7 +236,13 @@ $url = base_url() . 'mustahik/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="agama">Agama <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="agama" name="agama" required class="form-control col-md-7 col-xs-12">
+                <select type="text" class="form-control select2" style="width: 100%;" id="agama" name="agama" required>
+                  <option value="Islam">Islam</option>
+                  <option value="Kristen">Kristen</option>
+                  <option value="Katholik">Katholik</option>
+                  <option value="Hindu">Hindu</option>
+                  <option value="Budha">Budha</option>
+                </select>
               </div>
             </div>
           </div>
@@ -269,7 +275,7 @@ $url = base_url() . 'mustahik/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="pekerjaan">Pekerjaan <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" multiple style="width: 100%;" id="pekerjaan" name="pekerjaan" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="pekerjaan" name="pekerjaan" required>
                   <?php foreach ($pekerjaan as $pek) { ?>
                     <option value="<?= $pek; ?>"><?= $pek; ?></option>
                   <?php } ?>
@@ -344,7 +350,7 @@ $url = base_url() . 'mustahik/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sekolah">Sekolah <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <input type="text" id="sekolah" value="<?= $this->session->userdata('sekolah') ?>" name="sekolah" required class="form-control col-md-7 col-xs-12">
+                <input type="text" id="sekolah" readonly value="<?= $this->session->userdata('sekolah') ?>" name="sekolah" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
           </div>
@@ -398,9 +404,7 @@ $url = base_url() . 'mustahik/';
 <script type="text/javascript">
   $(document).ready(function() {
     tampil_data();
-    $('.select2').select2({
-      tags: true
-    });
+    $('.select2').select2();
     var kondisi;
 
     //icheck

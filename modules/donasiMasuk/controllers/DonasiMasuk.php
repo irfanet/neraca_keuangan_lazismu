@@ -8,9 +8,12 @@ class DonasiMasuk extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('donasiMasuk_model');
-		if($this->session->userdata('id_admin') != TRUE){
+		if($this->session->userdata('id_user') != TRUE){
             redirect('auth');
-        }
+		}
+		if($this->session->userdata('status') != 'admin'){
+            redirect('auth');
+		}
 	}
 	
     function index()
@@ -26,6 +29,8 @@ class DonasiMasuk extends MY_Controller{
 	function setData(){
 		$data = array ('success' => false, 'messages' => array());
 		$this->form_validation->set_rules('jumlah_dana','Jumlah Dana', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('jenis_donasi','Jenis Donasi','required');
+		$this->form_validation->set_rules('jenis_dana','Jenis Dana','required');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {

@@ -24,7 +24,11 @@ class Mutasi_model extends CI_Model
 
 	function getData()
 	{
-		$hasil = $this->db->get('mutasi');
+		$this->db->select('*');    
+		$this->db->from('mutasi a');
+		$this->db->join("jurnal b", "CONCAT('M-',a.kd_mutasi) = b.kd_transaksi","left");
+		$this->db->group_by('b.kd_transaksi','asc');
+		$hasil = $this->db->get();
 		return $hasil->result();
 	}
 	function setData()

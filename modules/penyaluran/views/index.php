@@ -141,6 +141,7 @@ $url = base_url() . 'penyaluran/';
                   <option value="Ghorim">Ghorim</option>
                   <option value="Dana Qord">Dana Qord</option>
                   <option value="Tasharuf Amwal">Tasharuf Amwal</option>
+                  <option value="Riqob">Riqob</option>
                 </select>
               </div>
             </div>
@@ -455,7 +456,7 @@ $url = base_url() . 'penyaluran/';
               '<td>' + no++ + '</td>' +
               '<td>' + data[i].tgl_penyaluran + '</td>' +
               '<td>' + data[i].kd_mustahik + '</td>' +
-              '<td>' + data[i].keterangan + '</td>' +
+              '<td>' + data[i].ket + '</td>' +
               '<td>' + data[i].sumber_dana + '</td>' +
               '<td>' + data[i].jenis_dana + '</td>' +
               '<td style="text-align:right;">' + jumlah_dana + '</td>' +

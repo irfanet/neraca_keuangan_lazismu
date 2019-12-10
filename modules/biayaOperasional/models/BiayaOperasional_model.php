@@ -25,7 +25,11 @@ class BiayaOperasional_model extends CI_Model
 
 	function getData()
 	{
-		$hasil = $this->db->get('biaya_operasional');
+		$this->db->select('*,a.keterangan AS ket');    
+		$this->db->from('biaya_operasional a');
+		$this->db->join("jurnal b", "CONCAT('BO-',a.kd_operasional) = b.kd_transaksi","left");
+		$this->db->group_by('b.kd_transaksi','asc');
+		$hasil = $this->db->get();
 		return $hasil->result();
 	}
 	function setData()

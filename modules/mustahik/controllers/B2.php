@@ -8,7 +8,7 @@ class B2 extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('b2_model');
-		if($this->session->userdata('id_admin') != TRUE){
+		if($this->session->userdata('id_user') != TRUE){
             redirect('auth');
         }
     }
@@ -73,9 +73,18 @@ class B2 extends MY_Controller{
 	}
 
 	function getMustahik(){
-		$this->db->from('mustahik');
-		$this->db->where('status_survey',0);
-		$hasil = $this->db->get();
+		if($this->session->userdata('status')!='admin'){
+			$this->db->select('*');    
+			$this->db->from('mustahik');
+			$this->db->where('sekolah',$this->session->userdata('sekolah'));
+			$this->db->where('status_survey',0);
+			$hasil = $this->db->get();
+		}else{
+			$this->db->select('*');   
+			$this->db->from('mustahik');
+			$this->db->where('status_survey',0);
+			$hasil = $this->db->get();				
+		}
 		echo json_encode($hasil->result());
 	}
 

@@ -41,7 +41,7 @@ class Auth extends MY_Controller{
 			if($admin['is_active']==1 || $user['is_active']==1){
 				if(password_verify($password, $admin['password'])){
 					$data= [
-						'id_admin' => $admin['id_user'],
+						'id_user' => $admin['id_user'],
 						'email' => $admin['email'],
 						'username' => $admin['username'],
 						'level' => $admin['level'],
@@ -51,7 +51,7 @@ class Auth extends MY_Controller{
                     redirect('dashboard/index_awal');	
 				}else if(password_verify($password, $user['password'])){
 					$data= [
-						'id_admin' => $user['id_user'],
+						'id_user' => $user['id_user'],
 						'email' => $user['email'],
 						'username' => $user['username'],
 						'sekolah' => $user['sekolah'],

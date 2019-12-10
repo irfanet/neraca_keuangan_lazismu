@@ -8,9 +8,12 @@ class Penyaluran extends MY_Controller{
     {
         parent::__construct();
 		$this->load->model('penyaluran_model');
-		if($this->session->userdata('id_admin') != TRUE){
+		if($this->session->userdata('id_user') != TRUE){
             redirect('auth');
-        }
+		}
+		if($this->session->userdata('status') != 'admin'){
+            redirect('auth');
+		}
 	}
 	
     function index()

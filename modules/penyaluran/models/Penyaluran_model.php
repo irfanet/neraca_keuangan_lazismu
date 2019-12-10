@@ -27,7 +27,11 @@ class Penyaluran_model extends CI_Model
 
 	function getData()
 	{
-		$hasil = $this->db->get('penyaluran');
+		$this->db->select('*,a.keterangan AS ket');    
+		$this->db->from('penyaluran a');
+		$this->db->join("jurnal b", "CONCAT('P-',a.kd_penyaluran) = b.kd_transaksi","left");
+		$this->db->group_by('b.kd_transaksi','asc');
+		$hasil = $this->db->get();
 		return $hasil->result();
 	}
 	function setData()

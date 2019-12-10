@@ -91,10 +91,10 @@
           </span>
         </a>
         <ul class="treeview-menu">
-          <li><a href="#" data-target="setting/viewSegmen1"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
-          <li><a href="#" data-target="setting/viewSegmen2"><i class="fa fa-circle-o"></i> Kode Segmen 2</a></li>
-          <li><a href="#" data-target="setting/viewSegmen3"><i class="fa fa-circle-o"></i> Kode Segmen 3</a></li>
-          <li><a href="#" data-target="setting/viewSegmen4"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
+          <li><a href="#" data-target="tree"><i class="fa fa-circle-o"></i> Kode Segmen 1</a></li>
+          <li><a href="#" data-target="tree"><i class="fa fa-circle-o"></i> Kode Segmen 2</a></li>
+          <li><a href="#" data-target="tree"><i class="fa fa-circle-o"></i> Kode Segmen 3</a></li>
+          <li><a href="#" data-target="tree"><i class="fa fa-circle-o"></i> Kode Segmen 4</a></li>
         </ul>
       </li>
         <?php }
@@ -118,17 +118,11 @@
   <!-- /.sidebar -->
 </aside>
 
-<?php
-  if ($this->session->userdata('status') == 'admin'){ 
-?>
 <div id="isi">
-  <?php $this->load->view('dashboard'); ?>
+<?php
+  $this->load->view('index');
+?>
 </div>
-<?php } else {
-?>
-  <?php $this->load->view('mustahik'); ?>
-<?php }
-?>
 
 <script>
   $(document).ready(function() {

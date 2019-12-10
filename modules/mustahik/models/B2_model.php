@@ -11,10 +11,20 @@ class B2_model extends CI_Model
 
 	function getData()
 	{
-		$this->db->select('*');    
-		$this->db->from('mustahik a');
-		$this->db->join("mustahik_b2 b", "a.no_registrasi = b.no_mustahik");
-		$hasil = $this->db->get();
+
+		if($this->session->userdata('status')!='admin'){
+			$this->db->select('*');    
+			$this->db->from('mustahik a');
+			$this->db->join("mustahik_b2 b", "a.no_registrasi = b.no_mustahik");
+			$this->db->where('a.sekolah',$this->session->userdata('sekolah'));
+			$hasil = $this->db->get();
+		}else{
+			$this->db->select('*');    
+			$this->db->from('mustahik a');
+			$this->db->join("mustahik_b2 b", "a.no_registrasi = b.no_mustahik");
+			$hasil = $this->db->get();
+		}
+
 		return $hasil->result();
 	}
 	function setData()
@@ -57,11 +67,13 @@ class B2_model extends CI_Model
 			'sawah_pekarangan' => $this->input->post('sawah_pekarangan'),
 			'aset_bergerak' => $this->input->post('aset_bergerak'),
 			'status_bantuan_dari_lembaga_lain' => implode(',',$this->input->post('status_bantuan_dari_lembaga_lain')),
-			'catatan_tambahan' => $this->input->post('catatan_tambahan'),
+			'catatan_tambahan' => $this->input->post('catatan_tambahan')
 		);
 		$hasil = $this->db->insert("mustahik_b2", $data);
-		$this->db->where('no_registrasi', $this->input->post('no_registrasi'));
-		$this->db->update('mustahik', array('status_survey' => 1));
+		if($hasil){
+			$this->db->where('no_registrasi', $this->input->post('no_registrasi'));
+			$this->db->update('mustahik', array('status_survey' => 1));	
+		}
 		return $hasil;
 	}
 	function getNilai($id){

@@ -159,7 +159,7 @@ $url = base_url() . 'muzaki/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="agama">Agama <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control" id="agama" name="agama" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="agama" name="agama" required>
                   <option value="Islam">Islam</option>
                   <option value="Kristen">Kristen</option>
                   <option value="Katholik">Katholik</option>
@@ -261,6 +261,7 @@ $url = base_url() . 'muzaki/';
 <script type="text/javascript">
   $(document).ready(function() {
     tampil_data();
+    $('.select2').select2();
     var kondisi;
 
     //fungsi tampil data

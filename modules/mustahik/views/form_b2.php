@@ -508,10 +508,14 @@ $url = base_url() . 'mustahik/b2/';
     });
     var kondisi;
     getMustahik();
-    //get radio
-    for (i = 1; i <= 31; i++) {
+    setRadio(31);
+    //set radio
+    function setRadio(n){
+      for (i = 1; i <= n; i++) {
         getRadio('tb_b2_3',i);
+      }
     }
+
 
     //get gatot
     function getField(kategori) {

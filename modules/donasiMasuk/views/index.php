@@ -121,7 +121,7 @@ $url = base_url() . 'donasiMasuk/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_muzaki">Muzaki <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2" style="width: 100%;" id="kd_muzaki" name="kd_muzaki" required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="kd_muzaki" name="kd_muzaki" data-placeholder="my placeholder" required>
                 </select>
               </div>
             </div>
