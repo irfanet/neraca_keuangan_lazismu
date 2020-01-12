@@ -13,10 +13,10 @@ class Auth extends MY_Controller{
     function index()
     {
         if($this->session->userdata('status') == 'admin'){
-			redirect('dashboard/index_awal');
+			redirect('homepage');
 		}
 		if($this->session->userdata('status') == 'user'){
-			redirect('mustahik/index_awal');
+			redirect('homepage_user');
 		}
 		
 		$this->form_validation->set_rules('email','Email','valid_email|trim|required|strip_tags');
@@ -48,7 +48,7 @@ class Auth extends MY_Controller{
 						'status' => 'admin'
 					]; 
 					$this->session->set_userdata($data);
-                    redirect('dashboard/index_awal');	
+                    redirect('homepage');	
 				}else if(password_verify($password, $user['password'])){
 					$data= [
 						'id_user' => $user['id_user'],
@@ -58,7 +58,7 @@ class Auth extends MY_Controller{
 						'status' => 'user'
 					];
 					$this->session->set_userdata($data);
-                    redirect('mustahik/index_awal');	
+                    redirect('homepage_user');	
 				}else{
 					$this->session->set_flashdata('message','<div class="alert alert-danger" role="alert">
 					Login failed! Wrong password.</div>');

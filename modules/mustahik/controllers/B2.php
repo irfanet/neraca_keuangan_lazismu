@@ -28,9 +28,50 @@ class B2 extends MY_Controller{
 		echo json_encode($data);
 	}
 
+	function check_default($post_string)
+	{
+		return $post_string == '0' ? FALSE : TRUE;
+	}
+
 	function setData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('no_registrasi','No Registrasi', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('no_registrasi','No Registrasi', 'required|callback_check_default');
+		$this->form_validation->set_message('check_default', 'You need to select something other than the default');
+		$this->form_validation->set_rules('tgl','Tanggal', 'required');
+		$this->form_validation->set_rules('petugas_survey','Petugas Survey', 'required');
+		$this->form_validation->set_rules('jumlah_tanggungan_keluarga','Jumlah Tanggungan Keluarga', 'required');
+		$this->form_validation->set_rules('jumlah_anak_yg_masih_sekolah','Jumlah Anak yg Masih Sekolah', 'required');
+		$this->form_validation->set_rules('jumlah_anak_yg_putus_sekolah','Jumlah Anak yg Putus Sekolah', 'required');
+		$this->form_validation->set_rules('jumlah_pengeluaran_bulanan','Jumlah Pengeluaran Bulanan', 'required');
+		$this->form_validation->set_rules('obat_rutin_anggota_keluarga_yg_sakit','Obat Rutin Anggota Keluarga yg Sakit', 'required');
+		$this->form_validation->set_rules('biaya_pendidikan_yg_ditanggung','Biaya Pendidikan yg Ditanggung', 'required');
+		$this->form_validation->set_rules('riwayat_hutang_berjalan','Riwayat Hutang Berjalan', 'required');
+		$this->form_validation->set_rules('keperluan_hutang','Keperluan Hutang', 'required');
+		// $this->form_validation->set_rules('pekerjaan_kepala_keluarga','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('merokok','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('pekerjaan_suami_istri','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('usia_mustahik','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('kondisi_kepala_keluarga','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('kepemilikan_rumah','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('luas_rumah','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('dinding_rumah','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('lantai','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('atap','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('sumber_air_minum','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('mck','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('penerangan','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('daya_terpasang','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('kelayakan_tidur','Jumlah Tanggungan Keluarga', 'required');
+		$this->form_validation->set_rules('barang_elektronik_yg_dimiliki','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('jumlah_makan_perhari','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('ayam','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('daging','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('susu','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('belanja_harian','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('aset_tidak_bergerak_sawah_pekarangan','Jumlah Tanggungan Keluarga', 'required');
+		// $this->form_validation->set_rules('aset_bergerak','Jumlah Tanggungan Keluarga', 'required');
+		$this->form_validation->set_rules('status_bantuan_dari_lembaga_lain','Jumlah Tanggungan Keluarga', 'required');
+		$this->form_validation->set_rules('catatan_tambahan','Catatan Tambahan', 'required');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {
@@ -52,7 +93,7 @@ class B2 extends MY_Controller{
 
 	function updateData(){
 		$data = array ('success' => false, 'messages' => array());
-		$this->form_validation->set_rules('nama', 'Nama', 'required|trim|strip_tags');
+		$this->form_validation->set_rules('no_registrasi', 'No Registrasi', 'required|trim|strip_tags');
 		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
 
 		if ($this->form_validation->run() == FALSE) {

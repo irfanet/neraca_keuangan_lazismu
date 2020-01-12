@@ -105,8 +105,9 @@ $url = base_url() . 'mustahik/';
       <form id="form_add" data-parsley-validate class="form-horizontal form-label-left">
         <div class="modal-body">
           <!-- <input type="hidden" id="kd_mustahik" name="kd_mustahik"> -->
+          <input type="hidden" id="no_registrasi" name="no_registrasi">
           <input type="hidden" name="old_image" id="old_image">
-          <div class="row">
+          <!-- <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">*</span>
               </label>
@@ -114,7 +115,7 @@ $url = base_url() . 'mustahik/';
                 <input type="text" id="no_registrasi" name="no_registrasi" placeholder="*data berdasarkan KTP" required class="form-control col-md-7 col-xs-12">
               </div>
             </div>
-          </div>
+          </div> -->
 
           <div class="row">
             <div class="form-group">

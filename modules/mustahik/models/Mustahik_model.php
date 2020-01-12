@@ -25,7 +25,7 @@ class Mustahik_model
 	{
 		$this->kd_data = uniqid();
 		$data = array(
-			'no_registrasi' => $this->input->post('no_registrasi'),
+			'no_registrasi' => $this->kd_data,
 			'no_kk' => $this->input->post('no_kk'),
 			'nik' => $this->input->post('nik'),
 			'nama' => $this->input->post('nama'),

@@ -2,6 +2,30 @@
 $title = "Form Survey Calon Mustahik (B2)";
 $url = base_url() . 'mustahik/b2/';
 ?>
+<style>
+#loading {
+   width: 100%;
+   height: 100%;
+   top: 0;
+   left: 0;
+   position: fixed;
+   display: block;
+   opacity: 0.7;
+   background-color: #fff;
+   z-index: 99;
+   text-align: center;
+}
+
+#loading-image {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  z-index: 100;
+}
+</style>
+<div id="loading">
+  <img id="loading-image" src="<?= base_url()?>assets/img/ajax-loader.gif" alt="Loading..." />
+</div>
 <!-- Content Wrapper. Contains page content -->
 <div class="content-wrapper">
   <!-- Content Header (Page header) -->
@@ -71,7 +95,8 @@ $url = base_url() . 'mustahik/b2/';
                   <th>Nama</th>
                   <th>Alamat</th>
                   <th>Detail Pengajuan</th>
-                  <!-- <th width="15px">Aksi</th> -->
+                  <th>Skor</th>
+                  <th width="15px">Aksi</th>
                 </tr>
               </thead>
               <tbody id="show_data">
@@ -104,6 +129,7 @@ $url = base_url() . 'mustahik/b2/';
         <div class="modal-body">
           
         <!-- Data survey -->
+        <input type="hidden" id="id_survey" name="id_survey">
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="no_registrasi">Nomor Registrasi <span class="required">:</span>
@@ -343,7 +369,7 @@ $url = base_url() . 'mustahik/b2/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="barang_elektronik_yg_dimiliki">Barang Elektronik yg Dimiliki <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2 tag" style="width: 100%;" id="barang_elektronik_yg_dimiliki" name="barang_elektronik_yg_dimiliki[]" multiple required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="barang_elektronik_yg_dimiliki" name="barang_elektronik_yg_dimiliki[]" multiple required>
                 </select>
               </div>
             </div>
@@ -409,20 +435,20 @@ $url = base_url() . 'mustahik/b2/';
             </div>
             <div class="row">
                 <div class="form-group">
-                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_tidak_bergerak">Aset Tidak Bergerak <span class="required">:</span>
+                <label class="control-label col-md-4 col-sm-4 col-xs-4" for="aset_tidak_bergerak_sawah_pekarangan">Aset Tidak Bergerak <span class="required">:</span>
                 </label>
-                <div class="col-md-6 col-sm-6 col-xs-6" id="aset_tidak_bergerak">
+                <div class="col-md-6 col-sm-6 col-xs-6" id="aset_tidak_bergerak_sawah_pekarangan">
                 </div>
                 </div>
             </div>
-            <div class="row">
+            <!-- <div class="row">
                 <div class="form-group">
                 <label class="control-label col-md-4 col-sm-4 col-xs-4" for="sawah_pekarangan">Sawah Pekarangan <span class="required">:</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-6" id="sawah_pekarangan">
                 </div>
                 </div>
-            </div>
+            </div> -->
 
             <div class="row">
                 <div class="form-group">
@@ -440,7 +466,7 @@ $url = base_url() . 'mustahik/b2/';
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="status_bantuan_dari_lembaga_lain">Status Bantuan dari Lembaga Lain <span class="required">:</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
-                <select type="text" class="form-control select2 tag" style="width: 100%;" id="status_bantuan_dari_lembaga_lain" name="status_bantuan_dari_lembaga_lain[]" multiple required>
+                <select type="text" class="form-control select2" style="width: 100%;" id="status_bantuan_dari_lembaga_lain" name="status_bantuan_dari_lembaga_lain[]" multiple required>
                 </select>
               </div>
             </div>
@@ -501,21 +527,24 @@ $url = base_url() . 'mustahik/b2/';
     tampil_data();
     $('.select2').select2();
     $('#barang_elektronik_yg_dimiliki').select2({
-      tags: true
+      tags: true,
+      tokenSeparators: [',', ' ']
     });
     $('#status_bantuan_dari_lembaga_lain').select2({
       tags: true
     });
     var kondisi;
     getMustahik();
-    setRadio(31);
+    setRadio(30);
     //set radio
     function setRadio(n){
       for (i = 1; i <= n; i++) {
         getRadio('tb_b2_3',i);
+        if(i==n){
+          $('#loading').hide();
+        }
       }
     }
-
 
     //get gatot
     function getField(kategori) {
@@ -563,7 +592,7 @@ $url = base_url() . 'mustahik/b2/';
           var i;
           var html ='';
           for (i = 0; i < data.length; i++) {
-            html += "<input type='radio' id='" + data[i].kd_data + "' class='minimal' value='"+ data[i].kd_data + "' name=' "+field+"' /> "+ data[i].keterangan + "&nbsp; ";
+            html += "<input type='radio' id='" + data[i].kd_data + "' class='minimal' value='"+ data[i].kd_data + ',' + data[i].nilai + "' name='"+field+"' required /> "+ data[i].keterangan + "&nbsp; ";
           }
           $('#'+field).append(html);
         }
@@ -578,7 +607,7 @@ $url = base_url() . 'mustahik/b2/';
         async: false,
         dataType: 'json',
         success: function(data) {
-          var html = '<option selected disabled>--- Pilih Satu ---</option>';
+          var html = '<option value="0" selected>--- Pilih Satu ---</option>';
           var i;
           for (i = 0; i < data.length; i++) {
             html += '<option value="' + data[i].no_registrasi + '">' + data[i].nama + ' - ' + data[i].alamat + '</option>';
@@ -608,10 +637,11 @@ $url = base_url() . 'mustahik/b2/';
               '<td>' + data[i].nama + '</td>' +
               '<td>' + data[i].alamat + '</td>' +
               '<td>' + data[i].detail_pengajuan + '</td>' +
-              // '<td style="text-align:center;">' +
-              // '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_survey + '"><i class="fa fa-pencil "></i></a>' + ' ' +
-              // '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_survey + '"><i class="fa fa-trash "></i></a>' +
-              // '</td>' +
+              '<td>' + data[i].skor + '</td>' +
+              '<td style="text-align:center;">' +
+              '<a href="javascript:;" class="btn btn-primary btn-xs item_edit" data="' + data[i].id_survey + '"><i class="fa fa-pencil "></i></a>' + ' ' +
+              '<a href="javascript:;" class="btn btn-danger btn-xs item_hapus" data="' + data[i].id_survey + '"><i class="fa fa-trash "></i></a>' +
+              '</td>' +
               '</tr>';
           }
           $('#show_data').html(html);
@@ -650,18 +680,56 @@ $url = base_url() . 'mustahik/b2/';
           id: id
         },
         success: function(data) {
-          $.each(data, function(no_registrasi, no_kk,nik, nama, tempat_lahir, tgl_lahir, alamat, dusun, desa, kecamatan, kota, propinsi, jenis_kelamin) {
+          $.each(data, function() {
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
-            $('#old_image').val(data.foto);
-            $('#no_registrasi').val(data.no_registrasi).attr('readonly', true);
-            $('#no_kk').val(data.no_kk);
-            $('#nik').val(data.nik);
-            $('#nama').val(data.nama);
-            $('#tempat_lahir').val(data.tempat_lahir);
-            $('#tgl_lahir').val(data.tgl_lahir);
-            $('#'+ data.jenis_kelamin).attr('checked',true);
+            $('#id_survey').val(data.id_survey);
+            $('#no_mustahik').val(data.no_mustahik);
+            $('#tgl').val(data.tgl);
+            $('#petugas_survey').val(data.petugas_survey);
+            $('#'+data.jumlah_tanggungan_keluarga).prop('checked',true);
+            $('#'+data.jumlah_anak_yg_masih_sekolah).prop('checked',true);
+            $('#'+data.jumlah_anak_yg_putus_sekolah).prop('checked',true);
+            $('#'+data.jumlah_pengeluaran_bulanan).prop('checked',true);
+            $('#'+data.obat_rutin_anggota_keluarga_yg_sakit).prop('checked',true);
+            $('#'+data.biaya_pendidikan_yg_ditanggung).prop('checked',true);
+            $('#'+data.riwayat_hutang_berjalan).prop('checked',true);
+            $('#'+data.keperluan_hutang).prop('checked',true);
+            $('#'+data.pekerjaan_kepala_keluarga).prop('checked',true);
+            $('#'+data.merokok).prop('checked',true);
+            $('#'+data.pekerjaan_suami_istri).prop('checked',true);
+            $('#'+data.usia_mustahik).prop('checked',true);
+            $('#'+data.kondisi_kepala_keluarga).prop('checked',true);
+            $('#'+data.kepemilikan_rumah).prop('checked',true);
+            $('#'+data.luas_rumah).prop('checked',true);
+            $('#'+data.dinding_rumah).prop('checked',true);
+            $('#'+data.lantai).prop('checked',true);
+            $('#'+data.atap).prop('checked',true);
+            $('#'+data.sumber_air_minum).prop('checked',true);
+            $('#'+data.mck).prop('checked',true);
+            $('#'+data.penerangan).prop('checked',true);
+            $('#'+data.daya_terpasang).prop('checked',true);
+            $('#'+data.kelayakan_tidur).prop('checked',true);
+            // $.each(data.barang_elektronik_yg_dimiliki.split(","), function(i,e){
+            //     $("#barang_elektronik_yg_dimiliki option[value='" + e + "']").prop("selected", true);
+            // });
+            var barang = data.barang_elektronik_yg_dimiliki;
+            var arrayArea = barang.split(',');
+            // $('#barang_elektronik_yg_dimiliki').select2().select2('val',arrayArea);
+            $('#barang_elektronik_yg_dimiliki').val(data.barang_elektronik_yg_dimiliki);
+            // $('#'+data.barang_elektronik_yg_dimiliki).prop('checked',true);
+            $('#'+data.jumlah_makan_perhari).prop('checked',true);
+            $('#'+data.ayam).prop('checked',true);
+            $('#'+data.daging).prop('checked',true);
+            $('#'+data.susu).prop('checked',true);
+            $('#'+data.belanja_harian).prop('checked',true);
+            $('#'+data.aset_tidak_bergerak_sawah_pekarangan).prop('checked',true);
+            $('#'+data.aset_bergerak).prop('checked',true);
+            $('#status_bantuan_dari_lembaga_lain').val(data.status_bantuan_dari_lembaga_lain);
+            $('#catatan_tambahan').val(data.catatan_tambahan);
+            $('#'+data.sekolah).prop('checked',true);
+            $('#'+data.skor).prop('checked',true);
           });
         }
       });

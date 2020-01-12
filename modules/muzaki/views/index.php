@@ -192,7 +192,7 @@ $url = base_url() . 'muzaki/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="npwp">NPWP <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="npwp">NPWZ <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <input type="text" id="npwp" name="npwp" required class="form-control col-md-7 col-xs-12">

@@ -52,6 +52,8 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 $route['default_controller'] = 'auth';
 $route['404_override'] = '';
 $route['translate_uri_dashes'] = true;
+$route['homepage'] = 'dashboard/index_awal';
+$route['homepage_user'] = 'mustahik/index_awal';
 
 /*
 | -------------------------------------------------------------------------

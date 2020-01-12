@@ -68,7 +68,7 @@ $url = base_url() . 'penyaluran/';
                 <tr>
                   <th width="10px">No</th>
                   <th>Tanggal</th>
-                  <th>Kode Muzaki</th>
+                  <th>Kode Mustahik</th>
                   <th>Keterangan</th>
                   <th>Jenis Donasi</th>
                   <th>Jenis Dana</th>
@@ -118,7 +118,7 @@ $url = base_url() . 'penyaluran/';
 
           <div class="row">
             <div class="form-group">
-              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_mustahik">Muzaki <span class="required">*</span>
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="kd_mustahik">Mustahik <span class="required">*</span>
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select type="text" class="form-control select2" style="width: 100%;" id="kd_mustahik" name="kd_mustahik" required>
