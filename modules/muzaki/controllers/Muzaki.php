@@ -92,7 +92,6 @@ class Muzaki extends MY_Controller{
 			  $excel['upload_error'] = $upload['error'];
 			}
 
-
 			// XLSX
 			$excelreader = PHPExcel_IOFactory::createReader("Excel2007");
 			$loadexcel = $excelreader->load('assets/uploads/excel/'.$this->filename.'.xlsx'); 

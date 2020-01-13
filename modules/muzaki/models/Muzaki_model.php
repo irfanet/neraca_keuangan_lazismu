@@ -16,9 +16,9 @@ class Muzaki_model extends CI_Model
 	}
 	function setData()
 	{
-		$this->kd_data = uniqid();
+		// $this->kd_data = uniqid();
 		$data = array(
-			'kd_muzaki' => $this->kd_data,
+			// 'kd_muzaki' => $this->kd_data,
 			'nama_muzaki' => $this->input->post('nama_muzaki'),
 			'alamat' => $this->input->post('alamat'),
 			'no_hp' => $this->input->post('no_hp'),

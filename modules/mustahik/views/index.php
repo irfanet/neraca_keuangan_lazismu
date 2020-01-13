@@ -31,6 +31,9 @@ $url = base_url() . 'mustahik/';
             <center>
               <a class="btn btn-app btn-lg" data-toggle="modal" id="btn_add_modal" data-target="#modal_add">
                 <i class="fa fa-plus text-primary"></i> Tambah
+              </a><br>
+              <a class="btn btn-app btn-lg" data-toggle="modal" id="btn_import_modal" data-target="#modal_import">
+                <i class="fa  fa-file-excel-o text-primary"></i> Import
               </a>
             </center>
           </div>
@@ -377,6 +380,42 @@ $url = base_url() . 'mustahik/';
 </div>
 <!-- /.modal tambah dan edit -->
 
+<!-- /.modal import -->
+<div class="modal fade" id="modal_import">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Import Data</h4>
+      </div>
+      <!-- enctype="multipart/form-data" -->
+      <form id="form_import" data-parsley-validate class="form-horizontal form-label-left">
+        <input type="hidden" name="dummy" id="dummy" value="<?= uniqid()?>">
+        <div class="modal-body">
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="excel">Pilih Excel <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="file" id="excel" name="excel" accept=".xlsx" required>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+          <input type="submit" name="btn_import" id="btn_import" value="Simpan" class="btn btn-primary">
+        </div>
+      </form>
+    </div>
+    <!-- /.modal-content -->
+  </div>
+  <!-- /.modal-dialog -->
+</div>
+<!-- /.modal import -->
+
 <!-- /.modal hapus -->
 <div class="modal modal-danger fade" id="modal_delete">
   <div class="modal-dialog">
@@ -429,8 +468,8 @@ $url = base_url() . 'mustahik/';
           for (i = 0; i < data.length; i++) {
             html += '<tr>' +
               '<td>' + no++ + '</td>' +
-              '<td>' + data[i].no_registrasi + '</td>' +
-              '<td>' + data[i].no_kk + '</td>' +
+              '<td>' + data[i].nik + '</td>' +
+              '<td>' + data[i].nama + '</td>' +
               '<td>' + data[i].alamat + '</td>' +
               '<td>' + data[i].detail_pengajuan + '</td>' +
               '<td>' + data[i].pekerjaan + '</td>' +
@@ -454,6 +493,49 @@ $url = base_url() . 'mustahik/';
         }
       });
     }
+
+    //Import Data
+    $('#btn_import').on('click', function() {
+      var myform = new FormData($('#form_import')[0]);
+        $.ajax({
+          async: true,
+          type: "POST",
+          url: "<?= $url ?>importData",
+          dataType: "JSON",
+          data: myform,
+          cache: false,
+          processData: false,
+          contentType: false,
+          success: function(data) {
+            if (data.success == true) {
+              $('#info').append('<div class="alert alert-success"><i class="fa fa-check"></i>' +
+                ' <b>Bershasil ! </b>Data telah disimpan ! ' + '</div>');
+              $('.form-group').removeClass('has-error')
+                .removeClass('has-success');
+              $('.text-danger').remove();
+              $('.alert-success').delay(500).show(1000, function() {
+                $(this).delay(2000).slideUp(500, function() {
+                  $(this).remove();
+                });
+              })
+              $('#form_import')[0].reset();
+              $('#modal_import').modal('hide');
+              tampil_data();
+            } else {
+              $.each(data.messages, function(key, value) {
+                var element = $('#' + key);
+                element.closest('div.form-group')
+                  .removeClass('has-error')
+                  .addClass(value.length > 0 ? 'has-error' : 'has-success')
+                  .find('.text-danger')
+                  .remove();
+                element.after(value);
+              });
+            }
+          }
+        });
+        return false;
+    });
 
     //ATUR HIDE AND SHOW
     $('#btn_add_modal').on('click', function() {

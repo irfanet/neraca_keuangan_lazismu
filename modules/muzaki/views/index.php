@@ -33,7 +33,7 @@ $url = base_url() . 'muzaki/';
                 <i class="fa fa-plus text-primary"></i> Tambah
               </a><br>
               <a class="btn btn-app btn-lg" data-toggle="modal" id="btn_import_modal" data-target="#modal_import">
-                <i class="fa fa-plus text-primary"></i> Import
+                <i class="fa  fa-file-excel-o text-primary"></i> Import
               </a>
             </center>
           </div>
@@ -439,8 +439,6 @@ $url = base_url() . 'muzaki/';
           }
         });
         return false;
-      
-
     });
 
     //SIMPAN DATA

@@ -4,6 +4,7 @@
 
 class Mustahik extends MY_Controller{
 
+	private $filename = "Data_mustahik";
     function __construct()
     {
         parent::__construct();
@@ -131,7 +132,66 @@ class Mustahik extends MY_Controller{
 		}
 
 		return $data;
+	}
 
+	function importData(){
+		include APPPATH . 'third_party/PHPExcel/PHPExcel.php';
+
+		$data = array ('success' => false, 'messages' => array());
+		$this->form_validation->set_rules('dummy', 'Dummy', 'required');
+		$this->form_validation->set_error_delimiters('<p class="text-danger">', '</p>');
+
+		if ($this->form_validation->run() == FALSE) {
+			foreach ($_POST as $key => $value) {
+				$data['messages'][$key] = form_error($key);
+			}   
+		}else{
+			$data['success'] = true;
+			
+			error_reporting(E_ALL ^ E_NOTICE);
+			$sql = "DELETE FROM mustahik";
+			$this->db->query($sql);
+
+			$upload = $this->mustahik_model->uploadExcel($this->filename);
+			if ($upload['result'] == 'failed') {
+			  $excel['upload_error'] = $upload['error'];
+			}
+
+			// XLSX
+			$excelreader = PHPExcel_IOFactory::createReader("Excel2007");
+			$loadexcel = $excelreader->load('assets/uploads/excel/'.$this->filename.'.xlsx'); 
+	
+			//XLS
+			// $excelreader =  new PHPExcel_Reader_Excel5();
+			// $loadexcel = $excelreader->load('upload/excel/'.$this->filename.'.xlsx'); 
+			$sheet = $loadexcel->getActiveSheet()->getRowIterator();
+			 
+			$excel = array();
+	
+			$numrow = 0;
+			foreach($sheet as $row){
+			   if ($numrow>1){
+				$cellIterator = $row->getCellIterator();
+				$cellIterator->setIterateOnlyExistingCells(false); 
+				
+				$get = array(); 
+				foreach ($cellIterator as $cell) {
+					array_push($get, $cell->getValue()); 
+				}           
+						
+				array_push($excel, array(
+					'nik'=>$get[1], 
+					'nama'=> $get[2],
+					'alamat'=>$get[3],
+					'detail_pengajuan'=>$get[7],
+					));
+				}
+			  $numrow++; 
+			}
+		  
+			$this->mustahik_model->insert_multiple($excel);
+		}
+		echo json_encode($data);
 	}
 
 
