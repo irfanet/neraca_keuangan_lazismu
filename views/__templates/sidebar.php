@@ -19,6 +19,12 @@
           <span>Jurnal</span>
         </a>
       </li>
+      <li class="treeview <?php echo $this->uri->segment(1) == 'jurnalUmum' ? 'active' : '' ?>">
+        <a href="#" data-target="jurnalUmum">
+          <i class="fa fa-list-ol"></i>
+          <span>Jurnal Umum</span>
+        </a>
+      </li>
       <li class="treeview <?php echo $this->uri->segment(1) == 'aset' ? 'active' : '' ?>">
         <a href="#" data-target="aset">
           <i class="fa fa-calculator"></i>
