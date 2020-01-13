@@ -123,9 +123,9 @@ class Aset_model extends CI_Model
 		$this->db->set('nilai_saat_ini', 'nilai_saat_ini-'.$this->nilai_aset,FALSE);
 		$hasil = $this->db->update('aset');
 
-		$this->kd_transaksi = 'A-'.$this->kd_data;
+		$this->kd_transaksi = 'D-'.$this->kd_data;
 		$this->setJurnalDepresiasi($this->kd_transaksi);
-		$this->updateNeraca($this->kd_transaksi);
+		$this->updateNeracaDepresiasi($this->kd_transaksi);
 		return $hasil;
 	}
 
@@ -136,7 +136,7 @@ class Aset_model extends CI_Model
 			array(
 				'tgl' => $this->tgl_perolehan ,
 				'kd_akun' => $this->akun_depresiasi ,
-				'keterangan' => 'Depresiasi aset '.$this->nama_aset.' sebesar '.$this->nilai_aset,
+				'keterangan' => 'Depresiasi aset "'.$this->nama_aset.'" sebesar '.$this->nilai_aset,
 				'debit' => $this->nilai_aset,
 				'kredit' => 0,
 				'status' => 1,
@@ -146,7 +146,7 @@ class Aset_model extends CI_Model
 			array(
 			   'tgl' => $this->tgl_perolehan ,
 			   'kd_akun' => $this->akun_aset ,
-			   'keterangan' => 'Depresiasi aset '.$this->nama_aset.' sebesar '.$this->nilai_aset,
+			   'keterangan' => 'Depresiasi aset "'.$this->nama_aset.'" sebesar '.$this->nilai_aset,
 			   'debit' => 0,
 			   'kredit' => $this->nilai_aset,
 			   'status' => 1,
@@ -167,6 +167,32 @@ class Aset_model extends CI_Model
 		}
 		$this->db->update_batch('jurnal', $data, 'kd_transaksi');
 		$this->updateNeraca($kd_transaksi);
+	}
+	function updateNeracaDepresiasi($kode){
+		$this->db->select('*');
+		$this->db->from('jurnal');
+		$this->db->where('kd_transaksi', $kode);
+		$this->db->where('status', 1);
+		$this->db->order_by('id', 'DESC');
+		$this->db->limit('2');
+		$jurnal = $this->db->get()->result_array();
+		foreach($jurnal as $j){
+			$kd_akun = $j['kd_akun'];
+			$debit = $j['debit'];
+			$kredit = $j['kredit'];
+			//check saldo akun
+			$s = $this->db->get_where("akun", array('kd_akun' => $kode))->row_array();
+			$saldo = $s['saldo'];
+			if ($debit != 0) {
+				$this->db->where('kd_akun', $kd_akun);
+				$this->db->set('saldo', 'saldo+' . $debit, FALSE);
+				$this->db->update('akun');
+			} else {
+				$this->db->where('kd_akun', $kd_akun);
+				$this->db->set('saldo', 'saldo-' . $kredit, FALSE);
+				$this->db->update('akun');
+			}
+		}
 	}
 
 	function updateNeraca($kode){
@@ -222,7 +248,11 @@ class Aset_model extends CI_Model
 	}
 	function getDetailByKode($kode)
 	{
-		$hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'A-'.$kode))->result();
+
+		$this->db->where('kd_transaksi', 'A-'.$kode);
+		$this->db->or_where('kd_transaksi =', 'D-'.$kode);
+		$hasil = $this->db->get('jurnal')->result();
+		// $hasil = $this->db->get_where("jurnal", array('kd_transaksi' => 'A-'.$kode))->result();
 		return $hasil;
 	}
 	function updateData()
