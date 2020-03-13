@@ -21,6 +21,10 @@ class Dashboard extends MY_Controller{
         $this->load->view('index');
 	}
 
+	function reset(){
+		// UPDATE `akun` SET `saldo` = 0 WHERE `saldo` != 0
+	}
+
 	function index_awal()
     {
         $this->load->template('index');

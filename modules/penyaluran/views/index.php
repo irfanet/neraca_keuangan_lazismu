@@ -335,6 +335,7 @@ $url = base_url() . 'penyaluran/';
         type: 'ajax',
         url: '<?= $url ?>getMustahik',
         async: false,
+        type: "GET",
         dataType: 'json',
         success: function(data) {
           var html = '<option selected disabled>--- Pilih Satu ---</option> <optgroup label="Mustahik (Form B2) ">';
@@ -353,6 +354,7 @@ $url = base_url() . 'penyaluran/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getIbnuSabil',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -372,6 +374,7 @@ $url = base_url() . 'penyaluran/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>" + paymentMethod + "",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -390,6 +393,7 @@ $url = base_url() . 'penyaluran/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getProgram",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -408,6 +412,7 @@ $url = base_url() . 'penyaluran/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getDanaPasiva",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -437,6 +442,7 @@ $url = base_url() . 'penyaluran/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

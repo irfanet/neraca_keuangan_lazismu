@@ -326,6 +326,7 @@ $url = base_url() . 'aset/';
         type: 'ajax',
         url: '<?= $url ?>getCash',
         async: false,
+        type: "GET",
         dataType: 'json',
         success: function(data) {
           var html = '<optgroup label="CASH">';
@@ -344,6 +345,7 @@ $url = base_url() . 'aset/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getBank",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -363,6 +365,7 @@ $url = base_url() . 'aset/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getAsetLancar',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -382,6 +385,7 @@ $url = base_url() . 'aset/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getDanaPasiva",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -412,6 +416,7 @@ $url = base_url() . 'aset/';
         type: 'ajax',
         url: '<?= $url ?>getData',
         async: true,
+        type: "GET",
         dataType: 'json',
         success: function(data) {
           $('#example2').dataTable().fnDestroy();

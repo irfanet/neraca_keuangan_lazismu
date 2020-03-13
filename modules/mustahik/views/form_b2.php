@@ -551,6 +551,7 @@ $url = base_url() . 'mustahik/b2/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getField/'+kategori,
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -575,6 +576,7 @@ $url = base_url() . 'mustahik/b2/';
      $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getKetField/'+id,
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -586,6 +588,7 @@ $url = base_url() . 'mustahik/b2/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getRadio/'+name+'/'+id,
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {
@@ -604,6 +607,7 @@ $url = base_url() . 'mustahik/b2/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getMustahik',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -623,6 +627,7 @@ $url = base_url() . 'mustahik/b2/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

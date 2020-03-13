@@ -458,6 +458,7 @@ $url = base_url() . 'mustahik/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

@@ -247,6 +247,7 @@ $url = base_url() . 'mutasi/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getCash',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -266,6 +267,7 @@ $url = base_url() . 'mutasi/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getBank",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -285,6 +287,7 @@ $url = base_url() . 'mutasi/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getAsetLancar',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -304,6 +307,7 @@ $url = base_url() . 'mutasi/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getDanaPasiva",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -333,6 +337,7 @@ $url = base_url() . 'mutasi/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

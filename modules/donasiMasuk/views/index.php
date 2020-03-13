@@ -170,6 +170,40 @@ $url = base_url() . 'donasiMasuk/';
             </div>
           </div>
 
+          
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jenis_nominal">Jenis Nominal <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="radio" id="jns_default" class="minimal" value="default" name="jenis_nominal" checked /> Default<br>
+                <input type="radio" id="jns_full" class="minimal" value="100" name="jenis_nominal" /> 100%<br>
+              </div>
+            </div>
+          </div>
+
+          <div name="show_default">
+          <!-- <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="potongan_amil">Potongan Amil (Zakat 12.5 % / Lain 20 %) <span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="potongan_amil" name="potongan_amil" value="20" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div> -->
+
+          <div class="row">
+            <div class="form-group">
+              <label class="control-label col-md-4 col-sm-4 col-xs-4" for="potongan_wilayah">Potongan Hak Wilayah (%)<span class="required">*</span>
+              </label>
+              <div class="col-md-6 col-sm-6 col-xs-6">
+                <input type="text" id="potongan_wilayah" name="potongan_wilayah" value="5" required class="form-control col-md-7 col-xs-12">
+              </div>
+            </div>
+          </div>
+          </div>
+
           <div class="row">
             <div class="form-group">
               <label class="control-label col-md-4 col-sm-4 col-xs-4" for="jumlah_dana">Jumlah Dana <span class="required">*</span>
@@ -279,6 +313,7 @@ $url = base_url() . 'donasiMasuk/';
     //   radioClass   : 'iradio_minimal-blue'
     // })
 
+
     //radio event
     $('input[type=radio][name=paymentMethod]').on('change', function() {
       switch ($(this).val()) {
@@ -293,11 +328,26 @@ $url = base_url() . 'donasiMasuk/';
       }
     });
 
+    //radio event
+    $('input[type=radio][name=jenis_nominal]').on('change', function() {
+      switch ($(this).val()) {
+        case '100':
+          $('[name="show_default"]').hide();
+          break;
+        case 'default':
+          $('[name="show_default"]').show();
+          break;
+      }
+    });
+
+
+
     //get muzaki
     function getMuzaki() {
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getMuzaki',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -316,6 +366,7 @@ $url = base_url() . 'donasiMasuk/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>" + paymentMethod + "",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -334,6 +385,7 @@ $url = base_url() . 'donasiMasuk/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getDanaPasiva",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -363,6 +415,7 @@ $url = base_url() . 'donasiMasuk/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

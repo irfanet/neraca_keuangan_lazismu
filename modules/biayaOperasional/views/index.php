@@ -288,6 +288,7 @@ $url = base_url() . 'biayaOperasional/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getMuzaki',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -306,6 +307,7 @@ $url = base_url() . 'biayaOperasional/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>" + paymentMethod + "",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -330,6 +332,7 @@ $url = base_url() . 'biayaOperasional/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>" + paymentMethod + "",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -348,6 +351,7 @@ $url = base_url() . 'biayaOperasional/';
       $.ajax({
         type: 'ajax',
         url: "<?= $url ?>getDanaPasiva",
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -377,6 +381,7 @@ $url = base_url() . 'biayaOperasional/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

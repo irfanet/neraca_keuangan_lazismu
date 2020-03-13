@@ -149,7 +149,7 @@ $url = base_url() . 'muzaki/';
               </label>
               <div class="col-md-6 col-sm-6 col-xs-6">
                 <select type="text" class="form-control" id="jenis_muzaki" name="jenis_muzaki" required>
-                  <option value="Pribadi">Pribadi</option>
+                  <option value="Individu">Individu</option>
                   <option value="Entitas">Entitas</option>
                   <option value="Lembaga">Lembaga</option>
                 </select>
@@ -309,6 +309,7 @@ $url = base_url() . 'muzaki/';
         type: 'ajax',
         url: '<?= $url ?>getData',
         async: true,
+        type: "GET",
         dataType: 'json',
         success: function(data) {
           $('#example2').dataTable().fnDestroy();

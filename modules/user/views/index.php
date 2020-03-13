@@ -204,6 +204,7 @@
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>get_data',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {

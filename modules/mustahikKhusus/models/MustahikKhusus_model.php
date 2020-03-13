@@ -101,5 +101,27 @@ class MustahikKhusus_model extends CI_Model
             return array_map('unlink', glob(FCPATH."assets/uploads/mustahik_khusus/$filename.*"));
         }
 	}
+
+	function uploadExcel($filename){
+		
+		$config['upload_path'] = './assets/uploads/excel/';
+		$config['allowed_types'] = 'xls|xlsx';
+		$config['max_size']  = '64000';
+		$config['overwrite'] = true;
+		$config['file_name'] = $filename;
+	
+		$this->load->library('upload', $config);
+		if($this->upload->do_upload('excel')){
+			$return = array('result' => 'success', 'file' => $this->upload->data(), 'error' => '');
+			return $return;
+		}else{
+			$return = array('result' => 'failed', 'file' => '', 'error' => $this->upload->display_errors());
+			return $return;
+		}
+	}
+
+	function insert_multiple($data){
+		$this->db->insert_batch("mustahik_khusus", $data);
+	}
 	
 }

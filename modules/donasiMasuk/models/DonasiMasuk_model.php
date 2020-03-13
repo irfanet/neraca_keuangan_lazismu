@@ -10,12 +10,14 @@ class DonasiMasuk_model extends CI_Model
 	public $jenis_dana;
 	public $jumlah_dana;
 	public $akun_amil;
+	public $akun_wilayah;
 	public $kd_transaksi;
 
 	public $nama_muzaki;
 	public $nama_akunA;
 	public $nama_akunP;
 	public $nama_akun_amil;
+	public $nama_akun_wilayah;
 	public $jenis_pembayaran;
 
 	function __construct()
@@ -42,6 +44,10 @@ class DonasiMasuk_model extends CI_Model
 		$this->jenis_donasi = $this->input->post('jenis_donasi');
 		$this->jenis_dana = $this->input->post('jenis_dana');
 		$this->jumlah_dana = $this->input->post('jumlah_dana');
+		$this->jenis_nominal = $this->input->post('jenis_nominal');
+		// $this->potongan_amil = $this->input->post('potongan_amil');
+		$this->potongan_wilayah = $this->input->post('potongan_wilayah');
+
 		$data = array(
 			// 'kd_donasi' => $this->kd_data,
 			'tgl_donasi' => $this->tgl_donasi,
@@ -59,53 +65,281 @@ class DonasiMasuk_model extends CI_Model
 	}
 	function setJurnal($kd_transaksi){
 		$this->akun_amil = 'A02.02.05.00';
+		$this->akun_wilayah = 'A02.02.11.00';
+
+		// $this->potongan_amil = $this->potongan_amil/100;
+		$this->potongan_wilayah = $this->potongan_wilayah/100; 
 		//zakat = potongan 12.5%
 		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
-			$dana_donasi = 0.875*$this->jumlah_dana;
-			$dana_amil = 0.125*$this->jumlah_dana;
+			// $dana_donasi = 0.825*$this->jumlah_dana;
+			// $dana_amil = 0.125*$this->jumlah_dana;
+			// $dana_hak_kelola_wilayah = 0.05*$this->jumlah_dana;
+			$this->potongan_amil = 0.125;
 		}
 		//lain-lain potongan 20%
 		else{
-			$dana_donasi = 0.8*$this->jumlah_dana;
-			$dana_amil = 0.2*$this->jumlah_dana;
+			// $dana_donasi = 0.75*$this->jumlah_dana;
+			// $dana_amil = 0.2*$this->jumlah_dana;
+			// $dana_hak_kelola_wilayah = 0.05*$this->jumlah_dana;
+			$this->potongan_amil = 0.2;
 		}
-		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil);
-		$data = array(
-			//aktiva
-			array(
-			   'tgl' => $this->tgl_donasi ,
-			   'kd_akun' => $this->jenis_dana ,
-			   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
-			   'debit' => $this->input->post('jumlah_dana'),
-			   'kredit' => 0,
-			   'status' => 0,
-			   'kd_transaksi' => $kd_transaksi
-			),
-			//pasiva
-			array(
-				'tgl' => $this->tgl_donasi ,
-				'kd_akun' => $this->jenis_donasi ,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
-				'debit' => 0,
-				'kredit' => $dana_donasi,
-				'status' => 0,
-			   	'kd_transaksi' => $kd_transaksi
-			),
-			//pasiva amil
-			array(
-				'tgl' => $this->tgl_donasi,
-				'kd_akun' => $this->akun_amil,
-				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
-				'debit' => 0,
-				'kredit' => $dana_amil,
-				'status' => 0,
-			   	'kd_transaksi' => $kd_transaksi
-			)
-		);
+
+		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil,$this->akun_wilayah);
+
+		if($this->potongan_amil == 0){
+			$dana_donasi = (1-$this->potongan_wilayah)*$this->jumlah_dana;
+			$dana_hak_kelola_wilayah = $this->potongan_wilayah*$this->jumlah_dana;
+
+			$data = array(
+				//aktiva
+				array(
+				   'tgl' => $this->tgl_donasi ,
+				   'kd_akun' => $this->jenis_dana ,
+				   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+				   'debit' => $dana_donasi,
+				   'kredit' => 0,
+				   'status' => 0,
+				   'kd_transaksi' => $kd_transaksi
+				),
+				//aktiva hak wilayah
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => "A01.01.01.11" ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+					'debit' => $dana_hak_kelola_wilayah,
+					'kredit' => 0, 
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				 ),
+				//pasiva
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => $this->jenis_donasi ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+					'debit' => 0,
+					'kredit' => $dana_donasi,
+					'status' => 0,
+					   'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva hak kelola wilayah
+				array(
+					'tgl' => $this->tgl_donasi,
+					'kd_akun' => $this->akun_wilayah,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+					'debit' => 0,
+					'kredit' => $dana_hak_kelola_wilayah,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				)
+			);
+		}else if($this->potongan_wilayah == 0){
+			$dana_donasi = (1-$this->potongan_amil)*$this->jumlah_dana;
+			$dana_amil = $this->potongan_amil*$this->jumlah_dana;	
+
+			$data = array(
+				//aktiva
+				array(
+				   'tgl' => $this->tgl_donasi ,
+				   'kd_akun' => $this->jenis_dana ,
+				   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+				   'debit' => $dana_donasi,
+				   'kredit' => 0,
+				   'status' => 0,
+				   'kd_transaksi' => $kd_transaksi
+				),
+				//aktiva amil
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => "A01.01.01.05" ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+					'debit' => $dana_amil,
+					'kredit' => 0,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => $this->jenis_donasi ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+					'debit' => 0,
+					'kredit' => $dana_donasi,
+					'status' => 0,
+					   'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva amil
+				array(
+					'tgl' => $this->tgl_donasi,
+					'kd_akun' => $this->akun_amil,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+					'debit' => 0,
+					'kredit' => $dana_amil,
+					'status' => 0,
+					   'kd_transaksi' => $kd_transaksi
+				)
+			);
+
+		}else if( ($this->potongan_wilayah == 0 && $this->potongan_amil == 0) || $this->jenis_nominal == 100){
+			$dana_donasi = $this->jumlah_dana;
+
+			$data = array(
+				//aktiva
+				array(
+				   'tgl' => $this->tgl_donasi ,
+				   'kd_akun' => $this->jenis_dana ,
+				   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+				   'debit' => $dana_donasi,
+				   'kredit' => 0,
+				   'status' => 0,
+				   'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => $this->jenis_donasi ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+					'debit' => 0,
+					'kredit' => $dana_donasi,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				)			
+			);
+		}else{
+			$dana_donasi = (1-$this->potongan_amil-$this->potongan_wilayah)*$this->jumlah_dana;
+			$dana_amil = $this->potongan_amil*$this->jumlah_dana;
+			$dana_hak_kelola_wilayah = $this->potongan_wilayah*$this->jumlah_dana;	
+			
+			$data = array(
+				//aktiva
+				array(
+				   'tgl' => $this->tgl_donasi ,
+				   'kd_akun' => $this->jenis_dana ,
+				   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+				   'debit' => $dana_donasi,
+				   'kredit' => 0,
+				   'status' => 0,
+				   'kd_transaksi' => $kd_transaksi
+				),
+				//aktiva amil
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => "A01.01.01.05" ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+					'debit' => $dana_amil,
+					'kredit' => 0,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				 ),
+				 //aktiva hak wilayah
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => "A01.01.01.11" ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+					'debit' => $dana_hak_kelola_wilayah,
+					'kredit' => 0, 
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				 ),
+				//pasiva
+				array(
+					'tgl' => $this->tgl_donasi ,
+					'kd_akun' => $this->jenis_donasi ,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+					'debit' => 0,
+					'kredit' => $dana_donasi,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva amil
+				array(
+					'tgl' => $this->tgl_donasi,
+					'kd_akun' => $this->akun_amil,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+					'debit' => 0,
+					'kredit' => $dana_amil,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				),
+				//pasiva hak kelola wilayah
+				array(
+					'tgl' => $this->tgl_donasi,
+					'kd_akun' => $this->akun_wilayah,
+					'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+					'debit' => 0,
+					'kredit' => $dana_hak_kelola_wilayah,
+					'status' => 0,
+					'kd_transaksi' => $kd_transaksi
+				)
+			);
+		}
+
+		// $this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil,$this->akun_wilayah);
+		// $data = array(
+		// 	//aktiva
+		// 	array(
+		// 	   'tgl' => $this->tgl_donasi ,
+		// 	   'kd_akun' => $this->jenis_dana ,
+		// 	   'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+		// 	   'debit' => $dana_donasi,
+		// 	   'kredit' => 0,
+		// 	   'status' => 0,
+		// 	   'kd_transaksi' => $kd_transaksi
+		// 	),
+		// 	//aktiva amil
+		// 	array(
+		// 		'tgl' => $this->tgl_donasi ,
+		// 		'kd_akun' => "A01.01.01.05" ,
+		// 		'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+		// 		'debit' => $dana_amil,
+		// 		'kredit' => 0,
+		// 		'status' => 0,
+		// 		'kd_transaksi' => $kd_transaksi
+		// 	 ),
+		// 	 //aktiva hak wilayah
+		// 	array(
+		// 		'tgl' => $this->tgl_donasi ,
+		// 		'kd_akun' => "A01.01.01.11" ,
+		// 		'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+		// 		'debit' => $dana_hak_kelola_wilayah,
+		// 		'kredit' => 0, 
+		// 		'status' => 0,
+		// 		'kd_transaksi' => $kd_transaksi
+		// 	 ),
+		// 	//pasiva
+		// 	array(
+		// 		'tgl' => $this->tgl_donasi ,
+		// 		'kd_akun' => $this->jenis_donasi ,
+		// 		'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
+		// 		'debit' => 0,
+		// 		'kredit' => $dana_donasi,
+		// 		'status' => 0,
+		// 	   	'kd_transaksi' => $kd_transaksi
+		// 	),
+		// 	//pasiva amil
+		// 	array(
+		// 		'tgl' => $this->tgl_donasi,
+		// 		'kd_akun' => $this->akun_amil,
+		// 		'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+		// 		'debit' => 0,
+		// 		'kredit' => $dana_amil,
+		// 		'status' => 0,
+		// 	   	'kd_transaksi' => $kd_transaksi
+		// 	),
+		// 	//pasiva hak kelola wilayah
+		// 	array(
+		// 		'tgl' => $this->tgl_donasi,
+		// 		'kd_akun' => $this->akun_wilayah,
+		// 		'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+		// 		'debit' => 0,
+		// 		'kredit' => $dana_hak_kelola_wilayah,
+		// 		'status' => 0,
+		// 	   	'kd_transaksi' => $kd_transaksi
+		// 	)
+		// );
 		return $this->db->insert_batch('jurnal', $data); 
 	}
 
-	function getKetDetail($kd_muzaki,$kd_akunA,$kd_akunP,$kd_akun_amil){
+	function getKetDetail($kd_muzaki,$kd_akunA,$kd_akunP,$kd_akun_amil,$kd_akun_wilayah){
 		$muzaki = $this->db->get_where("muzaki", array('kd_muzaki' => $kd_muzaki))->row_array();
 		$this->nama_muzaki = $muzaki['nama_muzaki'];
 		$aktiva = $this->db->get_where("akun", array('kd_akun' => $kd_akunA))->row_array();
@@ -114,6 +348,8 @@ class DonasiMasuk_model extends CI_Model
 		$this->nama_akunP = $pasiva['nama_akun'];
 		$amil = $this->db->get_where("akun", array('kd_akun' => $kd_akun_amil))->row_array();
 		$this->nama_akun_amil = $amil['nama_akun'];
+		$wilayah = $this->db->get_where("akun", array('kd_akun' => $kd_akun_wilayah))->row_array();
+		$this->nama_akun_wilyah = $wilayah['nama_akun'];
 		$bank = 'A01.01.02';
 		if(strpos($kd_akunA,$bank) !== false){
 			$this->jenis_pembayaran = 'Transfer';
@@ -217,17 +453,20 @@ class DonasiMasuk_model extends CI_Model
 	function updateJurnal($kd_transaksi){
 		$id = $this->getIdJurnal($this->kd_transaksi);
 		$this->akun_amil = 'A02.02.05.00';
+		$this->akun_wilayah = 'A02.02.11.00';
 		//zakat = potongan 12.5%
 		if($this->jenis_donasi == "A02.02.01.00" || $this->jenis_donasi == "A02.02.02.00"){
-			$dana_donasi = 0.875*$this->jumlah_dana;
+			$dana_donasi = 0.825*$this->jumlah_dana;
 			$dana_amil = 0.125*$this->jumlah_dana;
+			$dana_hak_kelola_wilayah = 0.05*$this->jumlah_dana;
 		}
 		//lain-lain potongan 20%
 		else{
-			$dana_donasi = 0.8*$this->jumlah_dana;
+			$dana_donasi = 0.75*$this->jumlah_dana;
 			$dana_amil = 0.2*$this->jumlah_dana;
+			$dana_hak_kelola_wilayah = 0.05*$this->jumlah_dana;
 		}
-		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil);
+		$this->getKetDetail($this->kd_muzaki,$this->jenis_dana,$this->jenis_donasi,$this->akun_amil,$this->akun_wilayah);
 		$data = array(
 			//aktiva
 			array(
@@ -240,9 +479,31 @@ class DonasiMasuk_model extends CI_Model
 				'status' => 0,
 				'kd_transaksi' => $kd_transaksi
 			),
-			//pasiva
+			//aktiva amil
 			array(
 				'id' => $id[1],
+				'tgl' => $this->tgl_donasi ,
+				'kd_akun' => "A01.01.01.05" ,
+				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
+				'debit' => $dana_amil,
+				'kredit' => 0,
+				'status' => 0,
+				'kd_transaksi' => $kd_transaksi
+			 ),
+			 //aktiva hak wilayah
+			array(
+				'id' => $id[2],
+				'tgl' => $this->tgl_donasi ,
+				'kd_akun' => "A01.01.01.11" ,
+				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+				'debit' => $dana_hak_kelola_wilayah,
+				'kredit' => 0, 
+				'status' => 0,
+				'kd_transaksi' => $kd_transaksi
+			 ),
+			//pasiva
+			array(
+				'id' => $id[3],
 				'tgl' => $this->tgl_donasi ,
 				'kd_akun' => $this->jenis_donasi ,
 				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akunP,
@@ -253,12 +514,23 @@ class DonasiMasuk_model extends CI_Model
 			),
 			//pasiva amil
 			array(
-				'id' => $id[2],
+				'id' => $id[4],
 				'tgl' => $this->tgl_donasi,
 				'kd_akun' => $this->akun_amil,
 				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_amil,
 				'debit' => 0,
 				'kredit' => $dana_amil,
+				'status' => 0,
+			   	'kd_transaksi' => $kd_transaksi
+			),
+			//pasiva hak kelola wilayah
+			array(
+				'id' => $id[5],
+				'tgl' => $this->tgl_donasi,
+				'kd_akun' => $this->akun_wilayah,
+				'keterangan' => 'Donasi dari '.$this->nama_muzaki.' secara '.$this->jenis_pembayaran. ' ke '.$this->nama_akunA.' untuk '.$this->nama_akun_wilayah,
+				'debit' => 0,
+				'kredit' => $dana_hak_kelola_wilayah,
 				'status' => 0,
 			   	'kd_transaksi' => $kd_transaksi
 			)

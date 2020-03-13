@@ -264,6 +264,7 @@ $url = base_url() . 'jurnal/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getData',
+        type: "GET",
         async: true,
         dataType: 'json',
         success: function(data) {

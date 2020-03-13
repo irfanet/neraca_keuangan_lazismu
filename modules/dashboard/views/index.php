@@ -15,6 +15,8 @@ $url = base_url() . 'dashboard/';
     </ol>
   </section>
 
+  <!-- <button><a href="<?= $url?>reset">Reset</a></button> -->
+
   <section class="content">
     <div class="row">
       <div class="col-md-6">
@@ -221,6 +223,7 @@ $url = base_url() . 'dashboard/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getAktiva',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -286,6 +289,7 @@ $url = base_url() . 'dashboard/';
             'searching': true,
             'ordering': true,
             'info': true,
+            "pageLength": 100,
             'autoWidth': true
           });
         }
@@ -296,6 +300,7 @@ $url = base_url() . 'dashboard/';
       $.ajax({
         type: 'ajax',
         url: '<?= $url ?>getPasiva',
+        type: "GET",
         async: false,
         dataType: 'json',
         success: function(data) {
@@ -363,6 +368,7 @@ $url = base_url() . 'dashboard/';
             'searching': true,
             'ordering': true,
             'info': true,
+            "pageLength": 100,
             'autoWidth': true
           });
         }
