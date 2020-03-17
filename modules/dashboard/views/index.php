@@ -19,6 +19,11 @@ $url = base_url() . 'dashboard/';
 
   <section class="content">
     <div class="row">
+      <a href="<?= $url?>printPDF" class="btn btn-app">
+        <i class="fa fa-save"></i> Save
+      </a>
+    </div>
+    <div class="row">
       <div class="col-md-6">
         <div class="box">
           <div class="box-header with-border">
