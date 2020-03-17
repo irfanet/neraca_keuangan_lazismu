@@ -567,6 +567,7 @@ $url = base_url() . 'donasiMasuk/';
       $('[name="show_in_edit"]').hide();
       $('#tgl_donasi').attr('readonly', false);
       $('#kd_muzaki').attr('readonly', false);
+      $('#kd_muzaki').val($("#kd_muzaki option[selected]").val());
     });
 
     //TOMBOL EDIT -> GET KODE & ATUR HIDE AND SHOW
@@ -586,13 +587,19 @@ $url = base_url() . 'donasiMasuk/';
             $('#modal_add').modal('show');
             $('[name="show_in_add"]').hide();
             $('[name="show_in_edit"]').show();
-            // $('#old_image').val(data.foto);
             $('#kd_donasi').val(data.kd_donasi);
             $('#tgl_donasi').val(data.tgl_donasi);
-            $('#kd_muzaki').val(data.kd_muzaki);
+            $('#kd_muzaki').val(data.kd_muzaki).change();
             $('#keterangan').val(data.keterangan);
-            $('#jenis_donasi').val(data.jenis_donasi);
-            $('#jenis_dana').val(data.jenis_dana);
+            $('#jenis_donasi').val(data.jenis_donasi).change();
+            $('#jenis_dana').val(data.jenis_dana).change();
+            // var jns = document.getElementById("jenis_dana");
+            // if(jns.indexOf("A01.01.01.") != -1){
+            //   console.log(str2 + " found");
+            //   $('#cash').prop("checked", true);
+            // }else{
+            //   $('#bank').prop("checked", true);
+            // }
             $('#jumlah_dana').val(data.jumlah_dana);
           });
         }
